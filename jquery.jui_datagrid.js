@@ -11,27 +11,13 @@
     var pluginName = 'jui_datagrid';
 
     // private methods
-    /**
-     *
-     * @param url
-     */
-    var fetch_data = function(url, page_num, rows_per_page) {
-        var dg_data = [];
-        $.ajax({
-            type: 'POST',
-            url: url,
-            async: false,
-            data: {
-                page_num: page_num,
-                rows_per_page: rows_per_page
-            },
-            success: function(data) {
-                dg_data = $.parseJSON(data);
-            }
-        });
-        return dg_data;
-    };
 
+
+    /**
+     * Display datagrid
+     * @param container_id
+     * @param a_dg
+     */
     var display_datagrid = function(container_id, a_dg) {
 
         var elem = $("#" + container_id);

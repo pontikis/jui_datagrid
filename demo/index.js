@@ -2,7 +2,7 @@ $(function() {
     //$('#switcher').themeswitcher();
 
     $("#demo_grid1").jui_datagrid({
-        apply_UI_style: true,
+        apply_UI_style: false,
         ajax_fetch_data_url: 'ajax_fetch_data1.php'
 /*        onShow: function(msg) {
             alert('Hello world! ' + msg);
@@ -37,5 +37,12 @@ $(function() {
         $("#demo_grid1").jui_datagrid('destroy');
     });
 
+
+    $("#demo_grid2").jui_datagrid({
+        ajax_fetch_data_url: 'ajax_fetch_data2.php'
+        /*        onShow: function(msg) {
+         alert('Hello world! ' + msg);
+         }*/
+    });
 
 });
