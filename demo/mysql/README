@@ -1,0 +1,7 @@
+Random data created with http://www.generatedata.com/
+
+MySQL:
+mysql -u username -p
+create database jui_datagrid collate utf8_general_ci;
+use jui_datagrid;
+source /path/to/jui_datagrid.sql
