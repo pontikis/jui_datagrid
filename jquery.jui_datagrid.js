@@ -15,20 +15,76 @@
      *
      * @param url
      */
-    var fetch_data = function(url) {
+    var fetch_data = function(url, page_num, rows_per_page) {
         var dg_data = [];
         $.ajax({
             type: 'POST',
             url: url,
+            async: false,
             data: {
-                rows_per_page: 10,
-                start_id: 0
+                page_num: page_num,
+                rows_per_page: rows_per_page
             },
             success: function(data) {
                 dg_data = $.parseJSON(data);
             }
         });
         return dg_data;
+    };
+
+    var display_datagrid = function(container_id, a_dg) {
+
+        var elem = $("#" + container_id);
+
+        var dg_data = a_dg['dg_data'];
+        var page_rows = dg_data.length;
+        var total_rows = a_dg['total_rows'];
+
+        if(total_rows > 0) {
+            var container_id = elem.attr("id");
+            var table_id = elem.jui_datagrid('getOption', 'table_id_prefix') + container_id;
+
+            var tbl = '<table id="' + table_id + '">';
+
+            tbl += '<thead>';
+            tbl += '<tr>';
+            $.each(dg_data[0], function(index, value) {
+                tbl += '<th>' + index + '</th>';
+            });
+            tbl += '<tr>';
+            tbl += '</thead>';
+
+            tbl += '<tbody>';
+            for(var i = 0; i < page_rows; i++) {
+                tbl += '<tr>';
+                $.each(dg_data[i], function(index, value) {
+                    tbl += '<td>' + value + '</td>';
+                });
+                tbl += '</tr>';
+            }
+            tbl += '<tbody>';
+
+            tbl += '</table>';
+
+            elem.html(tbl);
+
+            if(elem.jui_datagrid('getOption', 'apply_UI_style')) {
+                elem.jui_datagrid('setUIStyle',
+                    elem.jui_datagrid('getOption', 'table_class'),
+                    elem.jui_datagrid('getOption', 'tr_hover_class'),
+                    elem.jui_datagrid('getOption', 'th_class'),
+                    elem.jui_datagrid('getOption', 'td_class'),
+                    elem.jui_datagrid('getOption', 'tr_last_class'));
+            }
+
+            // bind event
+            elem.bind("onShow", elem.jui_datagrid('getOption', 'onShow'));
+            // trigger event
+            elem.triggerHandler("onShow");
+        } else {
+            elem.html(elem.jui_datagrid('getOption', 'rscNoRecords'));
+        }
+
     };
 
     // public methods
@@ -55,6 +111,9 @@
                         th_class: 'ui-state-default',
                         td_class: 'ui-widget-content',
                         tr_last_class: 'last-child',
+                        page_num: 1,
+                        rows_per_page: 10,
+                        rscNoRecords: 'No records found...',
                         onShow: function() {
                         }
                     };
@@ -64,30 +123,23 @@
                     settings = $.extend({}, settings, options);
                 }
 
-                var container_id = elem.attr("id");
-                var table_id = settings.table_id_prefix + container_id;
+                // fetch data and display datagrid
+                var rows_per_page = elem.jui_datagrid('getOption', 'rows_per_page');
+                var page_num = elem.jui_datagrid('getOption', 'page_num');
+                var ajax_fetch_data_url = elem.jui_datagrid('getOption', 'ajax_fetch_data_url');
 
-                var tbl = '<table id="' + table_id + '">' +
-                    '<thead>' +
-                    '<tr><th>Header Column</th><th>Column 2</th><th>Column 3</th><th>Column 4</th></tr>' +
-                    '</thead>' +
-                    '<tbody>' +
-                    '<tr><th>Header</th><td>Cell 2</td><td>Cell 3</td><td>Cell 4</td></tr>' +
-                    '<tr><th>Header</th><td>Cell 2</td><td>Cell 3</td><td>Cell 4</td></tr>' +
-                    '<tr><th>Header</th><td>Cell 2</td><td>Cell 3</td><td>Cell 4</td></tr>' +
-                    '</tbody>' +
-                    '</table>';
-
-                elem.html(tbl);
-                if(settings.apply_UI_style) {
-                    elem.jui_datagrid('setUIStyle', settings.table_class, settings.tr_hover_class, settings.th_class, settings.td_class, settings.tr_last_class);
-                }
-
-                // bind event
-                elem.bind("onShow", settings.onShow);
-                // trigger event
-                elem.triggerHandler("onShow");
-
+                $.ajax({
+                    type: 'POST',
+                    url: ajax_fetch_data_url,
+                    data: {
+                        page_num: page_num,
+                        rows_per_page: rows_per_page
+                    },
+                    success: function(data) {
+                        var a_data = $.parseJSON(data);
+                        display_datagrid(elem.attr("id"), a_data);
+                    }
+                });
             });
         },
 
@@ -98,7 +150,7 @@
          * @return {*}
          */
         getOption: function(opt) {
-            var elem = $(this);
+            var elem = this;
             return elem.data(pluginName)[opt];
         },
 
@@ -111,7 +163,7 @@
          * @param tr_last_class
          */
         setUIStyle: function(table_class, tr_hover_class, th_class, td_class, tr_last_class) {
-            var elem = $(this);
+            var elem = this;
             var table_selector = '#' + $(elem).jui_datagrid('getOption', 'table_id_prefix') + elem.attr("id");
             $(table_selector).addClass(table_class);
 

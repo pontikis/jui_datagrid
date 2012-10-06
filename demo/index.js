@@ -2,7 +2,8 @@ $(function() {
     //$('#switcher').themeswitcher();
 
     $("#demo_grid1").jui_datagrid({
-        apply_UI_style: false
+        apply_UI_style: true,
+        ajax_fetch_data_url: 'ajax_fetch_data1.php'
 /*        onShow: function(msg) {
             alert('Hello world! ' + msg);
         }*/
