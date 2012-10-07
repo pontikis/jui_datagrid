@@ -54,7 +54,7 @@
 
             elem.html(tbl);
 
-/*            var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
+            var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
             var pag = '<div id="' + paginator_id + '">';
             pag += '</div>';
 
@@ -64,7 +64,7 @@
                 currentPage: 1,
                 visiblePageLinks: 10,
                 totalPages: 100
-            });*/
+            });
 
 
             if(elem.jui_datagrid('getOption', 'apply_UI_style')) {
