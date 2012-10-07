@@ -1,0 +1,17 @@
+.nav-pane {
+    overflow: auto;
+    text-align: center;
+}
+
+.nav-item {
+    display: inline-block;
+    margin: 3px;
+    font-size: 12px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.nav-link {
+    text-decoration: none;
+}
