@@ -54,6 +54,19 @@
 
             elem.html(tbl);
 
+/*            var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
+            var pag = '<div id="' + paginator_id + '">';
+            pag += '</div>';
+
+            elem.append(pag);
+
+            $("#" + paginator_id).jui_pagination({
+                currentPage: 1,
+                visiblePageLinks: 10,
+                totalPages: 100
+            });*/
+
+
             if(elem.jui_datagrid('getOption', 'apply_UI_style')) {
                 elem.jui_datagrid('setUIStyle',
                     elem.jui_datagrid('getOption', 'table_class'),
@@ -97,6 +110,7 @@
                         th_class: 'ui-state-default',
                         td_class: 'ui-widget-content',
                         tr_last_class: 'last-child',
+                        paginator_id_prefix: 'pag_',
                         page_num: 1,
                         rows_per_page: 10,
                         rscNoRecords: 'No records found...',

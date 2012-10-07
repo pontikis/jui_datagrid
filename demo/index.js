@@ -40,9 +40,6 @@ $(function() {
 
     $("#demo_grid2").jui_datagrid({
         ajax_fetch_data_url: 'ajax_fetch_data2.php'
-        /*        onShow: function(msg) {
-         alert('Hello world! ' + msg);
-         }*/
     });
 
 });
