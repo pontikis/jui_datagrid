@@ -25,6 +25,7 @@
         var dg_data = a_dg['dg_data'];
         var page_rows = dg_data.length;
         var total_rows = a_dg['total_rows'];
+        var total_pages = Math.ceil(total_rows / 10);
 
         if(total_rows > 0) {
             var container_id = elem.attr("id");
@@ -54,17 +55,29 @@
 
             elem.html(tbl);
 
-            var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
-            var pag = '<div id="' + paginator_id + '">';
-            pag += '</div>';
 
-            elem.append(pag);
 
-            $("#" + paginator_id).jui_pagination({
-                currentPage: 1,
-                visiblePageLinks: 10,
-                totalPages: 100
-            });
+            if(typeof ($("#" + paginator_id).data('jui_pagination')) == 'undefined') {
+
+                var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
+                var pag = '<div id="' + paginator_id + '">';
+                pag += '</div>';
+
+                elem.append(pag);
+
+
+                $("#" + paginator_id).jui_pagination({
+                    //currentPage: 1,
+                    visiblePageLinks: 10,
+                    totalPages: total_pages,
+                    containerClass: 'paginator1',
+                    onChangePage: function() {
+                        elem.data('jui_datagrid').page_num = $(this).jui_pagination('getOption', 'currentPage');
+                        elem.jui_datagrid('init');
+                    }
+                });
+            }
+
 
 
             if(elem.jui_datagrid('getOption', 'apply_UI_style')) {

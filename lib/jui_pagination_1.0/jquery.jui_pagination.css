@@ -1,6 +1,20 @@
+/*
+DO NOT CHANGE this file, as it will be overwritten in next update.
+Write your own classes in other css file.
+*/
+
 .nav-pane {
     overflow: auto;
     text-align: center;
+}
+
+.current-page {
+    display: inline-block;
+    margin: 3px 20px 3px 3px;
+    font-size: 13px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .nav-item {
@@ -10,8 +24,54 @@
     text-align: center;
     padding-left: 2px;
     padding-right: 2px;
+    cursor: pointer;
 }
 
-.nav-link {
-    text-decoration: none;
+.nav-pages {
+    display: inline-block;
+}
+
+.nav-button {
+    display: inline-block;
+    margin: 3px;
+    font-size: 14px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    cursor: pointer;
+}
+
+.nav-dots-left {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.nav-dots-right {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.total-pages {
+    display: inline-block;
+    margin: 3px 3px 3px 20px;
+    font-size: 13px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.nav-slider-divider {
+    clear: both;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
