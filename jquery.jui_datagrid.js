@@ -10,8 +10,167 @@
 
     var pluginName = 'jui_datagrid';
 
-    // private methods
+    // public methods
+    var methods = {
 
+        /**
+         * @constructor
+         * @param options
+         * @return {*}
+         */
+        init: function(options) {
+
+            var elem = this;
+
+            return this.each(function() {
+
+                /**
+                 * settings and defaults
+                 * using $.extend, settings modification will affect elem.data() and vive versa
+                 */
+                var settings = elem.data(pluginName);
+                if(typeof(settings) == 'undefined') {
+                    var defaults = elem.jui_datagrid('getDefaults');
+                    settings = $.extend({}, defaults, options);
+                } else {
+                    settings = $.extend({}, settings, options);
+                }
+                elem.data(pluginName, settings);
+
+                var container_id = elem.attr("id");
+
+                // simple validation
+                //validate_input(container_id);
+
+                // bind events
+                elem.unbind("onShow").bind("onShow", elem.jui_datagrid('getOption', 'onShow'));
+
+                // fetch data and display datagrid
+                var rows_per_page = elem.jui_datagrid('getOption', 'rows_per_page');
+                var page_num = elem.jui_datagrid('getOption', 'page_num');
+                var ajax_fetch_data_url = elem.jui_datagrid('getOption', 'ajax_fetch_data_url');
+
+                $.ajax({
+                    type: 'POST',
+                    url: ajax_fetch_data_url,
+                    data: {
+                        page_num: page_num,
+                        rows_per_page: rows_per_page
+                    },
+                    success: function(data) {
+                        var a_data = $.parseJSON(data);
+                        display_datagrid(elem.attr("id"), a_data);
+                    }
+                });
+            });
+        },
+
+
+        /**
+         * Get default values
+         * Usage: $(element).jui_datagrid('getDefaults');
+         * @return {Object}
+         */
+        getDefaults: function() {
+            var defaults = {
+                page_num: 1,
+                rows_per_page: 10,
+
+                apply_UI_style: true,
+                table_class: 'ui-styled-table',
+                tr_hover_class: 'ui-state-hover',
+                th_class: 'ui-state-default',
+                td_class: 'ui-widget-content',
+                tr_last_class: 'last-child',
+
+                table_id_prefix: 'dg_',
+                paginator_id_prefix: 'pag_',
+
+                rscNoRecords: 'No records found...',
+
+                onShow: function() {
+                }
+            };
+            return defaults;
+        },
+
+        /**
+         * Get any option set to plugin using its name (as string)
+         * Usage: $(element).jui_datagrid('getOption', some_option);
+         * @param opt
+         * @return {*}
+         */
+        getOption: function(opt) {
+            var elem = this;
+            return elem.data(pluginName)[opt];
+        },
+
+        /**
+         * Get all options
+         * Usage: $(element).myPlugin('getAllOptions');
+         * @return {*}
+         */
+        getAllOptions: function() {
+            var elem = this;
+            return elem.data(pluginName);
+        },
+
+        /**
+         * Set option
+         * Usage: $(element).jui_datagrid('setOption', 'oprion_name',  'oprion_value',  reinit);
+         * @param opt
+         * @param val
+         * @param reinit
+         */
+        setOption: function(opt, val, reinit) {
+            var elem = this;
+            elem.data(pluginName)[opt] = val;
+            if(reinit) {
+                elem.jui_datagrid('init');
+            }
+        },
+
+        /**
+         * Destroy plugin
+         * Usage: $(element).jui_datagrid('destroy');
+         * @param options
+         * @return {*|jQuery}
+         */
+        destroy: function(options) {
+            return $(this).each(function() {
+                var $this = $(this);
+
+                $this.removeData(pluginName);
+            });
+        },
+
+        /**
+         * Apply UI styles to datagrid table
+         * @param table_class
+         * @param tr_hover_class
+         * @param th_class
+         * @param td_class
+         * @param tr_last_class
+         */
+        setUIStyle: function(table_class, tr_hover_class, th_class, td_class, tr_last_class) {
+            var elem = this;
+            var table_selector = '#' + $(elem).jui_datagrid('getOption', 'table_id_prefix') + elem.attr("id");
+            $(table_selector).addClass(table_class);
+
+            if(tr_hover_class) {
+                $(table_selector).on('mouseover mouseout', 'tbody tr', function(event) {
+                    $(this).children().toggleClass(tr_hover_class, event.type == 'mouseover');
+                });
+            }
+
+            $(table_selector).find("th").addClass(th_class);
+            $(table_selector).find("td").addClass(td_class);
+            $(table_selector).find("tr:last-child").addClass(tr_last_class);
+        }
+
+    };
+
+    // private methods
 
     /**
      * Display datagrid
@@ -55,8 +214,6 @@
 
             elem.html(tbl);
 
-
-
             if(typeof ($("#" + paginator_id).data('jui_pagination')) == 'undefined') {
 
                 var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
@@ -89,8 +246,6 @@
                     elem.jui_datagrid('getOption', 'tr_last_class'));
             }
 
-            // bind event
-            elem.bind("onShow", elem.jui_datagrid('getOption', 'onShow'));
             // trigger event
             elem.triggerHandler("onShow");
         } else {
@@ -99,113 +254,13 @@
 
     };
 
-    // public methods
-    var methods = {
-
-        /**
-         * @constructor
-         * @param options
-         * @return {*}
-         */
-        init: function(options) {
-
-            var elem = this;
-
-            return this.each(function() {
-
-                var settings = elem.data(pluginName);
-                if(typeof(settings) == 'undefined') {
-                    var defaults = {
-                        table_id_prefix: 'dg_',
-                        apply_UI_style: true,
-                        table_class: 'ui-styled-table',
-                        tr_hover_class: 'ui-state-hover',
-                        th_class: 'ui-state-default',
-                        td_class: 'ui-widget-content',
-                        tr_last_class: 'last-child',
-                        paginator_id_prefix: 'pag_',
-                        page_num: 1,
-                        rows_per_page: 10,
-                        rscNoRecords: 'No records found...',
-                        onShow: function() {
-                        }
-                    };
-                    settings = $.extend({}, defaults, options);
-                    elem.data(pluginName, settings);
-                } else {
-                    settings = $.extend({}, settings, options);
-                }
-
-                // fetch data and display datagrid
-                var rows_per_page = elem.jui_datagrid('getOption', 'rows_per_page');
-                var page_num = elem.jui_datagrid('getOption', 'page_num');
-                var ajax_fetch_data_url = elem.jui_datagrid('getOption', 'ajax_fetch_data_url');
-
-                $.ajax({
-                    type: 'POST',
-                    url: ajax_fetch_data_url,
-                    data: {
-                        page_num: page_num,
-                        rows_per_page: rows_per_page
-                    },
-                    success: function(data) {
-                        var a_data = $.parseJSON(data);
-                        display_datagrid(elem.attr("id"), a_data);
-                    }
-                });
-            });
-        },
-
-        /**
-         * Get any option set to plugin using its name (as string)
-         * Usage: $(element).jui_datagrid('getOption', some_option);
-         * @param opt
-         * @return {*}
-         */
-        getOption: function(opt) {
-            var elem = this;
-            return elem.data(pluginName)[opt];
-        },
-
-        /**
-         * Apply UI styles to datagrid table
-         * @param table_class
-         * @param tr_hover_class
-         * @param th_class
-         * @param td_class
-         * @param tr_last_class
-         */
-        setUIStyle: function(table_class, tr_hover_class, th_class, td_class, tr_last_class) {
-            var elem = this;
-            var table_selector = '#' + $(elem).jui_datagrid('getOption', 'table_id_prefix') + elem.attr("id");
-            $(table_selector).addClass(table_class);
-
-            if(tr_hover_class) {
-                $(table_selector).on('mouseover mouseout', 'tbody tr', function(event) {
-                    $(this).children().toggleClass(tr_hover_class, event.type == 'mouseover');
-                });
-            }
-
-            $(table_selector).find("th").addClass(th_class);
-            $(table_selector).find("td").addClass(td_class);
-            $(table_selector).find("tr:last-child").addClass(tr_last_class);
-        },
-
-        /**
-         * Destroy plugin
-         * @param options
-         * @return {*|jQuery}
-         */
-        destroy: function(options) {
-            return $(this).each(function() {
-                var $this = $(this);
-
-                $this.removeData(pluginName);
-            });
-        }
-    };
-
     $.fn.jui_datagrid = function(method) {
+
+        if(this.size() != 1) {
+            var err_msg = 'You must use this plugin with a unique element (at once)';
+            this.html('<span style="color: red;">' + 'ERROR: ' + err_msg + '</span>');
+            $.error(err_msg);
+        }
 
         // Method calling logic
         if(methods[method]) {
