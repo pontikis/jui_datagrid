@@ -249,6 +249,7 @@
 
             // trigger event
             elem.triggerHandler("onShow");
+
         } else {
             elem.html(elem.jui_datagrid('getOption', 'rscNoRecords'));
         }
