@@ -77,7 +77,7 @@ $("#element_id").jui_datagrid({
     tr_last_class: 'last-child',
 
     table_id_prefix: 'dg_',
-    paginator_id_prefix: 'pag_',
+    pagination_id_prefix: 'pag_',
 
     rscNoRecords: 'No records found...'
 });
