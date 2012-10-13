@@ -22,8 +22,8 @@ Write your own classes in other css file.
     margin: 3px;
     font-size: 12px;
     text-align: center;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     cursor: pointer;
 }
 
@@ -36,8 +36,8 @@ Write your own classes in other css file.
     margin: 3px;
     font-size: 14px;
     text-align: center;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
     cursor: pointer;
 }
 
@@ -70,8 +70,7 @@ Write your own classes in other css file.
     padding-right: 2px;
 }
 
-.nav-slider-divider {
-    clear: both;
-    padding-top: 5px;
-    padding-bottom: 5px;
+.nav-slider {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
