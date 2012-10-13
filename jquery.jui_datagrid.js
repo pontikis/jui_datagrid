@@ -1,10 +1,11 @@
 /**
  * jquery plugin which displays data in tabular format (datagrid)
  * Requires jquery, jquery-ui Themes CSS
- * Copyright 2012 Christos Pontikis (http://www.pontikis.net)
+ * It uses jui_pagination plugin (which requires jquery-ui)
+ * Copyright 2012 Christos Pontikis http://pontikis.net
  * Project page https://github.com/pontikis/jui_datagrid
  * Release 1.00 - ??/10/2012
- * License GPLv3
+ * License MIT
  */
 (function($) {
 
