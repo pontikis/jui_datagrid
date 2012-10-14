@@ -1,7 +1,7 @@
 jui_datagrid
 ============
 
-jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipule data in tabular format. As a javascript control, it can be integrated with any server-side technology (e.g. PHP, Perl, ASP, JSP and more).
+jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate data in tabular format. As a javascript control, it can be integrated with any server-side technology (e.g. PHP, Perl, ASP, JSP and more).
 
 jui_datagrid API is simple and powerful.
 
@@ -82,7 +82,7 @@ Preview:
 
 ### JSON data structure
 
-```javascript
+```json
 {
     "total_rows": "200",
     "page_data": [
