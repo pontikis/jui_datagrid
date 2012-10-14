@@ -52,7 +52,7 @@ if($conn)
 	$conn->Close();
 
 $result['total_rows'] = $total_rows;
-$result['dg_data'] = $a_data;
+$result['page_data'] = $a_data;
 
 $json = json_encode($result);
 
