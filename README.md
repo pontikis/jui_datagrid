@@ -76,7 +76,8 @@ $("#element_id").jui_datagrid({
     td_class: 'ui-widget-content',
     tr_last_class: 'last-child',
 
-    table_id_prefix: 'dg_',
+    datagrid_id_prefix: 'dg_',
+    table_id_prefix: 'tbl_',
     pagination_id_prefix: 'pag_',
 
     rscNoRecords: 'No records found...'

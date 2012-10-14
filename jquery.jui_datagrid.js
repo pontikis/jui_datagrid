@@ -7,6 +7,7 @@
  * Release 1.00 - ??/10/2012
  * License MIT
  */
+"use strict";
 (function($) {
 
     var pluginName = 'jui_datagrid';
@@ -40,27 +41,35 @@
 
                 var container_id = elem.attr("id");
 
-                // simple validation
-                //validate_input(container_id);
-
                 // bind events
                 elem.unbind("onShow").bind("onShow", elem.jui_datagrid('getOption', 'onShow'));
 
-                // fetch data and display datagrid
-                var rows_per_page = elem.jui_datagrid('getOption', 'rows_per_page');
-                var page_num = elem.jui_datagrid('getOption', 'page_num');
-                var ajax_fetch_data_url = elem.jui_datagrid('getOption', 'ajax_fetch_data_url');
+                // initialize
+                var section_id, section_html;
+                section_id = settings.datagrid_id_prefix + container_id;
+                if($("#" + section_id).length == 0) {
+                    section_html = '<div id="' + section_id + '">';
+                    section_html += '</div>';
+                    elem.append(section_html);
+                }
+                section_id = settings.pagination_id_prefix + container_id;
+                if(typeof ($("#" + section_id).data('jui_pagination')) == 'undefined') {
+                    section_html = '<div id="' + section_id + '">';
+                    section_html += '</div>';
+                    elem.append(section_html);
+                }
 
+                // fetch data and display datagrid
                 $.ajax({
                     type: 'POST',
-                    url: ajax_fetch_data_url,
+                    url: settings.ajax_fetch_data_url,
                     data: {
-                        page_num: page_num,
-                        rows_per_page: rows_per_page
+                        page_num: settings.page_num,
+                        rows_per_page: settings.rows_per_page
                     },
                     success: function(data) {
                         var a_data = $.parseJSON(data);
-                        display_datagrid(elem.attr("id"), a_data);
+                        display_datagrid(container_id, a_data);
                     }
                 });
             });
@@ -84,8 +93,9 @@
                 td_class: 'ui-widget-content',
                 tr_last_class: 'last-child',
 
-                table_id_prefix: 'dg_',
-                paginator_id_prefix: 'pag_',
+                datagrid_id_prefix: 'dg_',
+                table_id_prefix: 'tbl_',
+                pagination_id_prefix: 'pag_',
 
                 rscNoRecords: 'No records found...',
 
@@ -186,10 +196,12 @@
         var dg_data = a_dg['dg_data'];
         var page_rows = dg_data.length;
         var total_rows = a_dg['total_rows'];
-        var total_pages = Math.ceil(total_rows / 10);
+        var rows_per_page = elem.jui_datagrid('getOption', 'rows_per_page');
+        var total_pages = Math.ceil(total_rows / rows_per_page);
+        var datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id;
+        var pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
 
         if(total_rows > 0) {
-            var container_id = elem.attr("id");
             var table_id = elem.jui_datagrid('getOption', 'table_id_prefix') + container_id;
 
             var tbl = '<table id="' + table_id + '">';
@@ -214,29 +226,7 @@
 
             tbl += '</table>';
 
-            elem.html(tbl);
-
-            if(typeof ($("#" + paginator_id).data('jui_pagination')) == 'undefined') {
-
-                var paginator_id = elem.jui_datagrid('getOption', 'paginator_id_prefix') + container_id;
-                var pag = '<div id="' + paginator_id + '">';
-                pag += '</div>';
-
-                elem.append(pag);
-
-
-                $("#" + paginator_id).jui_pagination({
-                    //currentPage: 1,
-                    visiblePageLinks: 10,
-                    totalPages: total_pages,
-                    containerClass: 'paginator1',
-                    onChangePage: function() {
-                        elem.data('jui_datagrid').page_num = $(this).jui_pagination('getOption', 'currentPage');
-                        elem.jui_datagrid('init');
-                    }
-                });
-            }
-
+            $("#" + datagrid_id).html(tbl);
 
 
             if(elem.jui_datagrid('getOption', 'apply_UI_style')) {
@@ -248,11 +238,26 @@
                     elem.jui_datagrid('getOption', 'tr_last_class'));
             }
 
+
+            $("#" + pagination_id).show();
+            $("#" + pagination_id).jui_pagination({
+                currentPage: $("#" + container_id).jui_datagrid('getOption', 'page_num'),
+                visiblePageLinks: 5,
+                totalPages: total_pages,
+                containerClass: 'paginator1',
+                onChangePage: function(event, page_number) {
+                    elem.data('jui_datagrid').page_num = page_number;
+                    elem.jui_datagrid({'page_num': page_number});
+                }
+            });
+
+
             // trigger event
             elem.triggerHandler("onShow");
 
         } else {
-            elem.html(elem.jui_datagrid('getOption', 'rscNoRecords'));
+            $("#" + datagrid_id).html(elem.jui_datagrid('getOption', 'rscNoRecords'));
+            $("#" + pagination_id).hide();
         }
 
     };
