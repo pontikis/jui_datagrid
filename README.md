@@ -74,12 +74,6 @@ $("#element_id").jui_datagrid({
 });
 ```
 
-Preview:
-
-![jui_datagrid sample][sample]
-[sample]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/images/sample.png "jui_datagrid common usage"
-
-
 ### JSON data structure
 
 ```json
@@ -104,6 +98,13 @@ Preview:
     ]
 }
 ```
+
+
+### Preview:
+
+![jui_datagrid sample][sample]
+[sample]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/images/sample.png "jui_datagrid common usage"
+
 
 Options
 -------
