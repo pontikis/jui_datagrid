@@ -161,7 +161,6 @@
          * Usage: $(element).jui_datagrid('destroy');
          * @param options
          * @return {*|jQuery}
-         * TODO also destroy jui_pagination
          */
         destroy: function(options) {
             return $(this).each(function() {
