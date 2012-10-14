@@ -166,8 +166,11 @@
         destroy: function(options) {
             return $(this).each(function() {
                 var $this = $(this);
+                var datagrid_container_id = $this.attr("id");
+                var pagination_container_id = $this.jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
 
-                $this.removeData(pluginName);
+                $("#" + pagination_container_id).removeData();
+                $this.removeData();
             });
         },
 
