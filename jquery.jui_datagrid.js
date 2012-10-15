@@ -78,8 +78,9 @@
                         } else {
                             display_grid(container_id, total_rows, page_data);
                             apply_grid_style(container_id);
-                            display_pagination(container_id, total_rows);
-
+                            if(total_rows > settings.rowsPerPage) {
+                                display_pagination(container_id, total_rows);
+                            }
                             // trigger event
                             elem.triggerHandler("onDisplay");
                         }
