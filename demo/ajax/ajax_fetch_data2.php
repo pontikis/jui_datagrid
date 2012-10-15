@@ -7,8 +7,8 @@ if(!$isAjax) {
 	exit;
 }
 
-require_once 'mysql/settings.php';
-require_once 'lib/adodb_5.18a/adodb.inc.php';
+require_once '../mysql/settings.php';
+require_once '../lib/adodb_5.18a/adodb.inc.php';
 
 $result = array();
 

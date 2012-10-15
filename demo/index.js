@@ -2,8 +2,8 @@ $(function() {
     //$('#switcher').themeswitcher();
 
     $("#demo_grid1").jui_datagrid({
-        applyUIGridStyle: false,
-        ajaxFetchDataURL: 'ajax_fetch_data1.php',
+        //applyUIGridStyle: false,
+        ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
         onDisplayPagination: function(e, pagination_id) {
             $("#" + pagination_id).jui_pagination({
                 visiblePageLinks: 5,
@@ -52,7 +52,7 @@ $(function() {
 
 
     $("#demo_grid2").jui_datagrid({
-        ajaxFetchDataURL: 'ajax_fetch_data2.php'
+        ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php'
     });
 
 
