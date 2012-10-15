@@ -3,7 +3,10 @@ DO NOT CHANGE this file, as it will be overwritten in next update.
 Write your own classes in other css file.
 */
 
-/* BASIC CSS STYLING TO MAKE IT LOOK PRETTIER */
+/* BASIC CSS STYLING TO MAKE IT LOOK PRETTIER
+* http://stackoverflow.com/questions/2613632/jquery-ui-themes-and-html-tables
+* http://www.ke-cai.net/2010/01/theme-your-table-with-jquery-ui.html
+*/
 table { margin: 0em; }
 td, th { padding: 0px 4px; }
 
