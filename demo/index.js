@@ -1,13 +1,19 @@
 $(function() {
     /*$('#switcher').themeswitcher();*/
 
+    $("#ui-theme-switcher").change(function() {
+        var theme_url = $(this).val();
+        $("#ui-theme").attr("href", theme_url);
+    })
+
+
     $("#demo_grid1").jui_datagrid({
         //applyUIGridStyle: false,
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
         onDisplayPagination: function(e, pagination_id) {
             $("#" + pagination_id).jui_pagination({
                 visiblePageLinks: 5,
-                containerClass: 'pagination1'
+                containerClass: 'grid_pagination'
             });
         }
     });

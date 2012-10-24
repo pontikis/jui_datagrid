@@ -46,19 +46,29 @@
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
-                var section_id, section_html;
-                section_id = settings.datagrid_id_prefix + container_id;
-                if($("#" + section_id).length == 0) {
-                    section_html = '<div id="' + section_id + '">';
-                    section_html += '</div>';
-                    elem.append(section_html);
+                if(!elem.data('initialize')) {
+
+                    var datagrid_id, footer_id, tools_id, pagination_id, rows_id, elem_html;
+
+                    datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
+                    elem_html = '<div id="' + datagrid_id + '"></div>';
+
+                    tools_id = create_id(settings.tools_id_prefix, container_id);
+                    elem_html += '<div id="' + tools_id + '"></div>';
+
+                    pagination_id = create_id(settings.pagination_id_prefix, container_id);
+                    elem_html += '<div id="' + pagination_id + '"></div>';
+
+                    elem.html(elem_html);
+                    elem.data('initialize', true);
                 }
-                section_id = settings.pagination_id_prefix + container_id;
-                if(typeof ($("#" + section_id).data('jui_pagination')) == 'undefined') {
-                    section_html = '<div id="' + section_id + '">';
-                    section_html += '</div>';
-                    elem.append(section_html);
-                }
+
+                // apply style
+                $("#" + container_id).removeClass().addClass(settings.containerClass);
+                $("#" + datagrid_id).removeClass().addClass(settings.datagridClass);
+                $("#" + tools_id).removeClass().addClass(settings.toolsClass);
+                $("#" + pagination_id).removeClass().addClass(settings.paginationClass);
+
 
                 // fetch data and display datagrid
                 $.ajax({
@@ -100,6 +110,11 @@
                 pageNum: 1,
                 rowsPerPage: 10,
 
+                containerClass: 'grid',
+                datagridClass: 'grid_data',
+                toolsClass: 'grid_tools',
+                paginationClass: 'grid_pagination',
+
                 applyUIGridStyle: true,
                 tableClass: 'ui-styled-table',
                 trHoverClass: 'ui-state-hover',
@@ -109,6 +124,7 @@
 
                 datagrid_id_prefix: 'dg_',
                 table_id_prefix: 'tbl_',
+                tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
 
                 rscNoRecords: 'No records found...',
@@ -225,6 +241,16 @@
     /* private methods ------------------------------------------------------ */
 
     /**
+     * Create element id
+     * @param prefix
+     * @param container_id
+     * @return {*}
+     */
+    var create_id = function(prefix, plugin_container_id) {
+        return prefix + plugin_container_id;
+    }
+
+    /**
      * Display datagrid
      * @param container_id
      * @param total_rows
@@ -323,7 +349,7 @@
         var datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id;
         var pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
 
-        $("#" + datagrid_id).html(elem.jui_datagrid('getOption', 'rscNoRecords'));
+        $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
         $("#" + pagination_id).hide();
 
     };

@@ -49,3 +49,40 @@ table.ui-styled-table tbody tr.last-child td
 table.ui-styled-table tbody tr:last-child th,
 table.ui-styled-table tbody tr:last-child td
 { border-bottom-width: 1px !important; }
+
+.grid {
+    width: 600px;
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid_data {
+    border: solid #000000 1px;
+}
+
+.grid_table {
+    width: 100%;
+}
+
+.grid_footer {
+    overflow: auto;
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid_tools {
+    margin-top: 10px;
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid_pagination {
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid_rows {
+    width: 20%;
+    padding: 10px;
+    border: solid #000000 1px;
+}

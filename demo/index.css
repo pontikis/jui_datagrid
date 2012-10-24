@@ -7,7 +7,47 @@
     margin-bottom: 10px;
 }
 
-.pagination1 {
+
+.grid1 {
     width: 600px;
     padding: 10px;
+    border: solid #000000 1px;
 }
+
+.grid1_data {
+    width: 100%;
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid1_table {
+    width: 100%;
+}
+
+.grid1_footer {
+    width: 100%;
+    padding: 10px;
+    border: solid #000000 1px;
+}
+
+.grid1_tools {
+    width: 25%;
+    padding: 10px;
+    float: left;
+    border: solid #000000 1px;
+}
+
+.grid1_pagination {
+    width: 50%;
+    padding: 10px;
+    float: left;
+    border: solid #000000 1px;
+}
+
+.grid1_rows {
+    width: 25%;
+    padding: 10px;
+    float: left;
+    border: solid #000000 1px;
+}
+

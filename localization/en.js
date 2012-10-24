@@ -6,5 +6,5 @@
  *
  */
 var rsc_jui_dg = {
-    test: 'test'
+    no_records_found: 'No records found'
 };
