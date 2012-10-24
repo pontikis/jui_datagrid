@@ -1,5 +1,4 @@
 $(function() {
-    /*$('#switcher').themeswitcher();*/
 
     $("#ui-theme-switcher").change(function() {
         var theme_url = $(this).val();

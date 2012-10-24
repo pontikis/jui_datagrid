@@ -101,8 +101,7 @@
 <div class="level2">
     <ul>
         <li>Diplay tabular data
-        <li>Ajax enabled, gets data in JSON format using any server-side
-            technology
+        <li>Get data in JSON format using AJAX (any server-side technology)
         <li>Powerful pagination
         <li>CSS based themes compatible with jQuery-UI Theming
     </ul>
@@ -144,7 +143,8 @@
         ajaxFetchDataURL: 'some_server_url',
         onDisplayPagination: function(e, pagination_id) {
             $("#" + pagination_id).jui_pagination({
-                visiblePageLinks: 5
+                visiblePageLinks: 5,
+                containerClass: 'grid_pagination'
             });
         }
     });

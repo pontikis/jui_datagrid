@@ -1,3 +1,8 @@
+body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 13px;
+}
+
 #demo_grid1, #demo_grid2 {
     margin-top: 20px;
 }
