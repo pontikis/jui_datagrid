@@ -127,8 +127,6 @@
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
 
-                rscNoRecords: 'No records found...',
-
                 onDisplayPagination: function() {
                 },
                 onDisplay: function() {
