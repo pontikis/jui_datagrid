@@ -1,0 +1,150 @@
+/*
+DO NOT CHANGE this file, as it will be overwritten in next update.
+Write your own classes in other css file.
+*/
+
+/* -------------------------------------------------------------------------- */
+.nav-pane {
+    overflow: auto;
+    text-align: center;
+}
+
+/* -------------------------------------------------------------------------- */
+.goto-page {
+    display: inline-block;
+    background-image: url("images/bullet_go.png");
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 20px !important;
+    margin: 3px 10px 3px 10px;
+    width: 30px;
+    border-width: 0px;
+    font-size: 12px !important;
+    vertical-align: middle;
+}
+
+.nav-button-top {
+    display: inline-block;
+    margin: 3px 3px 3px 5px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.nav-button-prev {
+    display: inline-block;
+    margin: 3px 5px 3px 3px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.current-page-label {
+    display: inline-block;
+    margin: 3px 2px 3px 5px;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.current-page {
+    display: inline-block;
+    margin: 3px 3px 3px 2px;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.nav-pages {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 3px 0px 3px 0px;
+}
+
+.nav-item {
+    display: inline-block;
+    margin: 0px 3px 0px 3px !important;
+    font-size: 12px;
+    text-align: center;
+    padding: 0px 5px 0px 5px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.nav-dots-left {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.nav-dots-right {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.total-pages-label {
+    display: inline-block;
+    margin: 3px 2px 3px 3px;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.total-pages {
+    display: inline-block;
+    margin: 3px 5px 3px 2px;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.nav-button-next {
+    display: inline-block;
+    margin: 3px 3px 3px 5px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.nav-button-last {
+    display: inline-block;
+    margin: 3px 5px 3px 3px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.rows-per-page {
+    display: inline-block;
+    background-image: url("images/page.png");
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 20px !important;
+    margin: 3px 10px 3px 10px;
+    width: 30px;
+    border-width: 0px;
+    font-size: 12px !important;
+    vertical-align: middle;
+}
+
+.rows-info {
+    display: inline-block;
+    margin: 3px 5px 3px 5px;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.preferences {
+    float: right;
+    margin-top: 4px;
+    margin-right: 1px;
+}
+
+/* -------------------------------------------------------------------------- */
+.nav-slider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/* -------------------------------------------------------------------------- */
