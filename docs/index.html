@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jui_datagrid documentation (v1.00)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link href="syntaxhighlighter_3.0.83/styles/shCore.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="syntaxhighlighter_3.0.83/styles/shThemeDefault.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="index.css" rel="stylesheet" type="text/css"/>
+
+    <script src="syntaxhighlighter_3.0.83/scripts/shCore.js"
+            type="text/javascript"></script>
+    <script src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"
+            type="text/javascript"></script>
+    <script src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"
+            type="text/javascript"></script>
+    <script src="syntaxhighlighter_3.0.83/scripts/shBrushCss.js"
+            type="text/javascript"></script>
+    <script src="syntaxhighlighter_3.0.83/scripts/shBrushPlain.js"
+            type="text/javascript"></script>
+    <script src="syntaxhighlighter_3.0.83/scripts/shAutoloader.js"
+            type="text/javascript"></script>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.defaults['tab-size'] = 2;
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.all()
+    </script>
+
+</head>
+<body>
+
+<p><a href="http://pontikis.github.com">pontikis.github.com</a>
+
+    <a href="https://github.com/pontikis/jui_datagrid"><img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+            alt="Fork me on GitHub"></a>
+
+<h1>jui_datagrid documentation (v1.00)</h1>
+
+<div class="level1">
+    <p>jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate data
+        in tabular format.
+
+    <p>As a javascript control, it can be integrated with any server-side
+        technology (e.g. PHP, Perl, ASP, JSP and more).
+
+    <p>Compatible with modern web browsers. Tested with: Google Chrome, Mozilla
+        Firefox, Microsoft Internet Explorer, (default) Android browser.
+
+    <p>jui_datagrid API is simple and powerful.
+
+    <p>Project page: <a href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
+
+    <p>Copyright &copy; Christos Pontikis <a href="http://pontikis.net"
+                                             target="_blank">http://pontikis.net</a>
+
+    <p>License <a
+            href="https://raw.github.com/pontikis/jui_datagrid/master/MIT_LICENSE">MIT</a>
+
+    <p>Requires
+    <ul>
+        <li><a href="http://jquery.com" target="_blank">jquery</a>
+        <li><a href="http://jqueryui.com" target="_blank">jquery-ui</a>
+        <li><a href="http://jqueryui.com/themeroller/" target="_blank">jquery-ui
+            themes</a>
+
+        <li><a href="https://github.com/pontikis/jui_pagination">jui_pagination
+            plugin</a> (documentation <a
+                href="http://pontikis.github.com/jui_pagination/v1.10/docs/">here</a>)
+
+        <li>For touch event support <a href="http://touchpunch.furf.com/"
+                                       target="_blank">jquery.ui.touch-punch.min.js</a>
+            could be used (see folder /lib//jui_pagination/lib)
+    </ul>
+
+    <p>Tested with jquery 1.8.2 and jquery-ui 1.9.0
+
+    <p>UPCOMING Release 1.00 (?? Oct 2012) Download <a
+            href="https://github.com/pontikis/jui_datagrid/zipball/v1.0.0">here</a> (not yet available)
+
+    <p>CHANGELOG <a
+            href="https://github.com/pontikis/jui_datagrid/blob/master/CHANGELOG.md">here</a>
+
+    <p>DEMO <a href="http://pontikis.github.com/jui_datagrid/v1.00/demo/">http://pontikis.github.com/jui_datagrid/v1.10/demo/</a> (not yet available)
+
+    <p>
+        <small>Syntax highlight using <a
+                href="http://alexgorbatchev.com/SyntaxHighlighter/"
+                target="_blank">http://alexgorbatchev.com/SyntaxHighlighter/</a>
+        </small>
+
+</div>
+
+<!-- Features -------------------------------------------------------------- -->
+<h2>Features</h2>
+
+<div class="level2">
+    <ul>
+        <li>Diplay tabular data
+        <li>Ajax enabled, gets data in JSON format using any server-side
+            technology
+        <li>Powerful pagination
+        <li>CSS based themes compatible with jQuery-UI Theming
+    </ul>
+</div>
+
+
+<!-- Usage ----------------------------------------------------------------- -->
+<h2>Usage</h2>
+
+<h3>HTML (head section)</h3>
+
+<div class="level3">
+    <pre class="brush: xml">
+    &lt;link rel="stylesheet" href="/path/to/jqueryui_theme/jquery-ui.css">
+    &lt;link rel="stylesheet" href="/path/to/jquery.jui_pagination.css">
+    &lt;link rel="stylesheet" href="/path/to/jquery.jui_datagrid.css">
+    &lt;!--  if custom classes used -->
+    &lt;link rel="stylesheet" href="/path/to/custom.css">
+
+    &lt;script type="text/javascript" src="/path/to/jquery.js" type="text/javascript">&lt;/script>
+    &lt;script type="text/javascript" src="/path/to/jquery-ui.js" type="text/javascript">&lt;/script>
+
+    &lt;!--  if touch event support for touch devices is needed (see folder /lib) -->
+    &lt;script src="/path/to/jquery.ui.touch-punch.min.js" type="text/javascript">&lt;/script>
+
+    &lt;script type="text/javascript" src="/path/to/jquery.jui_pagination.js" type="text/javascript">&lt;/script>
+    &lt;script type="text/javascript" src="/path/to/jui_pagination/localization/en.js" type="text/javascript">&lt;/script>
+
+    &lt;script type="text/javascript" src="/path/to/jquery.jui_datagrid.js" type="text/javascript">&lt;/script>
+    &lt;script type="text/javascript" src="/path/to/jui_datagrid/localization/en.js" type="text/javascript">&lt;/script>
+    </pre>
+</div>
+
+<h3>JS code</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        ajaxFetchDataURL: 'some_server_url',
+        onDisplayPagination: function(e, pagination_id) {
+            $("#" + pagination_id).jui_pagination({
+                visiblePageLinks: 5
+            });
+        }
+    });
+    </pre>
+
+</div>
+
+<h3>JSON data structure</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    {
+        "total_rows": "200",
+        "page_data": [
+            {
+                "id": "111",
+                "lastname": "Diaz",
+                "firstname": "Kai",
+                "email": "odio.Aliquam@Phasellus.org",
+                "gender": "female"
+            },
+            {
+                "id": "112",
+                "lastname": "Snider",
+                "firstname": "Nelle",
+                "email": "vulputate@nonlobortis.org",
+                "gender": "female"
+            },
+            ...
+        ]
+    }
+    </pre>
+</div>
+
+<!-- Options --------------------------------------------------------------- -->
+<h2>Options</h2>
+
+<div class="level2">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        ajaxFetchDataURL: 'some_server_url', // REQUIRED
+
+        // DEFAULTS
+        pageNum: 1,
+        rowsPerPage: 10,
+
+        applyUIGridStyle: true,
+        tableClass: 'ui-styled-table',
+        trHoverClass: 'ui-state-hover',
+        thClass: 'ui-state-default',
+        tdClass: 'ui-widget-content',
+        trLastClass: 'last-child',
+
+        datagrid_id_prefix: 'dg_',
+        table_id_prefix: 'tbl_',
+        pagination_id_prefix: 'pag_',
+
+        rscNoRecords: 'No records found...',
+
+        onDisplayPagination: function() {
+        },
+        onDisplay: function() {
+        }
+    });
+    </pre>
+
+</div>
+
+
+<!-- Methods --------------------------------------------------------------- -->
+<h2>Methods</h2>
+
+<h3>getDefaults</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('getDefaults');
+    </pre>
+</div>
+
+
+<h3>getOption</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('getOption', 'option_name');
+    </pre>
+</div>
+
+
+<h3>getAllOptions</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('getAllOptions');
+    </pre>
+</div>
+
+
+<h3>setOption</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('setOption', 'option_name', option_value, reinit);
+    </pre>
+</div>
+
+<div class="level3">
+    <p>Alternative way to set one or more options
+</div>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({option1_name: option1_value, etc});
+    </pre>
+</div>
+
+<h3>destroy</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('destroy');
+    </pre>
+</div>
+
+
+<h3>setGridStyle</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('setGridStyle', tableClass, trHoverClass, thClass, tdClass, trLastClass);
+    </pre>
+</div>
+
+
+<h3>setPaginationOptions</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('setPaginationOptions', pag_options);
+    </pre>
+</div>
+
+
+<h3>getPaginationOptions</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('getPaginationOptions');
+    </pre>
+</div>
+
+<!-- Events ---------------------------------------------------------------- -->
+<h2>Events</h2>
+
+<h3>onDisplayPagination</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_pagination({
+        onDisplayPagination: function() {
+        // your code here
+        }
+    });
+    </pre>
+</div>
+
+<h3>onDisplay</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        onDisplay: function() {
+        // your code here
+        }
+    });
+    </pre>
+</div>
+
+
+<!-- Screenshots ----------------------------------------------------------- -->
+<h2>Screenshots</h2>
+
+<div class="level2">
+    <img src="../demo/images/sample.png"
+         title="sample.png">
+</div>
+
+
+<br/><br/><br/>
+
+</body>
+</html>

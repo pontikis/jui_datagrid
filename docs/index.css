@@ -1,0 +1,46 @@
+body {
+    font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    color: black;
+}
+
+h1 {
+    font-size: 180%;
+    font-weight: bold;
+    color: black;
+    background-color: inherit;
+    margin: 0 0 1em 0;
+    padding: 0.5em 0 0 0;
+    border-bottom: 1px solid #8CACBB;
+    clear: left;
+}
+
+.level1 {
+    margin-left: 3px;
+}
+
+h2 {
+    font-size: 150%;
+    margin-left: 20px;
+    color: black;
+    background-color: inherit;
+    font-weight: normal;
+    padding: 0.5em 0 0 0;
+    border-bottom: 1px solid #8CACBB;
+    clear: left;
+}
+
+.level2 {
+    margin-left: 23px;
+}
+
+h3 {
+    font-size: 140%;
+    margin-left: 43px;
+    border-bottom: none;
+    font-weight: bold;
+}
+
+
+.level3 {
+    margin-left: 46px;
+}
