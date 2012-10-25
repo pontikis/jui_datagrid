@@ -48,7 +48,7 @@
                 // initialize plugin html
                 if(!elem.data('initialize')) {
 
-                    var datagrid_id, footer_id, tools_id, pagination_id, rows_id, elem_html;
+                    var datagrid_id, tools_id, pagination_id, rows_id, elem_html;
 
                     datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
                     elem_html = '<div id="' + datagrid_id + '"></div>';
@@ -88,6 +88,7 @@
                         } else {
                             display_grid(container_id, total_rows, page_data);
                             apply_grid_style(container_id);
+                            display_tools(container_id);
                             if(total_rows > settings.rowsPerPage) {
                                 display_pagination(container_id, total_rows);
                             }
@@ -110,13 +111,15 @@
                 pageNum: 1,
                 rowsPerPage: 10,
 
-                containerClass: 'grid',
+                // main divs classes
+                containerClass: 'grid_container ui-state-default ui-corner-all',
                 datagridClass: 'grid_data',
-                toolsClass: 'grid_tools',
+                toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
 
+                // data table classes
                 applyUIGridStyle: true,
-                tableClass: 'ui-styled-table',
+                tableClass: 'ui-styled-table  grid_table_dim',
                 trHoverClass: 'ui-state-hover',
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
@@ -199,17 +202,36 @@
         setGridStyle: function(tableClass, trHoverClass, thClass, tdClass, trLastClass) {
             var elem = this;
             var table_selector = '#' + $(elem).jui_datagrid('getOption', 'table_id_prefix') + elem.attr("id");
-            $(table_selector).addClass(tableClass);
 
-            if(trHoverClass) {
+            if(tableClass != '') {
+                $(table_selector).removeClass().addClass(tableClass);
+            } else {
+                $(table_selector).removeClass();
+            }
+
+            if(trHoverClass != '') {
                 $(table_selector).on('mouseover mouseout', 'tbody tr', function(event) {
                     $(this).children().toggleClass(trHoverClass, event.type == 'mouseover');
                 });
             }
 
-            $(table_selector).find("th").addClass(thClass);
-            $(table_selector).find("td").addClass(tdClass);
-            $(table_selector).find("tr:last-child").addClass(trLastClass);
+            if(thClass != '') {
+                $(table_selector).find("th").removeClass().addClass(thClass);
+            } else {
+                $(table_selector).find("th").removeClass();
+            }
+
+            if(tdClass != '') {
+                $(table_selector).find("td").removeClass().addClass(tdClass);
+            } else {
+                $(table_selector).find("td").removeClass();
+            }
+
+            if(trLastClass != '') {
+                $(table_selector).find("tr:last-child").removeClass().addClass(trLastClass);
+            } else {
+                $(table_selector).find("tr:last-child").removeClass();
+            }
         },
 
         /**
@@ -307,6 +329,52 @@
     };
 
     /**
+     * Display tools
+     * @param container_id
+     */
+    var display_tools = function(container_id) {
+
+        var elem = $("#" + container_id);
+        var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
+        var toolsClass = elem.jui_datagrid('getOption', 'toolsClass');
+
+        var tools_html ='';
+        //tools_html += '<span id="toolbar" style="padding: 10px 4px;" class="ui-widget-header ui-corner-all">';
+        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></div>';
+        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-cancel"></span></div>';
+        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-arrowrefresh-1-e"></span></div>';
+        tools_html += '<button id="dgtool1">All1</button>';
+        tools_html += '<button id="dgtool2">All2</button>';
+        tools_html += '<button id="dgtool3">All2</button>';
+        //tools_html += '</span>';
+
+        $("#" + tools_id).html(tools_html);
+
+        $("#dgtool1").button({
+            text: false,
+            icons: {
+                primary: 'ui-icon-check'
+            }
+        })
+
+        $("#dgtool2").button({
+            text: false,
+            icons: {
+                primary: 'ui-icon-check'
+            }
+        })
+
+        $("#dgtool3").button({
+            text: false,
+            icons: {
+                primary: 'ui-icon-check'
+            }
+        })
+
+        //$("#" + tools_id).removeClass().addClass(toolsClass);
+    };
+
+    /**
      * Display pagination
      * @param container_id
      * @param total_rows
@@ -317,7 +385,7 @@
         var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
         var currentPage = elem.jui_datagrid('getOption', 'pageNum');
         var total_pages = Math.ceil(total_rows / rowsPerPage);
-        var pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
+        var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
         $("#" + pagination_id).show();
 

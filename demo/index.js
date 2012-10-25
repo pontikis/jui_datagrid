@@ -1,18 +1,18 @@
 $(function() {
 
+    // theme switcher ----------------------------------------------------------
     $("#ui-theme-switcher").change(function() {
         var theme_url = $(this).val();
         $("#ui-theme").attr("href", theme_url);
-    })
+    });
 
-
+    // demo grid1 --------------------------------------------------------------
     $("#demo_grid1").jui_datagrid({
-        //applyUIGridStyle: false,
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
         onDisplayPagination: function(e, pagination_id) {
             $("#" + pagination_id).jui_pagination({
                 visiblePageLinks: 5,
-                containerClass: 'grid_pagination'
+                containerClass: 'grid1_pagination'
             });
         }
     });
@@ -56,6 +56,7 @@ $(function() {
     });
 
 
+    // demo grid2 --------------------------------------------------------------
     $("#demo_grid2").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php'
     });
