@@ -8,12 +8,12 @@ Copyright Christos Pontikis http://pontikis.net
 * Requires jquery, jquery-ui, jquery-ui themes (tested with jquery 1.8.2 and jquery-ui 1.9.0)
 * For touch event support jquery.ui.touch-punch.min.js could be used (see folder /lib)
 
-Release 1.12 Download [here]
+UPCOMING Release 1.14 Download [here]
 
 License [MIT][mit]
 
 [mit]: https://raw.github.com/pontikis/jui_pagination/master/MIT_LICENSE
-[here]: https://github.com/pontikis/jui_pagination/zipball/v1.1.2
+[here]: https://github.com/pontikis/jui_pagination/zipball/v1.1.4
 
 
 DEMO

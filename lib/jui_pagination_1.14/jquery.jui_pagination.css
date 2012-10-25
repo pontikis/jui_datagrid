@@ -11,14 +11,11 @@ Write your own classes in other css file.
 
 /* -------------------------------------------------------------------------- */
 .goto-page {
-    display: inline-block;
-    background-image: url("images/bullet_go.png");
-    background-repeat: no-repeat;
+/*    display: inline-block;*/
+    background: url("images/bullet_go.png") no-repeat left center !important;
     padding: 0px 0px 0px 20px !important;
     margin: 3px 10px 3px 10px;
     width: 30px;
-    border-width: 0px;
-    font-size: 12px !important;
     vertical-align: middle;
 }
 
@@ -117,14 +114,11 @@ Write your own classes in other css file.
 }
 
 .rows-per-page {
-    display: inline-block;
-    background-image: url("images/page.png");
-    background-repeat: no-repeat;
+/*    display: inline-block;*/
+    background: url("images/page.png") no-repeat left center !important;
     padding: 0px 0px 0px 20px !important;
     margin: 3px 10px 3px 10px;
     width: 30px;
-    border-width: 0px;
-    font-size: 12px !important;
     vertical-align: middle;
 }
 
