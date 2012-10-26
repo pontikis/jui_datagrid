@@ -16,13 +16,11 @@ body {
 .grid1_container {
     width: 600px;
     padding: 10px;
-/*    border: solid #000000 1px;*/
 }
 
 .grid1_data {
     width: 100%;
     padding: 10px;
-/*    border: solid #000000 1px;*/
 }
 
 .grid1_table_dim {
@@ -31,12 +29,10 @@ body {
 
 .grid1_tools {
     padding: 10px;
-    border: solid #000000 1px;
 }
 
 .grid1_pagination {
     padding: 5px;
-/*    border: solid #000000 1px;*/
 }
 
 /* demo_grid2 --------------------------------------------------------------- */

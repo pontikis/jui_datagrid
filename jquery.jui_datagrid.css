@@ -3,52 +3,11 @@ DO NOT CHANGE this file, as it will be overwritten in next update.
 Write your own classes in other css file.
 */
 
-/* BASIC CSS STYLING TO MAKE IT LOOK PRETTIER
-* http://stackoverflow.com/questions/2613632/jquery-ui-themes-and-html-tables
-* http://www.ke-cai.net/2010/01/theme-your-table-with-jquery-ui.html
+/* TABLE CSS USING JQUERY UI
+http://stackoverflow.com/questions/2613632/jquery-ui-themes-and-html-tables
+http://www.ke-cai.net/2010/01/theme-your-table-with-jquery-ui.html
+http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.html
 */
-table { margin: 0em; }
-td, th { padding: 0px 4px; }
-
-
-/* IE7: setting "separate" results in bad visuals; all other browsers work fine with either value */
-/* if set to "separate", then this rule is also needed to prevent double vertical borders on hover:
-table.ui-styled-table tr * + th, table.ui-styled-table tr * + td  { border-left-width: 0px !important; } */
-table.ui-styled-table { border-collapse: collapse;}
-
-/* undo the "bolding" that jQuery UI theme may cause on hovered elements
-/* IE7: does not support "inherit", so use a MS proprietary expression along with an IE <= 7 targeting hack
-        to make the visuals consistent across all supported browsers */
-table.ui-styled-table td.ui-state-hover {
-    font-weight: inherit;
-    *font-weight: expression(this.parentNode.currentStyle['fontWeight']);
-}
-
-/* initally remove bottom border for all cells */
-table.ui-styled-table th, table.ui-styled-table td { border-bottom-width: 0px !important; }
-
-/* hovered-row cells should show bottom border (will be highlighted) */
-table.ui-styled-table tbody tr:hover th,
-table.ui-styled-table tbody tr:hover td
-{ border-bottom-width: 1px !important; }
-
-/* remove top border if the above row is being hovered to prevent double horizontal borders */
-table.ui-styled-table tbody tr:hover + tr th,
-table.ui-styled-table tbody tr:hover + tr td
-{ border-top-width: 0px !important; }
-
-/* last-row cells should always show bottom border (not necessarily highlighted if not hovered) */
-/* IE7, IE8: selector dependent on CSS classes because of no support for :last-child */
-table.ui-styled-table tbody tr.last-child th,
-table.ui-styled-table tbody tr.last-child td
-{ border-bottom-width: 1px !important; }
-
-/* last-row cells should always show bottom border (not necessarily highlighted if not hovered) */
-/* IE8 BUG: if these (unsupported) selectors are added to a rule, other selectors for that rule will stop working as well! */
-/* IE9+, FF, Chrome: make sure the visuals are working even without the CSS classes crutch */
-table.ui-styled-table tbody tr:last-child th,
-table.ui-styled-table tbody tr:last-child td
-{ border-bottom-width: 1px !important; }
 
 /* main divs classes */
 .grid_container {
@@ -62,7 +21,6 @@ table.ui-styled-table tbody tr:last-child td
     padding: 5px;
     margin: 0px 0px 5px 0px;
     overflow: auto;
-/*    border: solid #000000 1px;*/
 }
 
 .grid_tools {
@@ -71,18 +29,30 @@ table.ui-styled-table tbody tr:last-child td
     margin: 5px 5px 5px 5px;
     overflow: auto;
     text-align: center;
-/*    border: solid #000000 1px;*/
 }
 
 .grid_pagination {
-    padding: 0px 5px 0px 5px;
+    padding: 5px 5px 5px 5px;
     margin: 5px 0px 0px 0px;
     overflow: auto;
-/*    border: solid #000000 1px;*/
 }
 
 /* data table class affecting table dimensions */
-.grid_table_dim {
+.grid_table {
+    border-collapse: collapse;
     width: 100%;
     margin: auto;
 }
+
+table.grid_table td {
+    padding: 2px 4px;
+}
+
+table.grid_table th {
+    padding: 2px 4px;
+}
+
+table.grid_table.tr.trhover {
+    font-weight: inherit;
+}
+

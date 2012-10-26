@@ -119,12 +119,12 @@
 
                 // data table classes
                 applyUIGridStyle: true,
-                tableClass: 'ui-styled-table  grid_table_dim',
-                trHoverClass: 'ui-state-hover',
+                tableClass: 'grid_table',
+                trHoverClass: 'ui-state-hover trhover',
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
-                trLastClass: 'last-child',
 
+                // elements id prefix
                 datagrid_id_prefix: 'dg_',
                 table_id_prefix: 'tbl_',
                 tools_id_prefix: 'tools_',
@@ -197,9 +197,8 @@
          * @param trHoverClass
          * @param thClass
          * @param tdClass
-         * @param trLastClass
          */
-        setGridStyle: function(tableClass, trHoverClass, thClass, tdClass, trLastClass) {
+        setGridStyle: function(tableClass, trHoverClass, thClass, tdClass) {
             var elem = this;
             var table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), elem.attr("id"));
 
@@ -213,7 +212,6 @@
 
             $(table_selector).find("th").removeClass().addClass(thClass);
             $(table_selector).find("td").removeClass().addClass(tdClass);
-            $(table_selector).find("tr:last-child").removeClass().addClass(trLastClass);
         },
 
         /**
@@ -304,8 +302,7 @@
                 elem.jui_datagrid('getOption', 'tableClass'),
                 elem.jui_datagrid('getOption', 'trHoverClass'),
                 elem.jui_datagrid('getOption', 'thClass'),
-                elem.jui_datagrid('getOption', 'tdClass'),
-                elem.jui_datagrid('getOption', 'trLastClass'));
+                elem.jui_datagrid('getOption', 'tdClass'));
         }
 
     };
@@ -367,6 +364,7 @@
         var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
         var currentPage = elem.jui_datagrid('getOption', 'pageNum');
         var total_pages = Math.ceil(total_rows / rowsPerPage);
+        var paginationClass = elem.jui_datagrid('getOption', 'paginationClass');
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
         $("#" + pagination_id).show();
@@ -375,6 +373,7 @@
             $("#" + pagination_id).jui_pagination({
                 currentPage: currentPage,
                 totalPages: total_pages,
+                containerClass: paginationClass,
                 onChangePage: function(event, page_number) {
                     elem.data('jui_datagrid').pageNum = page_number;
                     elem.jui_datagrid({'pageNum': page_number});

@@ -191,18 +191,20 @@
         pageNum: 1,
         rowsPerPage: 10,
 
-        containerClass: 'grid',
+        // main divs classes
+        containerClass: 'grid_container ui-state-default ui-corner-all',
         datagridClass: 'grid_data',
-        toolsClass: 'grid_tools',
+        toolsClass: 'grid_tools ui-state-default ui-corner-all',
         paginationClass: 'grid_pagination',
 
+        // data table classes
         applyUIGridStyle: true,
-        tableClass: 'ui-styled-table',
-        trHoverClass: 'ui-state-hover',
+        tableClass: 'grid_table',
+        trHoverClass: 'ui-state-hover trhover',
         thClass: 'ui-state-default',
         tdClass: 'ui-widget-content',
-        trLastClass: 'last-child',
 
+        // elements id prefix
         datagrid_id_prefix: 'dg_',
         table_id_prefix: 'tbl_',
         tools_id_prefix: 'tools_',
