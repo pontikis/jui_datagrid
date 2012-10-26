@@ -201,13 +201,9 @@
          */
         setGridStyle: function(tableClass, trHoverClass, thClass, tdClass, trLastClass) {
             var elem = this;
-            var table_selector = '#' + $(elem).jui_datagrid('getOption', 'table_id_prefix') + elem.attr("id");
+            var table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), elem.attr("id"));
 
-            if(tableClass != '') {
-                $(table_selector).removeClass().addClass(tableClass);
-            } else {
-                $(table_selector).removeClass();
-            }
+            $(table_selector).removeClass().addClass(tableClass);
 
             if(trHoverClass != '') {
                 $(table_selector).on('mouseover mouseout', 'tbody tr', function(event) {
@@ -215,23 +211,9 @@
                 });
             }
 
-            if(thClass != '') {
-                $(table_selector).find("th").removeClass().addClass(thClass);
-            } else {
-                $(table_selector).find("th").removeClass();
-            }
-
-            if(tdClass != '') {
-                $(table_selector).find("td").removeClass().addClass(tdClass);
-            } else {
-                $(table_selector).find("td").removeClass();
-            }
-
-            if(trLastClass != '') {
-                $(table_selector).find("tr:last-child").removeClass().addClass(trLastClass);
-            } else {
-                $(table_selector).find("tr:last-child").removeClass();
-            }
+            $(table_selector).find("th").removeClass().addClass(thClass);
+            $(table_selector).find("td").removeClass().addClass(tdClass);
+            $(table_selector).find("tr:last-child").removeClass().addClass(trLastClass);
         },
 
         /**
