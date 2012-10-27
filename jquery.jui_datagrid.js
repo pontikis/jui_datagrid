@@ -122,6 +122,8 @@
                                         autoOpen: true,
                                         show: "blind",
                                         hide: "explode",
+                                        width: 400,
+                                        height: 300,
                                         position: {
                                             my: "top",
                                             at: "top",
@@ -138,7 +140,10 @@
                                             }
                                         ],
                                         open: create_preferences(container_id)
-                                    })
+                                    });
+
+                                    var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
+                                    $("#" + pref_tabs_id).tabs();
                                 });
 
 
@@ -252,6 +257,7 @@
                 pagination_id_prefix: 'pag_',
 
                 pref_dialog_id_prefix: 'pref_dlg_',
+                pref_tabs_id_prefix: 'pref_tabs_',
 
                 onDisplayPagination: function() {
                 },
@@ -401,10 +407,31 @@
     var create_preferences = function(plugin_container_id) {
         var prefix = $("#" + plugin_container_id).jui_datagrid('getOption', 'pref_dialog_id_prefix');
         var dialog_id = create_id(prefix, plugin_container_id);
+        prefix = $("#" + plugin_container_id).jui_datagrid('getOption', 'pref_tabs_id_prefix');
+        var tabs_id = create_id(prefix, plugin_container_id);
+
         var pref_id;
         var state;
 
         var pref_html = '';
+
+        pref_html += '<div id="' + tabs_id + '">';
+        pref_html += '<ul>';
+        pref_html += '<li><a href="#' + tabs_id + '-1">' + rsc_jui_dg.pref_tab_col + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '-2">' + rsc_jui_dg.pref_tab_misc + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '-3">' + rsc_jui_dg.pref_tab_pag + '</a></li>';
+        pref_html += '</ul>';
+
+        pref_html += '<div id="' + tabs_id + '-1">';
+        pref_html += 'Under construction 1';
+        pref_html += '</div>';
+
+        pref_html += '<div id="' + tabs_id + '-2">';
+        pref_html += 'Under construction 2';
+        pref_html += '</div>';
+
+        pref_html += '<div id="' + tabs_id + '-3">';
+
         pref_html += '<ul style="list-style-type: none;">';
 
         pref_id = dialog_id + '_slider';
@@ -423,6 +450,10 @@
         pref_html += '</li>';
 
         pref_html += '</ul>';
+
+        pref_html += '</div>';
+
+        pref_html += '</div>';
 
         $("#" + dialog_id).html(pref_html);
 
