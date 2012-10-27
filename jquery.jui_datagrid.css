@@ -25,7 +25,7 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
 
 .grid_tools {
     padding: 4px 5px 4px 5px;
-    font-size: 8px;
+    font-size: 11px !important;
     margin: 5px 5px 5px 5px;
     overflow: auto;
     text-align: center;
@@ -56,3 +56,13 @@ table.grid_table.tr.trhover {
     font-weight: inherit;
 }
 
+/* toolbar */
+.selectLabelClass {
+    margin: auto 5px auto 5px;
+    font-size: 13px;
+}
+
+.tbBtnContainer {
+    display: inline-block;
+    margin: 0 5px;
+}

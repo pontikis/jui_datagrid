@@ -11,7 +11,8 @@ $(function() {
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
         onDisplayPagination: function(e, pagination_id) {
             $("#" + pagination_id).jui_pagination({
-                visiblePageLinks: 5
+                visiblePageLinks: 5,
+                disableSelectionNavPane: true
             });
         }
     });

@@ -88,10 +88,91 @@
                         } else {
                             display_grid(container_id, total_rows, page_data);
                             apply_grid_style(container_id);
-                            display_tools(container_id);
+                            if(settings.useToolbar) {
+                                display_tools(container_id);
+                            }
                             if(total_rows > settings.rowsPerPage) {
                                 display_pagination(container_id, total_rows);
                             }
+
+                            // click on refresh button
+                            if(settings.showRefreshButton) {
+                                var selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
+                                $("#" + container_id).off('click', selector).on('click', selector, function() {
+                                    $("#" + container_id).jui_datagrid('refresh');
+                                });
+                            }
+
+                            /* CREATE PREFERENCES DIALOG -------------------- */
+                            if(settings.showPrefButton) {
+                                var pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
+                                if($('#' + pref_dialog_id).length == 0) {
+                                    var pref_html = '<div id="' + pref_dialog_id + '"></div>';
+                                    elem.append(pref_html);
+                                }
+
+                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
+                                $("#" + container_id).off('click', selector).on('click', selector, function(event) {
+
+                                    if(typeof($("#" + pref_dialog_id).data('dialog')) == 'object') {
+                                        $("#" + pref_dialog_id).dialog('destroy');
+                                    }
+
+                                    $("#" + pref_dialog_id).dialog({
+                                        autoOpen: true,
+                                        show: "blind",
+                                        hide: "explode",
+                                        position: {
+                                            my: "top",
+                                            at: "top",
+                                            of: '#' + container_id
+                                        },
+                                        title: rsc_jui_dg.preferences,
+                                        buttons: [
+                                            {
+                                                text: rsc_jui_dg.preferences_close,
+                                                click: function() {
+                                                    $(this).dialog("close");
+                                                    $(this).dialog("destroy");
+                                                }
+                                            }
+                                        ],
+                                        open: create_preferences(container_id)
+                                    })
+                                });
+
+
+                                selector = "#" + pref_dialog_id + '_slider';
+                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                    var state = $(event.target).is(":checked");
+                                    elem.jui_datagrid('setPaginationOptions',
+                                        {
+                                            useSlider: state
+                                        }
+                                    )
+                                });
+
+                                selector = "#" + pref_dialog_id + '_goto_page';
+                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                    var state = $(event.target).is(":checked");
+                                    elem.jui_datagrid('setPaginationOptions',
+                                        {
+                                            showGoToPage: state
+                                        })
+                                });
+
+                                selector = "#" + pref_dialog_id + '_rows_per_page';
+                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                    var state = $(event.target).is(":checked");
+                                    elem.jui_datagrid('setPaginationOptions',
+                                        {
+                                            showRowsPerPage: state
+                                        })
+                                });
+
+
+                            }
+
                             // trigger event
                             elem.triggerHandler("onDisplay");
                         }
@@ -111,6 +192,33 @@
                 pageNum: 1,
                 rowsPerPage: 10,
 
+                // toolbar options
+                useToolbar: true,
+                showPrefButton: true,
+                showSelectButtons: true,
+                showSelectLabel: false,
+                showRefreshButton: true,
+                showDeleteButton: true,
+                showPrintButton: true,
+                showExportButton: true,
+                showFiltersButton: true,
+                showPrefButtonText: false,
+                showSelectAllButtonText: false,
+                showSelectNoneButtonText: false,
+                showSelectInverseButtonText: false,
+                showRefreshButtonText: false,
+                showDeleteButtonText: true,
+                showPrintButtonText: false,
+                showExportButtonText: false,
+                showFiltersButtonText: false,
+
+                // pagination options
+                usePagination: true,
+                showGoToPage: true,
+                showRowsPerPage: true,
+                showRowsInfo: true,
+                showPaginationPreferences: true,
+
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
                 datagridClass: 'grid_data',
@@ -124,11 +232,26 @@
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
 
+                //toolbar classes
+                tbButtonContainer: 'tbBtnContainer',
+                tbPrefIconClass: 'ui-icon-gear',
+                tbSelectLabelClass: 'selectLabelClass',
+                tbSelectAllIconClass: 'ui-icon-circle-check',
+                tbSelectNoneIconClass: 'ui-icon-circle-close',
+                tbSelectInverseIconClass: 'ui-icon-check',
+                tbRefreshIconClass: 'ui-icon-refresh',
+                tbDeleteIconClass: 'ui-icon-trash',
+                tbPrintIconClass: 'ui-icon-print',
+                tbExportIconClass: 'ui-icon-extlink',
+                tbFiltersIconClass: 'ui-icon-search',
+
                 // elements id prefix
                 datagrid_id_prefix: 'dg_',
                 table_id_prefix: 'tbl_',
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
+
+                pref_dialog_id_prefix: 'pref_dlg_',
 
                 onDisplayPagination: function() {
                 },
@@ -175,12 +298,21 @@
         },
 
         /**
-         * Destroy plugin
-         * Usage: $(element).jui_datagrid('destroy');
-         * @param options
+         * Refresh plugin
+         * Usage: $(element).jui_datagrid('refresh');
          * @return {*|jQuery}
          */
-        destroy: function(options) {
+        refresh: function() {
+            var elem = this;
+            elem.jui_datagrid();
+        },
+
+        /**
+         * Destroy plugin
+         * Usage: $(element).jui_datagrid('destroy');
+         * @return {*|jQuery}
+         */
+        destroy: function() {
             return $(this).each(function() {
                 var $this = $(this);
                 var datagrid_container_id = $this.attr("id");
@@ -227,10 +359,21 @@
 
         /**
          * Get all pagination options
-         * Usage: $(element).jui_datagrid('getPaginationOptions');
+         * Usage: $(element).jui_datagrid('getAllPaginationOptions');
          * @return {*}
          */
-        getPaginationOptions: function() {
+        getPaginationOption: function(opt) {
+            var datagrid_container_id = this.attr("id");
+            var pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
+            return $("#" + pagination_id).jui_pagination('getOption', opt);
+        },
+
+        /**
+         * Get all pagination options
+         * Usage: $(element).jui_datagrid('getAllPaginationOptions');
+         * @return {*}
+         */
+        getAllPaginationOptions: function() {
             var datagrid_container_id = this.attr("id");
             var pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
             return $("#" + pagination_id).jui_pagination('getAllOptions');
@@ -248,7 +391,53 @@
      */
     var create_id = function(prefix, plugin_container_id) {
         return prefix + plugin_container_id;
-    }
+    };
+
+
+    /**
+     * Create preferences
+     * @param plugin_container_id
+     */
+    var create_preferences = function(plugin_container_id) {
+        var prefix = $("#" + plugin_container_id).jui_datagrid('getOption', 'pref_dialog_id_prefix');
+        var dialog_id = create_id(prefix, plugin_container_id);
+        var pref_id;
+        var state;
+
+        var pref_html = '';
+        pref_html += '<ul style="list-style-type: none;">';
+
+        pref_id = dialog_id + '_slider';
+        pref_html += '<li>';
+        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_slider + '</label>';
+        pref_html += '</li>';
+
+        pref_id = dialog_id + '_goto_page';
+        pref_html += '<li>';
+        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_goto_page + '</label>';
+        pref_html += '</li>';
+
+        pref_id = dialog_id + '_rows_per_page';
+        pref_html += '<li>';
+        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_rows_per_page + '</label>';
+        pref_html += '</li>';
+
+        pref_html += '</ul>';
+
+        $("#" + dialog_id).html(pref_html);
+
+        pref_id = dialog_id + '_slider';
+        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'useSlider');
+        $("#" + pref_id).attr("checked", state);
+
+        pref_id = dialog_id + '_goto_page';
+        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showGoToPage');
+        $("#" + pref_id).attr("checked", state);
+
+        pref_id = dialog_id + '_rows_per_page';
+        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showRowsPerPage');
+        $("#" + pref_id).attr("checked", state);
+    };
 
     /**
      * Display datagrid
@@ -317,40 +506,212 @@
         var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
         var toolsClass = elem.jui_datagrid('getOption', 'toolsClass');
 
-        var tools_html ='';
-        //tools_html += '<span id="toolbar" style="padding: 10px 4px;" class="ui-widget-header ui-corner-all">';
-        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></div>';
-        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-cancel"></span></div>';
-        //tools_html += '<div style="display: inline-block;" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-arrowrefresh-1-e"></span></div>';
-        tools_html += '<button id="dgtool1">All1</button>';
-        tools_html += '<button id="dgtool2">All2</button>';
-        tools_html += '<button id="dgtool3">All2</button>';
-        //tools_html += '</span>';
+        var tbButtonContainer = elem.jui_datagrid('getOption', 'tbButtonContainer');
+
+        var showPrefButton = elem.jui_datagrid('getOption', 'showPrefButton');
+        var showPrefButtonText = elem.jui_datagrid('getOption', 'showPrefButtonText');
+        var tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass');
+
+        var showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons');
+        var showSelectLabel = elem.jui_datagrid('getOption', 'showSelectLabel');
+        var tbSelectLabelClass = elem.jui_datagrid('getOption', 'tbSelectLabelClass');
+        var tbSelectAllIconClass = elem.jui_datagrid('getOption', 'tbSelectAllIconClass');
+        var tbSelectNoneIconClass = elem.jui_datagrid('getOption', 'tbSelectNoneIconClass');
+        var tbSelectInverseIconClass = elem.jui_datagrid('getOption', 'tbSelectInverseIconClass');
+        var showSelectAllButtonText = elem.jui_datagrid('getOption', 'showSelectAllButtonText');
+        var showSelectNoneButtonText = elem.jui_datagrid('getOption', 'showSelectNoneButtonText');
+        var showSelectInverseButtonText = elem.jui_datagrid('getOption', 'showSelectInverseButtonText');
+
+        var showRefreshButton = elem.jui_datagrid('getOption', 'showRefreshButton');
+        var showRefreshButtonText = elem.jui_datagrid('getOption', 'showRefreshButtonText');
+        var tbRefreshIconClass = elem.jui_datagrid('getOption', 'tbRefreshIconClass');
+
+        var showDeleteButton = elem.jui_datagrid('getOption', 'showDeleteButton');
+        var showDeleteButtonText = elem.jui_datagrid('getOption', 'showDeleteButtonText');
+        var tbDeleteIconClass = elem.jui_datagrid('getOption', 'tbDeleteIconClass');
+
+        var showPrintButton = elem.jui_datagrid('getOption', 'showPrintButton');
+        var showPrintButtonText = elem.jui_datagrid('getOption', 'showPrintButtonText');
+        var tbPrintIconClass = elem.jui_datagrid('getOption', 'tbPrintIconClass');
+
+        var showExportButton = elem.jui_datagrid('getOption', 'showExportButton');
+        var showExportButtonText = elem.jui_datagrid('getOption', 'showExportButtonText');
+        var tbExportIconClass = elem.jui_datagrid('getOption', 'tbExportIconClass');
+
+        var showFiltersButton = elem.jui_datagrid('getOption', 'showFiltersButton');
+        var showFiltersButtonText = elem.jui_datagrid('getOption', 'showFiltersButtonText');
+        var tbFiltersIconClass = elem.jui_datagrid('getOption', 'tbFiltersIconClass');
+
+        var tools_html = '';
+
+        if(showPrefButton) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+
+            var pref_id = tools_id + '_' + 'pref';
+            tools_html += '<button id="' + pref_id + '">' + rsc_jui_dg.preferences + '</button>';
+
+            tools_html += '</div>';
+        }
+
+        if(showSelectButtons) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+
+            var select_label_id = tools_id + '_' + 'select_label';
+            if(showSelectLabel) {
+                tools_html += '<label id="' + select_label_id + '">' + rsc_jui_dg.select_label + '</label>';
+            }
+
+            var select_all_id = tools_id + '_' + 'select_all';
+            tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.select_all + '</button>';
+
+            var select_none_id = tools_id + '_' + 'select_none';
+            tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.select_none + '</button>';
+
+            var select_inv_id = tools_id + '_' + 'select_inverse';
+            tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.select_inverse + '</button>';
+
+            tools_html += '</div>';
+        }
+
+        if(showRefreshButton) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+
+            var refresh_id = tools_id + '_' + 'refresh';
+            tools_html += '<button id="' + refresh_id + '">' + rsc_jui_dg.refresh + '</button>';
+
+            tools_html += '</div>';
+        }
+
+        if(showDeleteButton) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+
+            var delete_id = tools_id + '_' + 'delete';
+            tools_html += '<button id="' + delete_id + '">' + rsc_jui_dg.delete + '</button>';
+
+            tools_html += '</div>';
+        }
+
+        if(showPrintButton || showExportButton) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+        }
+
+        if(showPrintButton) {
+            var print_id = tools_id + '_' + 'print';
+            tools_html += '<button id="' + print_id + '">' + rsc_jui_dg.print + '</button>';
+        }
+
+        if(showExportButton) {
+            var export_id = tools_id + '_' + 'export';
+            tools_html += '<button id="' + export_id + '">' + rsc_jui_dg.export + '</button>';
+        }
+
+
+        if(showPrintButton || showExportButton) {
+            tools_html += '</div>';
+        }
+
+
+        if(showFiltersButton) {
+            tools_html += '<div class="' + tbButtonContainer + '">';
+
+            var filters_id = tools_id + '_' + 'filters';
+            tools_html += '<button id="' + filters_id + '">' + rsc_jui_dg.filters + '</button>';
+
+            tools_html += '</div>';
+        }
+
 
         $("#" + tools_id).html(tools_html);
 
-        $("#dgtool1").button({
-            text: false,
-            icons: {
-                primary: 'ui-icon-check'
-            }
-        })
+        if(showPrefButton) {
+            $("#" + pref_id).button({
+                label: rsc_jui_dg.preferences,
+                text: showPrefButtonText,
+                icons: {
+                    primary: tbPrefIconClass
+                }
+            });
+        }
 
-        $("#dgtool2").button({
-            text: false,
-            icons: {
-                primary: 'ui-icon-check'
-            }
-        })
+        if(showSelectButtons) {
 
-        $("#dgtool3").button({
-            text: false,
-            icons: {
-                primary: 'ui-icon-check'
-            }
-        })
+            $("#" + select_label_id).removeClass().addClass(tbSelectLabelClass);
 
-        //$("#" + tools_id).removeClass().addClass(toolsClass);
+            $("#" + select_all_id).button({
+                label: rsc_jui_dg.select_all,
+                text: showSelectAllButtonText,
+                icons: {
+                    primary: tbSelectAllIconClass
+                }
+            });
+
+            $("#" + select_none_id).button({
+                label: rsc_jui_dg.select_none,
+                text: showSelectNoneButtonText,
+                icons: {
+                    primary: tbSelectNoneIconClass
+                }
+            });
+
+            $("#" + select_inv_id).button({
+                label: rsc_jui_dg.select_inverse,
+                text: showSelectInverseButtonText,
+                icons: {
+                    primary: tbSelectInverseIconClass
+                }
+            });
+        }
+
+        if(showRefreshButton) {
+            $("#" + refresh_id).button({
+                label: rsc_jui_dg.refresh,
+                text: showRefreshButtonText,
+                icons: {
+                    primary: tbRefreshIconClass
+                }
+            });
+        }
+
+        if(showDeleteButton) {
+            $("#" + delete_id).button({
+                label: rsc_jui_dg.delete,
+                text: showDeleteButtonText,
+                icons: {
+                    primary: tbDeleteIconClass
+                }
+            });
+        }
+
+        if(showPrintButton) {
+            $("#" + print_id).button({
+                label: rsc_jui_dg.print,
+                text: showPrintButtonText,
+                icons: {
+                    primary: tbPrintIconClass
+                }
+            });
+        }
+
+        if(showExportButton) {
+            $("#" + export_id).button({
+                label: rsc_jui_dg.export,
+                text: showExportButtonText,
+                icons: {
+                    primary: tbExportIconClass
+                }
+            });
+        }
+
+        if(showFiltersButton) {
+            $("#" + filters_id).button({
+                label: rsc_jui_dg.filters,
+                text: showFiltersButtonText,
+                icons: {
+                    primary: tbFiltersIconClass
+                }
+            });
+        }
+
     };
 
     /**
