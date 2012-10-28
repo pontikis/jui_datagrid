@@ -14,8 +14,10 @@ body {
 
 /* demo_grid1 --------------------------------------------------------------- */
 .grid1_container {
-    width: 600px;
-    padding: 10px;
+    width: 700px;
+    padding: 5px;
+    background: none;
+    overflow: auto;
 }
 
 .grid1_data {
@@ -33,6 +35,11 @@ body {
 
 .grid1_pagination {
     padding: 5px;
+}
+
+.grid1_slider {
+    width: 400px;
+    margin: 10px auto;
 }
 
 /* demo_grid2 --------------------------------------------------------------- */

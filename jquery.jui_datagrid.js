@@ -48,7 +48,7 @@
                 // initialize plugin html
                 if(!elem.data('initialize')) {
 
-                    var datagrid_id, tools_id, pagination_id, rows_id, elem_html;
+                    var datagrid_id, tools_id, pagination_id, elem_html;
 
                     datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
                     elem_html = '<div id="' + datagrid_id + '"></div>';
@@ -91,9 +91,7 @@
                             if(settings.useToolbar) {
                                 display_tools(container_id);
                             }
-                            if(total_rows > settings.rowsPerPage) {
-                                display_pagination(container_id, total_rows);
-                            }
+                            display_pagination(container_id, total_rows);
 
                             // click on refresh button
                             if(settings.showRefreshButton) {
@@ -112,7 +110,7 @@
                                 }
 
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
-                                $("#" + container_id).off('click', selector).on('click', selector, function(event) {
+                                $("#" + container_id).off('click', selector).on('click', selector, function() {
 
                                     if(typeof($("#" + pref_dialog_id).data('dialog')) == 'object') {
                                         $("#" + pref_dialog_id).dialog('destroy');
@@ -193,9 +191,10 @@
          * @return {Object}
          */
         getDefaults: function() {
-            var defaults = {
+            return {
                 pageNum: 1,
                 rowsPerPage: 10,
+                maxRowsPerPage: 100,
 
                 // toolbar options
                 useToolbar: true,
@@ -222,7 +221,7 @@
                 showGoToPage: true,
                 showRowsPerPage: true,
                 showRowsInfo: true,
-                showPaginationPreferences: true,
+                showPaginationPreferences: false,
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
@@ -264,7 +263,6 @@
                 onDisplay: function() {
                 }
             };
-            return defaults;
         },
 
         /**
@@ -392,7 +390,7 @@
     /**
      * Create element id
      * @param prefix
-     * @param container_id
+     * @param plugin_container_id
      * @return {*}
      */
     var create_id = function(prefix, plugin_container_id) {
@@ -753,28 +751,63 @@
     var display_pagination = function(container_id, total_rows) {
 
         var elem = $("#" + container_id);
-        var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
         var currentPage = elem.jui_datagrid('getOption', 'pageNum');
+        var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
+        var maxRowsPerPage = elem.jui_datagrid('getOption', 'maxRowsPerPage');
         var total_pages = Math.ceil(total_rows / rowsPerPage);
         var paginationClass = elem.jui_datagrid('getOption', 'paginationClass');
+        var showGoToPage = elem.jui_datagrid('getOption', 'showGoToPage');
+        var showRowsPerPage = elem.jui_datagrid('getOption', 'showRowsPerPage');
+        var showRowsInfo = elem.jui_datagrid('getOption', 'showRowsInfo');
+        var showPaginationPreferences = elem.jui_datagrid('getOption', 'showPaginationPreferences');
+
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
         $("#" + pagination_id).show();
 
-        if(typeof ($("#" + pagination_id).data('jui_pagination')) == 'undefined') {
-            $("#" + pagination_id).jui_pagination({
-                currentPage: currentPage,
-                totalPages: total_pages,
-                containerClass: paginationClass,
-                onChangePage: function(event, page_number) {
-                    elem.data('jui_datagrid').pageNum = page_number;
-                    elem.jui_datagrid({'pageNum': page_number});
+        $("#" + pagination_id).jui_pagination({
+            currentPage: currentPage,
+            totalPages: total_pages,
+            containerClass: paginationClass,
+            showGoToPage: showGoToPage,
+            showRowsPerPage: showRowsPerPage,
+            showRowsInfo: showRowsInfo,
+            showPreferences: showPaginationPreferences,
+            onSetRowsPerPage: function(event, rpp) {
+                if(isNaN(rpp) || rpp <= 0) {
+                    elem.jui_datagrid('refresh');
+                } else {
+                    maxRowsPerPage = parseInt(maxRowsPerPage);
+                    if(maxRowsPerPage > 0) {
+                        if(rpp > maxRowsPerPage) {
+                            rpp = maxRowsPerPage;
+                            $("#" + pagination_id).jui_pagination('setOption', 'rowsPerPage', rpp, false);
+                        }
+                    }
+                    elem.jui_datagrid({
+                        pageNum: 1,
+                        rowsPerPage: rpp
+                    });
                 }
-            });
+            },
+            onChangePage: function(event, page_number) {
+                elem.jui_datagrid({
+                    pageNum: page_number
+                });
+            },
+            onDisplay: function() {
+                if(showRowsInfo) {
+                    var page_first_row = ((currentPage - 1) * rowsPerPage) + 1;
+                    var page_last_row = page_first_row + rowsPerPage - 1;
+                    var rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
+                    $(this).jui_pagination('setRowsInfo', rows_info);
+                }
+            }
+        });
 
-            // trigger event
-            elem.triggerHandler("onDisplayPagination", pagination_id);
-        }
+        // trigger event
+        elem.triggerHandler("onDisplayPagination", pagination_id);
+
 
     };
 
@@ -797,7 +830,7 @@
     $.fn.jui_datagrid = function(method) {
 
         if(this.size() != 1) {
-            var err_msg = 'You must use this plugin with a unique element (at once)';
+            var err_msg = 'You must use this plugin (' + pluginName + ') with a unique element (at once)';
             this.html('<span style="color: red;">' + 'ERROR: ' + err_msg + '</span>');
             $.error(err_msg);
         }

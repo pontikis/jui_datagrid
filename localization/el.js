@@ -20,5 +20,7 @@ var rsc_jui_dg = {
     print: 'Εκτύπωση',
     export: 'Εξαγωγή',
     filters: 'Κριτήρια',
+    rows_info_of: 'από',
+    rows_info_records: 'εγγραφές',
     no_records_found: 'Δεν βρέθηκαν εγγραφές'
 };

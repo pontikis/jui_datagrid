@@ -20,5 +20,7 @@ var rsc_jui_dg = {
     print: 'Print',
     export: 'Export',
     filters: 'Filters',
+    rows_info_of: 'of',
+    rows_info_records: 'records',
     no_records_found: 'No records found'
 };
