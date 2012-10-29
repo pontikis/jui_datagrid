@@ -17,7 +17,8 @@ body {
     width: 700px;
     padding: 5px;
     background: none;
-    overflow: auto;
+    overflow: hidden !important;
+
 }
 
 .grid1_data {
@@ -39,7 +40,8 @@ body {
 
 .grid1_slider {
     width: 400px;
-    margin: 10px auto;
+    margin: 15px auto;
+
 }
 
 /* demo_grid2 --------------------------------------------------------------- */
