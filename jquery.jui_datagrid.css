@@ -14,27 +14,23 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     width: 600px;
     padding: 5px;
     background: none;
-    overflow: auto;
 }
 
 .grid_data {
     padding: 5px;
     margin: 0px 0px 5px 0px;
-    overflow: auto;
 }
 
 .grid_tools {
     padding: 4px 5px 4px 5px;
     font-size: 11px !important;
     margin: 5px 5px 5px 5px;
-    overflow: auto;
     text-align: center;
 }
 
 .grid_pagination {
     padding: 5px 5px 5px 5px;
     margin: 5px 0px 0px 0px;
-    overflow: hidden !important;
 }
 
 /* data table class affecting table dimensions */
