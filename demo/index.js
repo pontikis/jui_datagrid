@@ -9,14 +9,7 @@ $(function() {
     // demo grid1 --------------------------------------------------------------
     $("#demo_grid1").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
-        containerClass: 'grid1_container ui-state-default ui-corner-all',
-        onDisplayPagination: function(e, pagination_id) {
-            $("#" + pagination_id).jui_pagination({
-                visiblePageLinks: 5,
-                disableSelectionNavPane: true
-                //sliderClass: 'grid1_slider'
-            });
-        }
+        containerClass: 'grid1_container ui-state-default ui-corner-all'
     });
 
 
@@ -60,7 +53,10 @@ $(function() {
 
     // demo grid2 --------------------------------------------------------------
     $("#demo_grid2").jui_datagrid({
-        ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php'
+        ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
+        paginationOptions: {
+            sliderAnimation: false
+        }
     });
 
 

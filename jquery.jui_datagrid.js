@@ -235,11 +235,13 @@
                 // pagination options
                 usePagination: true,
                 paginationOptions: {
+                    visiblePageLinks: 5,
                     useSlider: true,
                     showGoToPage: false,
                     showRowsPerPage: true,
                     showRowsInfo: true,
-                    showPreferences: false
+                    showPreferences: false,
+                    disableSelectionNavPane: true
                 },   // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass' will be ignored
 
                 // main divs classes
@@ -788,6 +790,8 @@
     var display_pagination = function(container_id, total_rows) {
 
         var elem = $("#" + container_id);
+
+        // fixed pagination options
         var currentPage = elem.jui_datagrid('getOption', 'pageNum');
         var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
         var maxRowsPerPage = elem.jui_datagrid('getOption', 'maxRowsPerPage');
@@ -796,17 +800,21 @@
 
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
-        var given_options = elem.jui_datagrid('getOption', 'paginationOptions');
+        // user defined pagination options
+        var default_options = elem.jui_datagrid('getDefaults');
+        var default_pagination_options = default_options.paginationOptions;
+        var given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions');
+        given_pagination_options = $.extend({}, default_pagination_options, given_pagination_options);
 
         // remove unacceptable settings
         var unacceptable = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass'];
         for(var i in unacceptable) {
-            if(typeof(given_options[unacceptable[i]]) != 'undefined') {
-                delete given_options[unacceptable[i]];
+            if(typeof(given_pagination_options[unacceptable[i]]) != 'undefined') {
+                delete given_pagination_options[unacceptable[i]];
             }
         }
 
-        var showRowsInfo = given_options.showRowsInfo;
+        var showRowsInfo = given_pagination_options.showRowsInfo;
 
         var pagination_options = {
             currentPage: currentPage,
@@ -846,8 +854,7 @@
             }
         };
 
-
-        pagination_options = $.extend({}, pagination_options, given_options);
+        pagination_options = $.extend({}, pagination_options, given_pagination_options);
 
         $("#" + pagination_id).jui_pagination(pagination_options);
 
