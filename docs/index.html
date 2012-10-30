@@ -190,6 +190,37 @@
         // DEFAULTS
         pageNum: 1,
         rowsPerPage: 10,
+        maxRowsPerPage: 100,
+
+        // toolbar options
+        useToolbar: true,
+        showPrefButton: true,
+        showSelectButtons: true,
+        showSelectLabel: false,
+        showRefreshButton: true,
+        showDeleteButton: true,
+        showPrintButton: true,
+        showExportButton: true,
+        showFiltersButton: true,
+        showPrefButtonText: false,
+        showSelectAllButtonText: false,
+        showSelectNoneButtonText: false,
+        showSelectInverseButtonText: false,
+        showRefreshButtonText: false,
+        showDeleteButtonText: true,
+        showPrintButtonText: false,
+        showExportButtonText: false,
+        showFiltersButtonText: false,
+
+        // pagination options
+        usePagination: true,
+        paginationOptions: {
+            useSlider: true,
+            showGoToPage: false,
+            showRowsPerPage: true,
+            showRowsInfo: true,
+            showPreferences: false
+        },   // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass' will be ignored
 
         // main divs classes
         containerClass: 'grid_container ui-state-default ui-corner-all',
@@ -204,11 +235,27 @@
         thClass: 'ui-state-default',
         tdClass: 'ui-widget-content',
 
+        //toolbar classes
+        tbButtonContainer: 'tbBtnContainer',
+        tbPrefIconClass: 'ui-icon-gear',
+        tbSelectLabelClass: 'selectLabelClass',
+        tbSelectAllIconClass: 'ui-icon-circle-check',
+        tbSelectNoneIconClass: 'ui-icon-circle-close',
+        tbSelectInverseIconClass: 'ui-icon-check',
+        tbRefreshIconClass: 'ui-icon-refresh',
+        tbDeleteIconClass: 'ui-icon-trash',
+        tbPrintIconClass: 'ui-icon-print',
+        tbExportIconClass: 'ui-icon-extlink',
+        tbFiltersIconClass: 'ui-icon-search',
+
         // elements id prefix
         datagrid_id_prefix: 'dg_',
         table_id_prefix: 'tbl_',
         tools_id_prefix: 'tools_',
         pagination_id_prefix: 'pag_',
+
+        pref_dialog_id_prefix: 'pref_dlg_',
+        pref_tabs_id_prefix: 'pref_tabs_',
 
         onDisplayPagination: function() {
         },
