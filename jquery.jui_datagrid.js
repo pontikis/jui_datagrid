@@ -121,7 +121,7 @@
                                         show: "blind",
                                         hide: "explode",
                                         width: 400,
-                                        height: 300,
+                                        height: 350,
                                         position: {
                                             my: "top",
                                             at: "top",
@@ -173,7 +173,23 @@
                                         })
                                 });
 
+                                selector = "#" + pref_dialog_id + '_rows_info';
+                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                    var state = $(event.target).is(":checked");
+                                    elem.jui_datagrid('setPaginationOptions',
+                                        {
+                                            showRowsInfo: state
+                                        })
+                                });
 
+                                selector = "#" + pref_dialog_id + '_nav_buttons';
+                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                    var state = $(event.target).is(":checked");
+                                    elem.jui_datagrid('setPaginationOptions',
+                                        {
+                                            showNavButtons: state
+                                        })
+                                });
                             }
 
                             // trigger event
@@ -450,6 +466,16 @@
         pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_rows_per_page + '</label>';
         pref_html += '</li>';
 
+        pref_id = dialog_id + '_rows_info';
+        pref_html += '<li>';
+        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_rows_info + '</label>';
+        pref_html += '</li>';
+
+        pref_id = dialog_id + '_nav_buttons';
+        pref_html += '<li>';
+        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_nav_buttons + '</label>';
+        pref_html += '</li>';
+
         pref_html += '</ul>';
 
         pref_html += '</div>';
@@ -468,6 +494,14 @@
 
         pref_id = dialog_id + '_rows_per_page';
         state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showRowsPerPage');
+        $("#" + pref_id).attr("checked", state);
+
+        pref_id = dialog_id + '_rows_info';
+        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showRowsInfo');
+        $("#" + pref_id).attr("checked", state);
+
+        pref_id = dialog_id + '_nav_buttons';
+        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showNavButtons');
         $("#" + pref_id).attr("checked", state);
     };
 
