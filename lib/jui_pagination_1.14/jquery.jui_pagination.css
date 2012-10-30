@@ -5,7 +5,6 @@ Write your own classes in other css file.
 
 /* -------------------------------------------------------------------------- */
 .nav-pane {
-    overflow: auto;
     text-align: center;
 }
 
@@ -143,10 +142,9 @@ Write your own classes in other css file.
 }
 
 .nav-slider-inside-pane {
-    display: inline-block;
+    float: left;
     width: 20%;
-    margin: auto 10px;
-    vertical-align: middle;
+    margin: 6px 15px 1px 15px;
 }
 
 /* -------------------------------------------------------------------------- */
