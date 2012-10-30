@@ -218,10 +218,13 @@
 
                 // pagination options
                 usePagination: true,
-                showGoToPage: true,
-                showRowsPerPage: true,
-                showRowsInfo: true,
-                showPaginationPreferences: false,
+                paginationOptions: {
+                    useSlider: true,
+                    showGoToPage: false,
+                    showRowsPerPage: true,
+                    showRowsInfo: true,
+                    showPreferences: false
+                },   // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass' will be ignored
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
@@ -485,7 +488,7 @@
 
         tbl += '<thead>';
         tbl += '<tr>';
-        $.each(page_data[0], function(index, value) {
+        $.each(page_data[0], function(index) {
             tbl += '<th>' + index + '</th>';
         });
         tbl += '<tr>';
@@ -756,23 +759,27 @@
         var maxRowsPerPage = elem.jui_datagrid('getOption', 'maxRowsPerPage');
         var total_pages = Math.ceil(total_rows / rowsPerPage);
         var paginationClass = elem.jui_datagrid('getOption', 'paginationClass');
-        var showGoToPage = elem.jui_datagrid('getOption', 'showGoToPage');
-        var showRowsPerPage = elem.jui_datagrid('getOption', 'showRowsPerPage');
-        var showRowsInfo = elem.jui_datagrid('getOption', 'showRowsInfo');
-        var showPaginationPreferences = elem.jui_datagrid('getOption', 'showPaginationPreferences');
 
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
-        $("#" + pagination_id).show();
+        var given_options = elem.jui_datagrid('getOption', 'paginationOptions');
 
-        $("#" + pagination_id).jui_pagination({
+        // remove unacceptable settings
+        var unacceptable = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass'];
+        for(var i in unacceptable) {
+            if(typeof(given_options[unacceptable[i]]) != 'undefined') {
+                delete given_options[unacceptable[i]];
+            }
+        }
+
+        var showRowsInfo = given_options.showRowsInfo;
+
+        var pagination_options = {
             currentPage: currentPage,
+            rowsPerPage: rowsPerPage,
             totalPages: total_pages,
             containerClass: paginationClass,
-            showGoToPage: showGoToPage,
-            showRowsPerPage: showRowsPerPage,
-            showRowsInfo: showRowsInfo,
-            showPreferences: showPaginationPreferences,
+
             onSetRowsPerPage: function(event, rpp) {
                 if(isNaN(rpp) || rpp <= 0) {
                     elem.jui_datagrid('refresh');
@@ -803,7 +810,12 @@
                     $(this).jui_pagination('setRowsInfo', rows_info);
                 }
             }
-        });
+        };
+
+
+        pagination_options = $.extend({}, pagination_options, given_options);
+
+        $("#" + pagination_id).jui_pagination(pagination_options);
 
         // trigger event
         elem.triggerHandler("onDisplayPagination", pagination_id);
