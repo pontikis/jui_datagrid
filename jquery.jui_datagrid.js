@@ -46,36 +46,35 @@
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
+                var header_id, datagrid_id, tools_id, pagination_id, pref_dialog_id, elem_html;
+                header_id = create_id(settings.header_id_prefix, container_id);
+                datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
+                tools_id = create_id(settings.tools_id_prefix, container_id);
+                pagination_id = create_id(settings.pagination_id_prefix, container_id);
+                pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
+
                 if(!elem.data('initialize')) {
 
-                    var header_id, datagrid_id, tools_id, pagination_id, elem_html;
-
-                    header_id = create_id(settings.header_id_prefix, container_id);
                     elem_html = '<div id="' + header_id + '">' + settings.title + '</div>';
-
-                    datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
                     elem_html += '<div id="' + datagrid_id + '"></div>';
-
-                    tools_id = create_id(settings.tools_id_prefix, container_id);
                     elem_html += '<div id="' + tools_id + '"></div>';
-
-                    pagination_id = create_id(settings.pagination_id_prefix, container_id);
                     elem_html += '<div id="' + pagination_id + '"></div>';
-
+                    elem_html += '<div id="' + pref_dialog_id + '"></div>';
                     elem.html(elem_html);
+
                     elem.data('initialize', true);
                 }
 
                 // apply style
                 $("#" + container_id).removeClass().addClass(settings.containerClass);
 
-                var header_elem = $("#" + header_id);
+                var elem_header = $("#" + header_id);
                 if(typeof settings.title === 'undefined') {
-                    header_elem.hide();
+                    elem_header.hide();
                 } else {
-                    header_elem.show();
-                    header_elem.text(settings.title);
-                    header_elem.removeClass().addClass(settings.headerClass);
+                    elem_header.show();
+                    elem_header.text(settings.title);
+                    elem_header.removeClass().addClass(settings.headerClass);
                 }
 
                 $("#" + datagrid_id).removeClass().addClass(settings.datagridClass);
@@ -122,27 +121,23 @@
                             /* click on Refresh button */
                             if(settings.showRefreshButton) {
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
-                                $("#" + container_id).off('click', selector).on('click', selector, function() {
+                                elem.off('click', selector).on('click', selector, function() {
                                     $("#" + container_id).jui_datagrid('refresh');
                                 });
                             }
 
                             /* click on Preferences button */
                             if(settings.showPrefButton) {
-                                var pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
-                                if($('#' + pref_dialog_id).length == 0) {
-                                    var pref_html = '<div id="' + pref_dialog_id + '"></div>';
-                                    elem.append(pref_html);
-                                }
 
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
-                                $("#" + container_id).off('click', selector).on('click', selector, function() {
+                                var elem_pref_dialog = $("#" + pref_dialog_id);
+                                elem.off('click', selector).on('click', selector, function() {
 
-                                    if(typeof($("#" + pref_dialog_id).data('dialog')) == 'object') {
-                                        $("#" + pref_dialog_id).dialog('destroy');
+                                    if(typeof(elem_pref_dialog.data('dialog')) == 'object') {
+                                        elem_pref_dialog.dialog('destroy');
                                     }
 
-                                    $("#" + pref_dialog_id).dialog({
+                                    elem_pref_dialog.dialog({
                                         autoOpen: true,
                                         show: "blind",
                                         hide: "explode",
@@ -172,7 +167,7 @@
 
                                 // PREFERENCES EVENTS --------------------------
                                 selector = "#" + pref_dialog_id + '_slider';
-                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
@@ -182,7 +177,7 @@
                                 });
 
                                 selector = "#" + pref_dialog_id + '_goto_page';
-                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
@@ -192,7 +187,7 @@
                                 });
 
                                 selector = "#" + pref_dialog_id + '_rows_per_page';
-                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
@@ -202,7 +197,7 @@
                                 });
 
                                 selector = "#" + pref_dialog_id + '_rows_info';
-                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
@@ -212,7 +207,7 @@
                                 });
 
                                 selector = "#" + pref_dialog_id + '_nav_buttons';
-                                $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
+                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
@@ -519,25 +514,15 @@
 
         $("#" + dialog_id).html(pref_html);
 
-        pref_id = dialog_id + '_slider';
-        state = elem.jui_datagrid('getPaginationOption', 'useSlider');
-        $("#" + pref_id).attr("checked", state);
+        var a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
+        var a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
 
-        pref_id = dialog_id + '_goto_page';
-        state = elem.jui_datagrid('getPaginationOption', 'showGoToPage');
-        $("#" + pref_id).attr("checked", state);
+        for(var i in a_id_ext) {
+            pref_id = dialog_id + a_id_ext[i];
+            state = elem.jui_datagrid('getPaginationOption', a_opt[i]);
+            $("#" + pref_id).attr("checked", state);
+        }
 
-        pref_id = dialog_id + '_rows_per_page';
-        state = elem.jui_datagrid('getPaginationOption', 'showRowsPerPage');
-        $("#" + pref_id).attr("checked", state);
-
-        pref_id = dialog_id + '_rows_info';
-        state = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
-        $("#" + pref_id).attr("checked", state);
-
-        pref_id = dialog_id + '_nav_buttons';
-        state = elem.jui_datagrid('getPaginationOption', 'showNavButtons');
-        $("#" + pref_id).attr("checked", state);
     };
 
     /**
@@ -835,6 +820,7 @@
 
         // CREATE PAGINATION OPTIONS
         var given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions');
+        var elem_pagination = $("#" + pagination_id);
 
         // remove unacceptable settings
         var internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
@@ -845,7 +831,7 @@
         }
 
 
-        var pagination_options = $("#" + pagination_id).data('jui_pagination');
+        var pagination_options = elem_pagination.data('jui_pagination');
         if(typeof(pagination_options) === 'undefined') {
             var default_options = elem.jui_datagrid('getDefaults');
             var default_pagination_options = default_options.paginationOptions;
@@ -897,7 +883,7 @@
         pagination_options = $.extend({}, pagination_options, internal_pagination_options);
 
 
-        $("#" + pagination_id).jui_pagination(pagination_options);
+        elem_pagination.jui_pagination(pagination_options);
 
         // trigger event
         elem.triggerHandler("onDisplayPagination", pagination_id);
