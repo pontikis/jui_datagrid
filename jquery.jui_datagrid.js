@@ -106,8 +106,20 @@
                             }
                             display_pagination(container_id, total_rows);
 
+
+                            /**
+                             * *************************************************
+                             * EVENTS HANDLING
+                             * (for NAVIGATION events, see display_pagination)
+                             * *************************************************
+                             */
                             var selector;
-                            // click on refresh button
+
+                            // GRID EVENTS -------------------------------------
+
+                            // TOOLBAR EVENTS ----------------------------------
+
+                            /* click on Refresh button */
                             if(settings.showRefreshButton) {
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
                                 $("#" + container_id).off('click', selector).on('click', selector, function() {
@@ -115,7 +127,7 @@
                                 });
                             }
 
-                            /* CREATE PREFERENCES DIALOG -------------------- */
+                            /* click on Preferences button */
                             if(settings.showPrefButton) {
                                 var pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
                                 if($('#' + pref_dialog_id).length == 0) {
@@ -158,7 +170,7 @@
                                     $("#" + pref_tabs_id).tabs();
                                 });
 
-
+                                // PREFERENCES EVENTS --------------------------
                                 selector = "#" + pref_dialog_id + '_slider';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
