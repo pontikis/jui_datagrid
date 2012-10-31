@@ -166,9 +166,12 @@
                                 });
 
                                 // PREFERENCES EVENTS --------------------------
+                                var state;
+
+                                // navigation tab
                                 selector = "#" + pref_dialog_id + '_slider';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    var state = $(event.target).is(":checked");
+                                    state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             useSlider: state
@@ -178,7 +181,7 @@
 
                                 selector = "#" + pref_dialog_id + '_goto_page';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    var state = $(event.target).is(":checked");
+                                    state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showGoToPage: state
@@ -188,7 +191,7 @@
 
                                 selector = "#" + pref_dialog_id + '_rows_per_page';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    var state = $(event.target).is(":checked");
+                                    state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showRowsPerPage: state
@@ -198,7 +201,7 @@
 
                                 selector = "#" + pref_dialog_id + '_rows_info';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    var state = $(event.target).is(":checked");
+                                    state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showRowsInfo: state
@@ -208,7 +211,7 @@
 
                                 selector = "#" + pref_dialog_id + '_nav_buttons';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    var state = $(event.target).is(":checked");
+                                    state = $(event.target).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showNavButtons: state
