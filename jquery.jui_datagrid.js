@@ -859,7 +859,7 @@
             onDisplay: function() {
                 if(showRowsInfo) {
                     var page_first_row = ((currentPage - 1) * rowsPerPage) + 1;
-                    var page_last_row = page_first_row + rowsPerPage - 1;
+                    var page_last_row = Math.min(page_first_row + rowsPerPage - 1, total_rows);
                     var rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
                     $(this).jui_pagination('setRowsInfo', rows_info);
                 }
