@@ -185,6 +185,7 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         ajaxFetchDataURL: 'some_server_url', // REQUIRED
+        title: 'Your title here'  // OPTIONAL
 
         // DEFAULTS
         pageNum: 1,
@@ -214,15 +215,18 @@
         // pagination options
         usePagination: true,
         paginationOptions: {
+            visiblePageLinks: 5,
             useSlider: true,
             showGoToPage: false,
             showRowsPerPage: true,
             showRowsInfo: true,
-            showPreferences: false
-        },   // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass' will be ignored
+            showPreferences: false,
+            disableSelectionNavPane: true
+        }, // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay' will be ignored
 
         // main divs classes
         containerClass: 'grid_container ui-state-default ui-corner-all',
+        headerClass: 'grid_geader ui-widget-header ui-corner-top',
         datagridClass: 'grid_data',
         toolsClass: 'grid_tools ui-state-default ui-corner-all',
         paginationClass: 'grid_pagination',
@@ -249,6 +253,7 @@
 
         // elements id prefix
         datagrid_id_prefix: 'dg_',
+        header_id_prefix: 'header_',
         table_id_prefix: 'tbl_',
         tools_id_prefix: 'tools_',
         pagination_id_prefix: 'pag_',
@@ -256,8 +261,6 @@
         pref_dialog_id_prefix: 'pref_dlg_',
         pref_tabs_id_prefix: 'pref_tabs_',
 
-        onDisplayPagination: function() {
-        },
         onDisplay: function() {
         }
     });
