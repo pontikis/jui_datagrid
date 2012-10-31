@@ -352,11 +352,15 @@
     <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">PAGINATION</span>
 </div>
 
-<h3>setPaginationOptions</h3>
+<h3>Set Pagination Options</h3>
 
 <div class="level3">
     <pre class="brush: js">
-    $("#element_id").jui_datagrid('setPaginationOptions', pag_options);
+    $("#element_id").jui_datagrid({
+        paginationOptions: {
+            // options here
+        }
+    });
     </pre>
 </div>
 

@@ -399,17 +399,6 @@
         },
 
         /**
-         * Set pagination options
-         * Usage: $(element).jui_datagrid('setPaginationOptions', pag_options);
-         * @param pag_options
-         */
-        setPaginationOptions: function(pag_options) {
-            var datagrid_container_id = this.attr("id");
-            var pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
-            $("#" + pagination_id).jui_pagination(pag_options);
-        },
-
-        /**
          * Get all pagination options
          * Usage: $(element).jui_datagrid('getAllPaginationOptions');
          * @return {*}
