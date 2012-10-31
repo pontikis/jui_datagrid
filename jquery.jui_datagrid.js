@@ -429,9 +429,10 @@
      * @param plugin_container_id
      */
     var create_preferences = function(plugin_container_id) {
-        var prefix = $("#" + plugin_container_id).jui_datagrid('getOption', 'pref_dialog_id_prefix');
+        var elem = $("#" + plugin_container_id);
+        var prefix = elem.jui_datagrid('getOption', 'pref_dialog_id_prefix');
         var dialog_id = create_id(prefix, plugin_container_id);
-        prefix = $("#" + plugin_container_id).jui_datagrid('getOption', 'pref_tabs_id_prefix');
+        prefix = elem.jui_datagrid('getOption', 'pref_tabs_id_prefix');
         var tabs_id = create_id(prefix, plugin_container_id);
 
         var pref_id;
@@ -492,23 +493,23 @@
         $("#" + dialog_id).html(pref_html);
 
         pref_id = dialog_id + '_slider';
-        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'useSlider');
+        state = elem.jui_datagrid('getPaginationOption', 'useSlider');
         $("#" + pref_id).attr("checked", state);
 
         pref_id = dialog_id + '_goto_page';
-        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showGoToPage');
+        state = elem.jui_datagrid('getPaginationOption', 'showGoToPage');
         $("#" + pref_id).attr("checked", state);
 
         pref_id = dialog_id + '_rows_per_page';
-        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showRowsPerPage');
+        state = elem.jui_datagrid('getPaginationOption', 'showRowsPerPage');
         $("#" + pref_id).attr("checked", state);
 
         pref_id = dialog_id + '_rows_info';
-        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showRowsInfo');
+        state = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
         $("#" + pref_id).attr("checked", state);
 
         pref_id = dialog_id + '_nav_buttons';
-        state = $("#" + plugin_container_id).jui_datagrid('getPaginationOption', 'showNavButtons');
+        state = elem.jui_datagrid('getPaginationOption', 'showNavButtons');
         $("#" + pref_id).attr("checked", state);
     };
 
