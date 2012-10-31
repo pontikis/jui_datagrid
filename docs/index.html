@@ -140,12 +140,11 @@
 <div class="level3">
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
-        ajaxFetchDataURL: 'some_server_url',
-        onDisplayPagination: function(e, pagination_id) {
-            $("#" + pagination_id).jui_pagination({
-                visiblePageLinks: 5,
-                containerClass: 'grid_pagination'
-            });
+        ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
+        containerClass: 'grid1_container ui-state-default ui-corner-all',
+        title: 'Customers',
+        paginationOptions: {
+            sliderAnimation: false
         }
     });
     </pre>

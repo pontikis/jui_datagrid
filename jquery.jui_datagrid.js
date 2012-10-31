@@ -48,10 +48,13 @@
                 // initialize plugin html
                 if(!elem.data('initialize')) {
 
-                    var datagrid_id, tools_id, pagination_id, elem_html;
+                    var header_id, datagrid_id, tools_id, pagination_id, elem_html;
+
+                    header_id = create_id(settings.header_id_prefix, container_id);
+                    elem_html = '<div id="' + header_id + '">' + settings.title + '</div>';
 
                     datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
-                    elem_html = '<div id="' + datagrid_id + '"></div>';
+                    elem_html += '<div id="' + datagrid_id + '"></div>';
 
                     tools_id = create_id(settings.tools_id_prefix, container_id);
                     elem_html += '<div id="' + tools_id + '"></div>';
@@ -65,6 +68,16 @@
 
                 // apply style
                 $("#" + container_id).removeClass().addClass(settings.containerClass);
+
+                var header_elem = $("#" + header_id);
+                if(typeof settings.title === 'undefined') {
+                    header_elem.hide();
+                } else {
+                    header_elem.show();
+                    header_elem.text(settings.title);
+                    header_elem.removeClass().addClass(settings.headerClass);
+                }
+
                 $("#" + datagrid_id).removeClass().addClass(settings.datagridClass);
                 $("#" + tools_id).removeClass().addClass(settings.toolsClass);
                 $("#" + pagination_id).removeClass().addClass(settings.paginationClass);
@@ -251,6 +264,7 @@
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
+                headerClass: 'grid_geader ui-widget-header ui-corner-top',
                 datagridClass: 'grid_data',
                 toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
@@ -277,6 +291,7 @@
 
                 // elements id prefix
                 datagrid_id_prefix: 'dg_',
+                header_id_prefix: 'header_',
                 table_id_prefix: 'tbl_',
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',

@@ -16,6 +16,11 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     background: none;
 }
 
+.grid_geader {
+    padding: 2px 5px;
+    margin: 5px 5px -5px 5px;
+}
+
 .grid_data {
     padding: 5px;
     margin: 0px 0px 5px 0px;
