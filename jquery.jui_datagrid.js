@@ -42,7 +42,6 @@
                 var container_id = elem.attr("id");
 
                 // bind events
-                elem.unbind("onDisplayPagination").bind("onDisplayPagination", settings.onDisplayPagination);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
@@ -309,8 +308,6 @@
                 pref_dialog_id_prefix: 'pref_dlg_',
                 pref_tabs_id_prefix: 'pref_tabs_',
 
-                onDisplayPagination: function() {
-                },
                 onDisplay: function() {
                 }
             };
@@ -887,10 +884,6 @@
 
 
         elem_pagination.jui_pagination(pagination_options);
-
-        // trigger event
-        elem.triggerHandler("onDisplayPagination", pagination_id);
-
 
     };
 
