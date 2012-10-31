@@ -261,6 +261,8 @@
         pref_dialog_id_prefix: 'pref_dlg_',
         pref_tabs_id_prefix: 'pref_tabs_',
 
+        onDelete: function() {
+        },
         onDisplay: function() {
         }
     });
@@ -385,6 +387,18 @@
 
 <!-- Events ---------------------------------------------------------------- -->
 <h2>Events</h2>
+
+<h3>onDelete</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        onDelete: function() {
+        // your code here
+        }
+    });
+    </pre>
+</div>
 
 <h3>onDisplay</h3>
 

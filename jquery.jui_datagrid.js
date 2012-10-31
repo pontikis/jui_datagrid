@@ -42,6 +42,7 @@
                 var container_id = elem.attr("id");
 
                 // bind events
+                elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
@@ -116,6 +117,14 @@
                             // GRID EVENTS -------------------------------------
 
                             // TOOLBAR EVENTS ----------------------------------
+
+                            /* click on Delete button */
+                            if(settings.showDeleteButton) {
+                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
+                                elem.off('click', selector).on('click', selector, function() {
+                                    elem.triggerHandler("onDelete");
+                                });
+                            }
 
                             /* click on Refresh button */
                             if(settings.showRefreshButton) {
@@ -308,6 +317,8 @@
                 pref_dialog_id_prefix: 'pref_dlg_',
                 pref_tabs_id_prefix: 'pref_tabs_',
 
+                onDelete: function() {
+                },
                 onDisplay: function() {
                 }
             };
