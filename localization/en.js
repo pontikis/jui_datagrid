@@ -8,9 +8,9 @@
 var rsc_jui_dg = {
     preferences: 'Preferences',
     preferences_close: 'Close',
-    pref_tab_col: 'Columns',
-    pref_tab_misc: 'Misc',
-    pref_tab_pag: 'Pagination',
+    pref_tab_grid: 'Grid',
+    pref_tab_tools: 'Tools',
+    pref_tab_nav: 'Navigation',
     select_label: 'Select',
     select_all: 'All',
     select_none: 'None',

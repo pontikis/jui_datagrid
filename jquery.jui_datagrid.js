@@ -457,9 +457,9 @@
 
         pref_html += '<div id="' + tabs_id + '">';
         pref_html += '<ul>';
-        pref_html += '<li><a href="#' + tabs_id + '-1">' + rsc_jui_dg.pref_tab_col + '</a></li>';
-        pref_html += '<li><a href="#' + tabs_id + '-2">' + rsc_jui_dg.pref_tab_misc + '</a></li>';
-        pref_html += '<li><a href="#' + tabs_id + '-3">' + rsc_jui_dg.pref_tab_pag + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '-1">' + rsc_jui_dg.pref_tab_grid + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '-2">' + rsc_jui_dg.pref_tab_tools + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '-3">' + rsc_jui_dg.pref_tab_nav + '</a></li>';
         pref_html += '</ul>';
 
         pref_html += '<div id="' + tabs_id + '-1">';

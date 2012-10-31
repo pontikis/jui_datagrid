@@ -8,9 +8,9 @@
 var rsc_jui_dg = {
     preferences: 'Προτιμήσεις',
     preferences_close: 'Εντάξει',
-    pref_tab_col: 'Στήλες',
-    pref_tab_misc: 'Διάφορα',
-    pref_tab_pag: 'Σελιδοποίηση',
+    pref_tab_grid: 'Πίνακας',
+    pref_tab_tools: 'Εργαλεία',
+    pref_tab_nav: 'Πλοήγηση',
     select_label: 'Επιλογή',
     select_all: 'Όλα',
     select_none: 'Κανένα',
