@@ -93,9 +93,10 @@
                             }
                             display_pagination(container_id, total_rows);
 
+                            var selector;
                             // click on refresh button
                             if(settings.showRefreshButton) {
-                                var selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
+                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
                                 $("#" + container_id).off('click', selector).on('click', selector, function() {
                                     $("#" + container_id).jui_datagrid('refresh');
                                 });
@@ -842,7 +843,6 @@
                     if(maxRowsPerPage > 0) {
                         if(rpp > maxRowsPerPage) {
                             rpp = maxRowsPerPage;
-                            $("#" + pagination_id).jui_pagination('setOption', 'rowsPerPage', rpp, false);
                         }
                     }
                     elem.jui_datagrid({
