@@ -48,3 +48,8 @@ body {
 }
 
 /* demo_grid2 --------------------------------------------------------------- */
+.grid2_container {
+    width: 700px;
+    padding: 5px;
+    background: none;
+}

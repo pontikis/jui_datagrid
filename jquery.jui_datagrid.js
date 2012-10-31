@@ -148,47 +148,51 @@
                                 selector = "#" + pref_dialog_id + '_slider';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
-                                    elem.jui_datagrid('setPaginationOptions',
-                                        {
+                                    elem.jui_datagrid({
+                                        paginationOptions: {
                                             useSlider: state
                                         }
-                                    )
+                                    })
                                 });
 
                                 selector = "#" + pref_dialog_id + '_goto_page';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
-                                    elem.jui_datagrid('setPaginationOptions',
-                                        {
+                                    elem.jui_datagrid({
+                                        paginationOptions: {
                                             showGoToPage: state
-                                        })
+                                        }
+                                    })
                                 });
 
                                 selector = "#" + pref_dialog_id + '_rows_per_page';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
-                                    elem.jui_datagrid('setPaginationOptions',
-                                        {
+                                    elem.jui_datagrid({
+                                        paginationOptions: {
                                             showRowsPerPage: state
-                                        })
+                                        }
+                                    })
                                 });
 
                                 selector = "#" + pref_dialog_id + '_rows_info';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
-                                    elem.jui_datagrid('setPaginationOptions',
-                                        {
+                                    elem.jui_datagrid({
+                                        paginationOptions: {
                                             showRowsInfo: state
-                                        })
+                                        }
+                                    })
                                 });
 
                                 selector = "#" + pref_dialog_id + '_nav_buttons';
                                 $("#" + pref_dialog_id).off('click', selector).on('click', selector, function(event) {
                                     var state = $(event.target).is(":checked");
-                                    elem.jui_datagrid('setPaginationOptions',
-                                        {
+                                    elem.jui_datagrid({
+                                        paginationOptions: {
                                             showNavButtons: state
-                                        })
+                                        }
+                                    })
                                 });
                             }
 
@@ -242,7 +246,7 @@
                     showRowsInfo: true,
                     showPreferences: false,
                     disableSelectionNavPane: true
-                },   // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass' will be ignored
+                }, // 'currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay' will be ignored
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
@@ -800,23 +804,31 @@
 
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
 
-        // user defined pagination options
-        var default_options = elem.jui_datagrid('getDefaults');
-        var default_pagination_options = default_options.paginationOptions;
+        // CREATE PAGINATION OPTIONS
         var given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions');
-        given_pagination_options = $.extend({}, default_pagination_options, given_pagination_options);
 
         // remove unacceptable settings
-        var unacceptable = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass'];
-        for(var i in unacceptable) {
-            if(typeof(given_pagination_options[unacceptable[i]]) != 'undefined') {
-                delete given_pagination_options[unacceptable[i]];
+        var internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
+        for(var i in internal_defined) {
+            if(typeof(given_pagination_options[internal_defined[i]]) != 'undefined') {
+                delete given_pagination_options[internal_defined[i]];
             }
         }
 
-        var showRowsInfo = given_pagination_options.showRowsInfo;
 
-        var pagination_options = {
+        var pagination_options = $("#" + pagination_id).data('jui_pagination');
+        if(typeof(pagination_options) == 'undefined') {
+            var default_options = elem.jui_datagrid('getDefaults');
+            var default_pagination_options = default_options.paginationOptions;
+            pagination_options = $.extend({}, default_pagination_options, given_pagination_options);
+
+        } else {
+            pagination_options = $.extend({}, pagination_options, given_pagination_options);
+        }
+
+        var showRowsInfo = pagination_options.showRowsInfo;
+
+        var internal_pagination_options = {
             currentPage: currentPage,
             rowsPerPage: rowsPerPage,
             totalPages: total_pages,
@@ -854,7 +866,8 @@
             }
         };
 
-        pagination_options = $.extend({}, pagination_options, given_pagination_options);
+        pagination_options = $.extend({}, pagination_options, internal_pagination_options);
+
 
         $("#" + pagination_id).jui_pagination(pagination_options);
 
