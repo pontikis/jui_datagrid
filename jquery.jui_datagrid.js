@@ -31,7 +31,7 @@
                  * using $.extend, settings modification will affect elem.data() and vive versa
                  */
                 var settings = elem.data(pluginName);
-                if(typeof(settings) == 'undefined') {
+                if(typeof(settings) === 'undefined') {
                     var defaults = elem.jui_datagrid('getDefaults');
                     settings = $.extend({}, defaults, options);
                 } else {
@@ -818,7 +818,7 @@
 
 
         var pagination_options = $("#" + pagination_id).data('jui_pagination');
-        if(typeof(pagination_options) == 'undefined') {
+        if(typeof(pagination_options) === 'undefined') {
             var default_options = elem.jui_datagrid('getDefaults');
             var default_pagination_options = default_options.paginationOptions;
             pagination_options = $.extend({}, default_pagination_options, given_pagination_options);
