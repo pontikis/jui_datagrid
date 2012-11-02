@@ -11,6 +11,7 @@
 (function($) {
 
     var pluginName = 'jui_datagrid';
+    var pluginStatus = 'jui_datagrid_status';
 
     // public methods
     var methods = {
@@ -39,6 +40,10 @@
                 }
                 elem.data(pluginName, settings);
 
+                if(typeof  elem.data(pluginStatus) === 'undefined') {
+                    elem.data(pluginStatus, {})
+                }
+
                 var container_id = elem.attr("id");
 
                 // bind events
@@ -55,7 +60,7 @@
                 pagination_id = create_id(settings.pagination_id_prefix, container_id);
                 pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
 
-                if(!elem.data('initialize')) {
+                if(!elem.data(pluginStatus)['initialize']) {
 
                     elem_html = '<div id="' + header_id + '">' + settings.title + '</div>';
                     elem_html += '<div id="' + datagrid_id + '"></div>';
@@ -64,7 +69,7 @@
                     elem_html += '<div id="' + pref_dialog_id + '"></div>';
                     elem.html(elem_html);
 
-                    elem.data('initialize', true);
+                    elem.data(pluginStatus)['initialize'] = true;
                 }
 
                 // apply style
