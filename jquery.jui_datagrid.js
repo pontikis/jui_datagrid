@@ -124,17 +124,16 @@
                             // GRID EVENTS -------------------------------------
                             var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
                             var elem_table = $("#" + table_id);
+                            var col_index, row_index;
 
                             selector = "tbody tr td";
-                            var cell_index;
                             elem_table.off('click', selector).on('click', selector, function() {
-
-                                cell_index = $(this).index() + 1;
-                                elem.triggerHandler("onCellClick", cell_index);
+                                col_index = $(this).index() + 1;
+                                row_index = $(this).parent("tr").index() + 1;
+                                elem.triggerHandler("onCellClick", {col: col_index, row: row_index});
                             });
 
                             selector = "tbody tr";
-                            var row_index;
                             elem_table.off('click', selector).on('click', selector, function() {
 
                                 row_index = $(this).index() + 1;

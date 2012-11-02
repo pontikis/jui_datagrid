@@ -14,11 +14,11 @@ $(function() {
         onDelete: function() {
             alert('Delete pressed');
         },
-        onCellClick: function(event, cell_index) {
-            alert('td ' + cell_index);
+        onCellClick: function(event, data) {
+            alert('cell: col ' + data.col + ' row ' + data.row);
         },
         onRowClick: function(event, row_index) {
-            alert('tr ' + row_index);
+            //alert('tr ' + row_index);
         }
     });
 
