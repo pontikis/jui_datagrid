@@ -4,7 +4,7 @@
  * It uses jui_pagination plugin (which requires jquery-ui)
  * Copyright 2012 Christos Pontikis http://pontikis.net
  * Project page https://github.com/pontikis/jui_datagrid
- * UPCOMING Release: 1.00 (?? Oct 2012)
+ * UPCOMING Release: 1.00 (?? Nov 2012)
  * License MIT
  */
 "use strict";
