@@ -13,6 +13,12 @@ $(function() {
         title: 'Customers',
         onDelete: function() {
             alert('Delete pressed');
+        },
+        onCellClick: function(event, cell_index) {
+            alert('td ' + cell_index);
+        },
+        onRowClick: function(event, row_index) {
+            alert('tr ' + row_index);
         }
     });
 

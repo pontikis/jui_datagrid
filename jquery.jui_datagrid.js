@@ -42,6 +42,8 @@
                 var container_id = elem.attr("id");
 
                 // bind events
+                elem.unbind("onCellClick").bind("onCellClick", settings.onCellClick);
+                elem.unbind("onRowClick").bind("onRowClick", settings.onRowClick);
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
@@ -115,6 +117,28 @@
                             var selector;
 
                             // GRID EVENTS -------------------------------------
+                            var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+                            var elem_table = $("#" + table_id);
+
+                            selector = "tbody tr td";
+                            var cell_index;
+                            elem_table.off('click', selector).on('click', selector, function() {
+
+                                cell_index = $(this).index() + 1;
+                                elem.triggerHandler("onCellClick", cell_index);
+                            });
+
+                            selector = "tbody tr";
+                            var row_index;
+                            elem_table.off('click', selector).on('click', selector, function() {
+
+                                row_index = $(this).index() + 1;
+                                $(this).children("td").toggleClass(settings.selectedTrTdClass);
+
+                                elem.triggerHandler("onRowClick", row_index);
+                            });
+
+
 
                             // TOOLBAR EVENTS ----------------------------------
 
@@ -179,7 +203,7 @@
                                 // navigation tab
                                 selector = "#" + pref_dialog_id + '_slider';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(event.target).is(":checked");
+                                    state = $(this).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             useSlider: state
@@ -189,7 +213,7 @@
 
                                 selector = "#" + pref_dialog_id + '_goto_page';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(event.target).is(":checked");
+                                    state = $(this).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showGoToPage: state
@@ -199,7 +223,7 @@
 
                                 selector = "#" + pref_dialog_id + '_rows_per_page';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(event.target).is(":checked");
+                                    state = $(this).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showRowsPerPage: state
@@ -209,7 +233,7 @@
 
                                 selector = "#" + pref_dialog_id + '_rows_info';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(event.target).is(":checked");
+                                    state = $(this).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showRowsInfo: state
@@ -219,7 +243,7 @@
 
                                 selector = "#" + pref_dialog_id + '_nav_buttons';
                                 elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(event.target).is(":checked");
+                                    state = $(this).is(":checked");
                                     elem.jui_datagrid({
                                         paginationOptions: {
                                             showNavButtons: state
@@ -294,6 +318,8 @@
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
 
+                selectedTrTdClass: 'ui-state-highlight',
+
                 //toolbar classes
                 tbButtonContainer: 'tbBtnContainer',
                 tbPrefIconClass: 'ui-icon-gear',
@@ -317,6 +343,10 @@
                 pref_dialog_id_prefix: 'pref_dlg_',
                 pref_tabs_id_prefix: 'pref_tabs_',
 
+                onCellClick: function() {
+                },
+                onRowClick: function() {
+                },
                 onDelete: function() {
                 },
                 onDisplay: function() {
@@ -535,8 +565,8 @@
 
         var elem = $("#" + container_id);
         var page_rows = page_data.length;
-        var datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id;
-        var table_id = elem.jui_datagrid('getOption', 'table_id_prefix') + container_id;
+        var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
+        var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
 
         var tbl = '<table id="' + table_id + '">';
 
