@@ -663,7 +663,7 @@
             tools_html += '<div class="' + tbButtonContainer + '">';
 
             var refresh_id = tools_id + '_' + 'refresh';
-            tools_html += '<button id="' + refresh_id + '">' + rsc_jui_dg.refresh + '</button>';
+            tools_html += '<button id="' + refresh_id + '">' + rsc_jui_dg.tb_refresh + '</button>';
 
             tools_html += '</div>';
         }
@@ -672,7 +672,7 @@
             tools_html += '<div class="' + tbButtonContainer + '">';
 
             var delete_id = tools_id + '_' + 'delete';
-            tools_html += '<button id="' + delete_id + '">' + rsc_jui_dg.delete + '</button>';
+            tools_html += '<button id="' + delete_id + '">' + rsc_jui_dg.tb_delete + '</button>';
 
             tools_html += '</div>';
         }
@@ -683,12 +683,12 @@
 
         if(showPrintButton) {
             var print_id = tools_id + '_' + 'print';
-            tools_html += '<button id="' + print_id + '">' + rsc_jui_dg.print + '</button>';
+            tools_html += '<button id="' + print_id + '">' + rsc_jui_dg.tb_print + '</button>';
         }
 
         if(showExportButton) {
             var export_id = tools_id + '_' + 'export';
-            tools_html += '<button id="' + export_id + '">' + rsc_jui_dg.export + '</button>';
+            tools_html += '<button id="' + export_id + '">' + rsc_jui_dg.tb_export + '</button>';
         }
 
 
@@ -701,7 +701,7 @@
             tools_html += '<div class="' + tbButtonContainer + '">';
 
             var filters_id = tools_id + '_' + 'filters';
-            tools_html += '<button id="' + filters_id + '">' + rsc_jui_dg.filters + '</button>';
+            tools_html += '<button id="' + filters_id + '">' + rsc_jui_dg.tb_filters + '</button>';
 
             tools_html += '</div>';
         }
@@ -750,7 +750,7 @@
 
         if(showRefreshButton) {
             $("#" + refresh_id).button({
-                label: rsc_jui_dg.refresh,
+                label: rsc_jui_dg.tb_refresh,
                 text: showRefreshButtonText,
                 icons: {
                     primary: tbRefreshIconClass
@@ -760,7 +760,7 @@
 
         if(showDeleteButton) {
             $("#" + delete_id).button({
-                label: rsc_jui_dg.delete,
+                label: rsc_jui_dg.tb_delete,
                 text: showDeleteButtonText,
                 icons: {
                     primary: tbDeleteIconClass
@@ -770,7 +770,7 @@
 
         if(showPrintButton) {
             $("#" + print_id).button({
-                label: rsc_jui_dg.print,
+                label: rsc_jui_dg.tb_print,
                 text: showPrintButtonText,
                 icons: {
                     primary: tbPrintIconClass
@@ -780,7 +780,7 @@
 
         if(showExportButton) {
             $("#" + export_id).button({
-                label: rsc_jui_dg.export,
+                label: rsc_jui_dg.tb_export,
                 text: showExportButtonText,
                 icons: {
                     primary: tbExportIconClass
@@ -790,7 +790,7 @@
 
         if(showFiltersButton) {
             $("#" + filters_id).button({
-                label: rsc_jui_dg.filters,
+                label: rsc_jui_dg.tb_filters,
                 text: showFiltersButtonText,
                 icons: {
                     primary: tbFiltersIconClass
