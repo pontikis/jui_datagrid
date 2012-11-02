@@ -165,7 +165,7 @@
                                 var elem_pref_dialog = $("#" + pref_dialog_id);
                                 elem.off('click', selector).on('click', selector, function() {
 
-                                    if(typeof(elem_pref_dialog.data('dialog')) == 'object') {
+                                    if(jui_widget_exists(pref_dialog_id, 'dialog')) {
                                         elem_pref_dialog.dialog('destroy');
                                     }
 
@@ -473,6 +473,29 @@
      */
     var create_id = function(prefix, plugin_container_id) {
         return prefix + plugin_container_id;
+    };
+
+    /**
+     * DOM element with specified ID exists
+     * @param elem_id
+     * @return {Boolean}
+     */
+    var dom_element_exists = function(elem_id) {
+        return ($("#" + elem_id).length === 0 ? false : true);
+    };
+
+    /**
+     * jQuery UI widget exists on element with specified ID
+     * @param elem_id
+     * @param widget_type
+     * @return {Boolean}
+     */
+    var jui_widget_exists = function(elem_id, widget_type) {
+        if(!dom_element_exists(elem_id)) {
+            return false;
+        } else {
+            return (typeof $("#" + elem_id).data(widget_type) === 'object' ? true : false)
+        }
     };
 
 
