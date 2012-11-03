@@ -40,8 +40,16 @@
                 }
                 elem.data(pluginName, settings);
 
+                // initialize plugin status
                 if(typeof  elem.data(pluginStatus) === 'undefined') {
-                    elem.data(pluginStatus, {})
+                    elem.data(pluginStatus, {});
+                    elem.data(pluginStatus)['a_selected_ids'] = [];
+                    elem.data(pluginStatus)['count_selected_ids'] = 0;
+                }
+
+                if(settings.rowSelectionMode == 'single' || settings.rowSelectionMode == false) {
+                    elem.data(pluginStatus)['a_selected_ids'] = [];
+                    elem.data(pluginStatus)['count_selected_ids'] = 0;
                 }
 
                 var container_id = elem.attr("id");
@@ -117,7 +125,7 @@
                         /**
                          * *************************************************
                          * EVENTS HANDLING
-                         * (for NAVIGATION events, see display_pagination)
+                         * (for NAVIGATION events, see 'display_pagination()')
                          * *************************************************
                          */
                         var selector;
@@ -128,6 +136,7 @@
                             var elem_table = $("#" + table_id);
                             var col_index, row_index;
 
+                            /* click on cell */
                             selector = "tbody tr td";
                             elem_table.off('click', selector).on('click', selector, function() {
                                 col_index = $(this).index() + 1;
@@ -135,11 +144,45 @@
                                 elem.triggerHandler("onCellClick", {col: col_index, row: row_index});
                             });
 
+                            /* click on row */
                             selector = "tbody tr";
                             elem_table.off('click', selector).on('click', selector, function() {
 
-                                row_index = $(this).index() + 1;
-                                $(this).children("td").toggleClass(settings.selectedTrTdClass);
+                                if(settings.rowSelectionMode != false) {
+                                    // get row id
+                                    var prefix_len = (table_id + '_tr_').length;
+                                    var row_id = parseInt($(this).attr("id").substr(prefix_len));
+
+                                    if(settings.rowSelectionMode == 'single') {
+                                        elem.data(pluginStatus)['a_selected_ids'] = [];
+                                        elem.data(pluginStatus)['count_selected_ids'] = 0;
+                                        elem_table.find("td").removeClass(settings.selectedTrTdClass);
+                                    }
+
+                                    var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                                    if(idx > -1) {
+                                        elem.data(pluginStatus)['a_selected_ids'].splice(idx, 1);
+                                        elem.data(pluginStatus)['count_selected_ids'] -= 1;
+                                        $(this).children("td").removeClass(settings.selectedTrTdClass);
+                                    } else {
+                                        elem.data(pluginStatus)['a_selected_ids'].push(row_id);
+                                        elem.data(pluginStatus)['count_selected_ids'] += 1;
+                                        $(this).children("td").addClass(settings.selectedTrTdClass);
+                                    }
+
+                                    var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
+                                    var elem_selected_label = $("#" + tools_id + '_selected_label');
+                                    var elem_selected = $("#" + tools_id + '_selected');
+                                    if(selected_rows > 0) {
+                                        elem_selected_label.show();
+                                        elem_selected.text(selected_rows).show();
+                                    } else {
+                                        elem_selected_label.hide();
+                                        elem_selected.text(selected_rows).hide();
+                                    }
+                                }
+
+
 
                                 elem.triggerHandler("onRowClick", row_index);
                             });
@@ -740,10 +783,11 @@
             if(showSelectButtons && rowSelectionMode == 'multiple') {
                 tools_html += '<div class="' + tbButtonContainer + '">';
 
+                var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
                 var selected_label_id = tools_id + '_' + 'selected_label';
                 var selected_id = tools_id + '_' + 'selected';
                 tools_html += '<span id="' + selected_label_id + '">' + rsc_jui_dg.tb_selected_label + ':' + '</span>';
-                tools_html += '<span id="' + selected_id + '">' + '0' + '</span>';
+                tools_html += '<span id="' + selected_id + '">' + selected_rows + '</span>';
 
                 var select_all_id = tools_id + '_' + 'select_all';
                 tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.tb_select_all + '</button>';
@@ -824,8 +868,18 @@
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple') {
 
-                $("#" + selected_label_id).removeClass().addClass(tbSelectedLabelClass);
-                $("#" + selected_id).removeClass().addClass(tbSelectedClass);
+                var elem_selected_label = $("#" + selected_label_id);
+                var elem_selected = $("#" + selected_id);
+                elem_selected_label.removeClass().addClass(tbSelectedLabelClass);
+                elem_selected.removeClass().addClass(tbSelectedClass);
+
+                if(selected_rows > 0) {
+                    elem_selected_label.show();
+                    elem_selected.show();
+                } else {
+                    elem_selected_label.hide();
+                    elem_selected.hide();
+                }
 
                 $("#" + select_all_id).button({
                     label: rsc_jui_dg.tb_select_all,
