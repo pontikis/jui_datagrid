@@ -170,33 +170,7 @@
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
                                 elem.off('click', selector).on('click', selector, function() {
 
-                                    if(jui_widget_exists(pref_dialog_id, 'dialog')) {
-                                        elem_pref_dialog.dialog('destroy');
-                                    }
-
-                                    elem_pref_dialog.dialog({
-                                        autoOpen: true,
-                                        show: "blind",
-                                        hide: "explode",
-                                        width: 400,
-                                        height: 350,
-                                        position: {
-                                            my: "top",
-                                            at: "top",
-                                            of: '#' + container_id
-                                        },
-                                        title: rsc_jui_dg.preferences,
-                                        buttons: [
-                                            {
-                                                text: rsc_jui_dg.preferences_close,
-                                                click: function() {
-                                                    $(this).dialog("close");
-                                                    $(this).dialog("destroy");
-                                                }
-                                            }
-                                        ],
-                                        open: create_preferences(container_id)
-                                    });
+                                    create_dialog_pref(container_id, pref_dialog_id);
 
                                     var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
                                     $("#" + pref_tabs_id).tabs();
@@ -240,6 +214,8 @@
                 pageNum: 1,
                 rowsPerPage: 10,
                 maxRowsPerPage: 100,
+
+                rowSelectionMode: 'multiple',   // 'multiple', 'single', 'false'
 
                 // toolbar options
                 useToolbar: true,
@@ -553,7 +529,7 @@
 
         pref_html += '</div>';
 
-        /* NAV TOOLS -------------------------------------------------------- */
+        /* TAB NAV ---------------------------------------------------------- */
         pref_html += '<div id="' + tabs_id + '_nav">';
 
         pref_html += '<ul style="list-style-type: none;">';
@@ -588,6 +564,46 @@
         }
 
     };
+
+
+    /**
+     *
+     * @param plugin_container_id
+     * @param dialog_id
+     */
+    var create_dialog_pref = function(plugin_container_id, dialog_id) {
+
+        var elem_pref_dialog = $("#" + dialog_id);
+
+        if(jui_widget_exists(dialog_id, 'dialog')) {
+            elem_pref_dialog.dialog('destroy');
+        }
+
+        elem_pref_dialog.dialog({
+            autoOpen: true,
+            show: "blind",
+            hide: "explode",
+            width: 400,
+            height: 350,
+            position: {
+                my: "top",
+                at: "top",
+                of: '#' + plugin_container_id
+            },
+            title: rsc_jui_dg.preferences,
+            buttons: [
+                {
+                    text: rsc_jui_dg.preferences_close,
+                    click: function() {
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    }
+                }
+            ],
+            open: create_preferences(plugin_container_id)
+        });
+
+    }
 
     /**
      * Display datagrid
