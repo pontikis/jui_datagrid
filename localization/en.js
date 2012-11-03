@@ -11,7 +11,14 @@ var rsc_jui_dg = {
     pref_tab_grid: 'Grid',
     pref_tab_tools: 'Tools',
     pref_tab_nav: 'Navigation',
-    select_label: 'Select',
+
+    pref_show_select: 'Select buttons',
+    pref_show_refresh: 'Refresh button',
+    pref_show_delete: 'Delete button',
+    pref_show_print: 'Print button',
+    pref_show_export: 'Export button',
+    pref_show_filters: 'Filters button',
+
     select_all: 'All',
     select_none: 'None',
     select_inverse: 'Inverse',
@@ -20,7 +27,9 @@ var rsc_jui_dg = {
     tb_print: 'Print',
     tb_export: 'Export',
     tb_filters: 'Filters',
+
     rows_info_of: 'of',
     rows_info_records: 'records',
+
     no_records_found: 'No records found'
 };

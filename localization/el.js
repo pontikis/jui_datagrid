@@ -11,16 +11,26 @@ var rsc_jui_dg = {
     pref_tab_grid: 'Πίνακας',
     pref_tab_tools: 'Εργαλεία',
     pref_tab_nav: 'Πλοήγηση',
-    select_label: 'Επιλογή',
+
+    pref_show_select: 'Εργαλεία επιλογής',
+    pref_show_refresh: 'Ανανέωση',
+    pref_show_delete: 'Διαγραφή',
+    pref_show_print: 'Εκτύπωση',
+    pref_show_export: 'Εξαγωγή',
+    pref_show_filters: 'Κριτήρια',
+
     select_all: 'Όλα',
     select_none: 'Κανένα',
     select_inverse: 'Αναστροφή',
+
     tb_refresh: 'Ανανέωση',
     tb_delete: 'Διαγραφή',
     tb_print: 'Εκτύπωση',
     tb_export: 'Εξαγωγή',
     tb_filters: 'Κριτήρια',
+
     rows_info_of: 'από',
     rows_info_records: 'εγγραφές',
+
     no_records_found: 'Δεν βρέθηκαν εγγραφές'
 };

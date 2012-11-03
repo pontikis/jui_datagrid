@@ -72,22 +72,24 @@
                     elem.data(pluginStatus)['initialize'] = true;
                 }
 
-                // apply style
-                $("#" + container_id).removeClass().addClass(settings.containerClass);
-
                 var elem_header = $("#" + header_id);
+                var elem_grid = $("#" + datagrid_id);
+                var elem_tools = $("#" + tools_id);
+                var elem_pag = $("#" + pagination_id);
+                var elem_pref_dialog = $("#" + pref_dialog_id);
+
+                // apply style
+                elem.removeClass().addClass(settings.containerClass);
+
                 if(typeof settings.title === 'undefined') {
                     elem_header.hide();
                 } else {
-                    elem_header.show();
-                    elem_header.text(settings.title);
-                    elem_header.removeClass().addClass(settings.headerClass);
+                    elem_header.show().text(settings.title).removeClass().addClass(settings.headerClass);
                 }
 
-                $("#" + datagrid_id).removeClass().addClass(settings.datagridClass);
-                $("#" + tools_id).removeClass().addClass(settings.toolsClass);
-                $("#" + pagination_id).removeClass().addClass(settings.paginationClass);
-
+                elem_grid.removeClass().addClass(settings.datagridClass);
+                elem_tools.removeClass().addClass(settings.toolsClass);
+                elem_pag.removeClass().addClass(settings.paginationClass);
 
                 // fetch data and display datagrid
                 $.ajax({
@@ -166,7 +168,6 @@
                             if(settings.showPrefButton) {
 
                                 selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
-                                var elem_pref_dialog = $("#" + pref_dialog_id);
                                 elem.off('click', selector).on('click', selector, function() {
 
                                     if(jui_widget_exists(pref_dialog_id, 'dialog')) {
@@ -202,58 +203,22 @@
                                 });
 
                                 // PREFERENCES EVENTS --------------------------
-                                var state;
+                                var a_id_ext, a_opt;
+
+                                // tools tab
+                                a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
+                                a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
+                                for(var i in a_id_ext) {
+                                    util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
+                                }
 
                                 // navigation tab
-                                selector = "#" + pref_dialog_id + '_slider';
-                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(this).is(":checked");
-                                    elem.jui_datagrid({
-                                        paginationOptions: {
-                                            useSlider: state
-                                        }
-                                    })
-                                });
+                                a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
+                                a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
+                                for(var i in a_id_ext) {
+                                    util_pref_nav(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
+                                }
 
-                                selector = "#" + pref_dialog_id + '_goto_page';
-                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(this).is(":checked");
-                                    elem.jui_datagrid({
-                                        paginationOptions: {
-                                            showGoToPage: state
-                                        }
-                                    })
-                                });
-
-                                selector = "#" + pref_dialog_id + '_rows_per_page';
-                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(this).is(":checked");
-                                    elem.jui_datagrid({
-                                        paginationOptions: {
-                                            showRowsPerPage: state
-                                        }
-                                    })
-                                });
-
-                                selector = "#" + pref_dialog_id + '_rows_info';
-                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(this).is(":checked");
-                                    elem.jui_datagrid({
-                                        paginationOptions: {
-                                            showRowsInfo: state
-                                        }
-                                    })
-                                });
-
-                                selector = "#" + pref_dialog_id + '_nav_buttons';
-                                elem_pref_dialog.off('click', selector).on('click', selector, function(event) {
-                                    state = $(this).is(":checked");
-                                    elem.jui_datagrid({
-                                        paginationOptions: {
-                                            showNavButtons: state
-                                        }
-                                    })
-                                });
                             }
 
                             // trigger event
@@ -280,7 +245,6 @@
                 useToolbar: true,
                 showPrefButton: true,
                 showSelectButtons: true,
-                showSelectLabel: false,
                 showRefreshButton: true,
                 showDeleteButton: true,
                 showPrintButton: true,
@@ -327,7 +291,6 @@
                 //toolbar classes
                 tbButtonContainer: 'tbBtnContainer',
                 tbPrefIconClass: 'ui-icon-gear',
-                tbSelectLabelClass: 'selectLabelClass',
                 tbSelectAllIconClass: 'ui-icon-circle-check',
                 tbSelectNoneIconClass: 'ui-icon-circle-close',
                 tbSelectInverseIconClass: 'ui-icon-check',
@@ -502,6 +465,51 @@
         }
     };
 
+    /**
+     *
+     * @param elem
+     * @param elem_pref_dialog
+     * @param selector
+     * @param prop_name
+     */
+    var util_pref_nav = function(elem, elem_pref_dialog, selector, prop_name) {
+        elem_pref_dialog.off('click', selector).on('click', selector, function() {
+            var obj_pref_pag = {};
+            obj_pref_pag[prop_name] = $(this).is(":checked");
+            elem.jui_datagrid({
+                paginationOptions: obj_pref_pag
+            })
+        });
+    };
+
+    /**
+     *
+     * @param elem
+     * @param elem_pref_dialog
+     * @param selector
+     * @param prop_name
+     */
+    var util_pref = function(elem, elem_pref_dialog, selector, prop_name) {
+        elem_pref_dialog.off('click', selector).on('click', selector, function() {
+            var obj_pref = {};
+            obj_pref[prop_name] = $(this).is(":checked");
+            elem.jui_datagrid(obj_pref)
+        });
+    };
+
+    /**
+     *
+     * @param chk_id
+     * @param chk_label
+     * @return {String}
+     */
+    var util_pref_li = function(chk_id, chk_label) {
+        var li_html;
+        li_html = '<li>';
+        li_html += '<input type="checkbox" id="' + chk_id + '" /><label for="' + chk_id + '">' + chk_label + '</label>';
+        li_html += '</li>';
+        return li_html;
+    };
 
     /**
      * Create preferences
@@ -514,55 +522,46 @@
         prefix = elem.jui_datagrid('getOption', 'pref_tabs_id_prefix');
         var tabs_id = create_id(prefix, plugin_container_id);
 
-        var pref_id;
-        var state;
-
         var pref_html = '';
 
+
         pref_html += '<div id="' + tabs_id + '">';
+
+        /* TABS ------------------------------------------------------------- */
         pref_html += '<ul>';
-        pref_html += '<li><a href="#' + tabs_id + '-1">' + rsc_jui_dg.pref_tab_grid + '</a></li>';
-        pref_html += '<li><a href="#' + tabs_id + '-2">' + rsc_jui_dg.pref_tab_tools + '</a></li>';
-        pref_html += '<li><a href="#' + tabs_id + '-3">' + rsc_jui_dg.pref_tab_nav + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '_grid">' + rsc_jui_dg.pref_tab_grid + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '_tools">' + rsc_jui_dg.pref_tab_tools + '</a></li>';
+        pref_html += '<li><a href="#' + tabs_id + '_nav">' + rsc_jui_dg.pref_tab_nav + '</a></li>';
         pref_html += '</ul>';
 
-        pref_html += '<div id="' + tabs_id + '-1">';
+        /* TAB GRID --------------------------------------------------------- */
+        pref_html += '<div id="' + tabs_id + '_grid">';
         pref_html += 'Under construction 1';
         pref_html += '</div>';
 
-        pref_html += '<div id="' + tabs_id + '-2">';
-        pref_html += 'Under construction 2';
-        pref_html += '</div>';
-
-        pref_html += '<div id="' + tabs_id + '-3">';
+        /* TAB TOOLS -------------------------------------------------------- */
+        pref_html += '<div id="' + tabs_id + '_tools">';
 
         pref_html += '<ul style="list-style-type: none;">';
+        pref_html += util_pref_li(dialog_id + '_btn_select', rsc_jui_dg.pref_show_select);
+        pref_html += util_pref_li(dialog_id + '_btn_refresh', rsc_jui_dg.pref_show_refresh);
+        pref_html += util_pref_li(dialog_id + '_btn_delete', rsc_jui_dg.pref_show_delete);
+        pref_html += util_pref_li(dialog_id + '_btn_print', rsc_jui_dg.pref_show_print);
+        pref_html += util_pref_li(dialog_id + '_btn_export', rsc_jui_dg.pref_show_export);
+        pref_html += util_pref_li(dialog_id + '_btn_filters', rsc_jui_dg.pref_show_filters);
+        pref_html += '</ul>';
 
-        pref_id = dialog_id + '_slider';
-        pref_html += '<li>';
-        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_slider + '</label>';
-        pref_html += '</li>';
+        pref_html += '</div>';
 
-        pref_id = dialog_id + '_goto_page';
-        pref_html += '<li>';
-        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_goto_page + '</label>';
-        pref_html += '</li>';
+        /* NAV TOOLS -------------------------------------------------------- */
+        pref_html += '<div id="' + tabs_id + '_nav">';
 
-        pref_id = dialog_id + '_rows_per_page';
-        pref_html += '<li>';
-        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_rows_per_page + '</label>';
-        pref_html += '</li>';
-
-        pref_id = dialog_id + '_rows_info';
-        pref_html += '<li>';
-        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_rows_info + '</label>';
-        pref_html += '</li>';
-
-        pref_id = dialog_id + '_nav_buttons';
-        pref_html += '<li>';
-        pref_html += '<input type="checkbox" id="' + pref_id + '" /><label for="' + pref_id + '">' + rsc_jui_pag.pref_show_nav_buttons + '</label>';
-        pref_html += '</li>';
-
+        pref_html += '<ul style="list-style-type: none;">';
+        pref_html += util_pref_li(dialog_id + '_slider', rsc_jui_pag.pref_show_slider);
+        pref_html += util_pref_li(dialog_id + '_goto_page', rsc_jui_pag.pref_show_goto_page);
+        pref_html += util_pref_li(dialog_id + '_rows_per_page', rsc_jui_pag.pref_show_rows_per_page);
+        pref_html += util_pref_li(dialog_id + '_rows_info', rsc_jui_pag.pref_show_rows_info);
+        pref_html += util_pref_li(dialog_id + '_nav_buttons', rsc_jui_pag.pref_show_nav_buttons);
         pref_html += '</ul>';
 
         pref_html += '</div>';
@@ -571,13 +570,21 @@
 
         $("#" + dialog_id).html(pref_html);
 
-        var a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
-        var a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
+        var a_id_ext, a_opt;
+        /* TAB TOOLS set values --------------------------------------------- */
+        a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
+        a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
 
         for(var i in a_id_ext) {
-            pref_id = dialog_id + a_id_ext[i];
-            state = elem.jui_datagrid('getPaginationOption', a_opt[i]);
-            $("#" + pref_id).attr("checked", state);
+            $("#" + dialog_id + a_id_ext[i]).attr("checked",  elem.jui_datagrid('getOption', a_opt[i]));
+        }
+
+        /* TAB NAV set values ----------------------------------------------- */
+        a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
+        a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
+
+        for(var i in a_id_ext) {
+            $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getPaginationOption', a_opt[i]));
         }
 
     };
@@ -656,8 +663,6 @@
         var tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass');
 
         var showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons');
-        var showSelectLabel = elem.jui_datagrid('getOption', 'showSelectLabel');
-        var tbSelectLabelClass = elem.jui_datagrid('getOption', 'tbSelectLabelClass');
         var tbSelectAllIconClass = elem.jui_datagrid('getOption', 'tbSelectAllIconClass');
         var tbSelectNoneIconClass = elem.jui_datagrid('getOption', 'tbSelectNoneIconClass');
         var tbSelectInverseIconClass = elem.jui_datagrid('getOption', 'tbSelectInverseIconClass');
@@ -698,11 +703,6 @@
 
         if(showSelectButtons) {
             tools_html += '<div class="' + tbButtonContainer + '">';
-
-            var select_label_id = tools_id + '_' + 'select_label';
-            if(showSelectLabel) {
-                tools_html += '<label id="' + select_label_id + '">' + rsc_jui_dg.select_label + '</label>';
-            }
 
             var select_all_id = tools_id + '_' + 'select_all';
             tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.select_all + '</button>';
@@ -777,8 +777,6 @@
         }
 
         if(showSelectButtons) {
-
-            $("#" + select_label_id).removeClass().addClass(tbSelectLabelClass);
 
             $("#" + select_all_id).button({
                 label: rsc_jui_dg.select_all,
