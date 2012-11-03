@@ -106,24 +106,24 @@
 
                         if(total_rows == 0) {
                             display_no_data(container_id);
+                            display_tools(container_id, total_rows);
                         } else {
                             display_grid(container_id, total_rows, page_data);
                             apply_grid_style(container_id);
-                            if(settings.useToolbar) {
-                                display_tools(container_id);
-                            }
+                            display_tools(container_id, total_rows);
                             display_pagination(container_id, total_rows);
+                        }
 
+                        /**
+                         * *************************************************
+                         * EVENTS HANDLING
+                         * (for NAVIGATION events, see display_pagination)
+                         * *************************************************
+                         */
+                        var selector;
 
-                            /**
-                             * *************************************************
-                             * EVENTS HANDLING
-                             * (for NAVIGATION events, see display_pagination)
-                             * *************************************************
-                             */
-                            var selector;
-
-                            // GRID EVENTS -------------------------------------
+                        // GRID EVENTS -------------------------------------
+                        if(total_rows > 0) {
                             var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
                             var elem_table = $("#" + table_id);
                             var col_index, row_index;
@@ -143,61 +143,61 @@
 
                                 elem.triggerHandler("onRowClick", row_index);
                             });
-
-
-
-                            // TOOLBAR EVENTS ----------------------------------
-
-                            /* click on Delete button */
-                            if(settings.showDeleteButton) {
-                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
-                                elem.off('click', selector).on('click', selector, function() {
-                                    elem.triggerHandler("onDelete");
-                                });
-                            }
-
-                            /* click on Refresh button */
-                            if(settings.showRefreshButton) {
-                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
-                                elem.off('click', selector).on('click', selector, function() {
-                                    $("#" + container_id).jui_datagrid('refresh');
-                                });
-                            }
-
-                            /* click on Preferences button */
-                            if(settings.showPrefButton) {
-
-                                selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
-                                elem.off('click', selector).on('click', selector, function() {
-
-                                    create_dialog_pref(container_id, pref_dialog_id);
-
-                                    var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
-                                    $("#" + pref_tabs_id).tabs();
-                                });
-
-                                // PREFERENCES EVENTS --------------------------
-                                var a_id_ext, a_opt;
-
-                                // tools tab
-                                a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
-                                a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
-                                for(var i in a_id_ext) {
-                                    util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
-                                }
-
-                                // navigation tab
-                                a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
-                                a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
-                                for(var i in a_id_ext) {
-                                    util_pref_nav(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
-                                }
-
-                            }
-
-                            // trigger event
-                            elem.triggerHandler("onDisplay");
                         }
+
+                        // TOOLBAR EVENTS ----------------------------------
+
+                        /* click on Refresh button */
+                        if(settings.showRefreshButton) {
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
+                            elem.off('click', selector).on('click', selector, function() {
+                                $("#" + container_id).jui_datagrid('refresh');
+                            });
+                        }
+
+                        /* click on Delete button */
+                        if(settings.showDeleteButton) {
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
+                            elem.off('click', selector).on('click', selector, function() {
+                                elem.triggerHandler("onDelete");
+                            });
+                        }
+
+
+                        /* click on Preferences button */
+                        if(settings.showPrefButton) {
+
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'pref';
+                            elem.off('click', selector).on('click', selector, function() {
+
+                                create_dialog_pref(container_id, pref_dialog_id);
+
+                                var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
+                                $("#" + pref_tabs_id).tabs();
+                            });
+
+                            // PREFERENCES EVENTS --------------------------
+                            var a_id_ext, a_opt;
+
+                            // tools tab
+                            a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
+                            a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
+                            for(var i in a_id_ext) {
+                                util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
+                            }
+
+                            // navigation tab
+                            a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
+                            a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
+                            for(var i in a_id_ext) {
+                                util_pref_nav(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
+                            }
+
+                        }
+
+                        // trigger event
+                        elem.triggerHandler("onDisplay");
+
                     }
                 });
             });
@@ -215,10 +215,9 @@
                 rowsPerPage: 10,
                 maxRowsPerPage: 100,
 
-                rowSelectionMode: 'multiple',   // 'multiple', 'single', 'false'
+                rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
                 // toolbar options
-                useToolbar: true,
                 showPrefButton: true,
                 showSelectButtons: true,
                 showRefreshButton: true,
@@ -552,7 +551,7 @@
         a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
 
         for(var i in a_id_ext) {
-            $("#" + dialog_id + a_id_ext[i]).attr("checked",  elem.jui_datagrid('getOption', a_opt[i]));
+            $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getOption', a_opt[i]));
         }
 
         /* TAB NAV set values ----------------------------------------------- */
@@ -666,7 +665,7 @@
      * Display tools
      * @param container_id
      */
-    var display_tools = function(container_id) {
+    var display_tools = function(container_id, total_rows) {
 
         var elem = $("#" + container_id);
         var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
@@ -716,22 +715,22 @@
 
             tools_html += '</div>';
         }
+        if(total_rows > 0) {
+            if(showSelectButtons) {
+                tools_html += '<div class="' + tbButtonContainer + '">';
 
-        if(showSelectButtons) {
-            tools_html += '<div class="' + tbButtonContainer + '">';
+                var select_all_id = tools_id + '_' + 'select_all';
+                tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.select_all + '</button>';
 
-            var select_all_id = tools_id + '_' + 'select_all';
-            tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.select_all + '</button>';
+                var select_none_id = tools_id + '_' + 'select_none';
+                tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.select_none + '</button>';
 
-            var select_none_id = tools_id + '_' + 'select_none';
-            tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.select_none + '</button>';
+                var select_inv_id = tools_id + '_' + 'select_inverse';
+                tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.select_inverse + '</button>';
 
-            var select_inv_id = tools_id + '_' + 'select_inverse';
-            tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.select_inverse + '</button>';
-
-            tools_html += '</div>';
+                tools_html += '</div>';
+            }
         }
-
         if(showRefreshButton) {
             tools_html += '<div class="' + tbButtonContainer + '">';
 
@@ -741,34 +740,37 @@
             tools_html += '</div>';
         }
 
-        if(showDeleteButton) {
-            tools_html += '<div class="' + tbButtonContainer + '">';
+        if(total_rows > 0) {
+            if(showDeleteButton) {
+                tools_html += '<div class="' + tbButtonContainer + '">';
 
-            var delete_id = tools_id + '_' + 'delete';
-            tools_html += '<button id="' + delete_id + '">' + rsc_jui_dg.tb_delete + '</button>';
+                var delete_id = tools_id + '_' + 'delete';
+                tools_html += '<button id="' + delete_id + '">' + rsc_jui_dg.tb_delete + '</button>';
 
-            tools_html += '</div>';
+                tools_html += '</div>';
+            }
         }
 
-        if(showPrintButton || showExportButton) {
-            tools_html += '<div class="' + tbButtonContainer + '">';
+        if(total_rows > 0) {
+            if(showPrintButton || showExportButton) {
+                tools_html += '<div class="' + tbButtonContainer + '">';
+            }
+
+            if(showPrintButton) {
+                var print_id = tools_id + '_' + 'print';
+                tools_html += '<button id="' + print_id + '">' + rsc_jui_dg.tb_print + '</button>';
+            }
+
+            if(showExportButton) {
+                var export_id = tools_id + '_' + 'export';
+                tools_html += '<button id="' + export_id + '">' + rsc_jui_dg.tb_export + '</button>';
+            }
+
+
+            if(showPrintButton || showExportButton) {
+                tools_html += '</div>';
+            }
         }
-
-        if(showPrintButton) {
-            var print_id = tools_id + '_' + 'print';
-            tools_html += '<button id="' + print_id + '">' + rsc_jui_dg.tb_print + '</button>';
-        }
-
-        if(showExportButton) {
-            var export_id = tools_id + '_' + 'export';
-            tools_html += '<button id="' + export_id + '">' + rsc_jui_dg.tb_export + '</button>';
-        }
-
-
-        if(showPrintButton || showExportButton) {
-            tools_html += '</div>';
-        }
-
 
         if(showFiltersButton) {
             tools_html += '<div class="' + tbButtonContainer + '">';
@@ -792,31 +794,33 @@
             });
         }
 
-        if(showSelectButtons) {
+        if(total_rows > 0) {
+            if(showSelectButtons) {
 
-            $("#" + select_all_id).button({
-                label: rsc_jui_dg.select_all,
-                text: showSelectAllButtonText,
-                icons: {
-                    primary: tbSelectAllIconClass
-                }
-            });
+                $("#" + select_all_id).button({
+                    label: rsc_jui_dg.select_all,
+                    text: showSelectAllButtonText,
+                    icons: {
+                        primary: tbSelectAllIconClass
+                    }
+                });
 
-            $("#" + select_none_id).button({
-                label: rsc_jui_dg.select_none,
-                text: showSelectNoneButtonText,
-                icons: {
-                    primary: tbSelectNoneIconClass
-                }
-            });
+                $("#" + select_none_id).button({
+                    label: rsc_jui_dg.select_none,
+                    text: showSelectNoneButtonText,
+                    icons: {
+                        primary: tbSelectNoneIconClass
+                    }
+                });
 
-            $("#" + select_inv_id).button({
-                label: rsc_jui_dg.select_inverse,
-                text: showSelectInverseButtonText,
-                icons: {
-                    primary: tbSelectInverseIconClass
-                }
-            });
+                $("#" + select_inv_id).button({
+                    label: rsc_jui_dg.select_inverse,
+                    text: showSelectInverseButtonText,
+                    icons: {
+                        primary: tbSelectInverseIconClass
+                    }
+                });
+            }
         }
 
         if(showRefreshButton) {
@@ -828,35 +832,38 @@
                 }
             });
         }
-
-        if(showDeleteButton) {
-            $("#" + delete_id).button({
-                label: rsc_jui_dg.tb_delete,
-                text: showDeleteButtonText,
-                icons: {
-                    primary: tbDeleteIconClass
-                }
-            });
+        if(total_rows > 0) {
+            if(showDeleteButton) {
+                $("#" + delete_id).button({
+                    label: rsc_jui_dg.tb_delete,
+                    text: showDeleteButtonText,
+                    icons: {
+                        primary: tbDeleteIconClass
+                    }
+                });
+            }
         }
 
-        if(showPrintButton) {
-            $("#" + print_id).button({
-                label: rsc_jui_dg.tb_print,
-                text: showPrintButtonText,
-                icons: {
-                    primary: tbPrintIconClass
-                }
-            });
-        }
+        if(total_rows > 0) {
+            if(showPrintButton) {
+                $("#" + print_id).button({
+                    label: rsc_jui_dg.tb_print,
+                    text: showPrintButtonText,
+                    icons: {
+                        primary: tbPrintIconClass
+                    }
+                });
+            }
 
-        if(showExportButton) {
-            $("#" + export_id).button({
-                label: rsc_jui_dg.tb_export,
-                text: showExportButtonText,
-                icons: {
-                    primary: tbExportIconClass
-                }
-            });
+            if(showExportButton) {
+                $("#" + export_id).button({
+                    label: rsc_jui_dg.tb_export,
+                    text: showExportButtonText,
+                    icons: {
+                        primary: tbExportIconClass
+                    }
+                });
+            }
         }
 
         if(showFiltersButton) {
