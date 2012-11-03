@@ -51,6 +51,7 @@ if($rs)
 if($conn)
 	$conn->Close();
 
+$result['row_primary_key'] = 'id';
 $result['total_rows'] = $total_rows;
 $result['page_data'] = $a_data;
 

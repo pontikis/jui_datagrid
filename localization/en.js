@@ -19,9 +19,10 @@ var rsc_jui_dg = {
     pref_show_export: 'Export button',
     pref_show_filters: 'Filters button',
 
-    select_all: 'All',
-    select_none: 'None',
-    select_inverse: 'Inverse',
+    tb_selected_label: 'Selected',
+    tb_select_all: 'All',
+    tb_select_none: 'None',
+    tb_select_inverse: 'Inverse',
     tb_refresh: 'Refresh',
     tb_delete: 'Delete',
     tb_print: 'Print',

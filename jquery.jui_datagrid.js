@@ -281,6 +281,8 @@
                 //toolbar classes
                 tbButtonContainer: 'tbBtnContainer',
                 tbPrefIconClass: 'ui-icon-gear',
+                tbSelectedLabelClass: 'selectedLabelClass',
+                tbSelectedClass: 'selectedClass',
                 tbSelectAllIconClass: 'ui-icon-circle-check',
                 tbSelectNoneIconClass: 'ui-icon-circle-close',
                 tbSelectInverseIconClass: 'ui-icon-check',
@@ -635,7 +637,7 @@
         var tbl = '<table id="' + table_id + '">';
 
         tbl += '<thead>';
-        tbl += '<tr>';
+        tbl += '<tr id="' + table_id + '_tr_0">';
         $.each(page_data[0], function(index) {
             tbl += '<th>' + index + '</th>';
         });
@@ -644,7 +646,7 @@
 
         tbl += '<tbody>';
         for(var i = 0; i < page_rows; i++) {
-            tbl += '<tr>';
+            tbl += '<tr id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '">';
             $.each(page_data[i], function(index, value) {
                 tbl += '<td>' + value + '</td>';
             });
@@ -695,6 +697,8 @@
         var tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass');
 
         var showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons');
+        var tbSelectedClass = elem.jui_datagrid('getOption', 'tbSelectedClass');
+        var tbSelectedLabelClass = elem.jui_datagrid('getOption', 'tbSelectedLabelClass');
         var tbSelectAllIconClass = elem.jui_datagrid('getOption', 'tbSelectAllIconClass');
         var tbSelectNoneIconClass = elem.jui_datagrid('getOption', 'tbSelectNoneIconClass');
         var tbSelectInverseIconClass = elem.jui_datagrid('getOption', 'tbSelectInverseIconClass');
@@ -736,14 +740,19 @@
             if(showSelectButtons && rowSelectionMode == 'multiple') {
                 tools_html += '<div class="' + tbButtonContainer + '">';
 
+                var selected_label_id = tools_id + '_' + 'selected_label';
+                var selected_id = tools_id + '_' + 'selected';
+                tools_html += '<span id="' + selected_label_id + '">' + rsc_jui_dg.tb_selected_label + ':' + '</span>';
+                tools_html += '<span id="' + selected_id + '">' + '0' + '</span>';
+
                 var select_all_id = tools_id + '_' + 'select_all';
-                tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.select_all + '</button>';
+                tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.tb_select_all + '</button>';
 
                 var select_none_id = tools_id + '_' + 'select_none';
-                tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.select_none + '</button>';
+                tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.tb_select_none + '</button>';
 
                 var select_inv_id = tools_id + '_' + 'select_inverse';
-                tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.select_inverse + '</button>';
+                tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.tb_select_inverse + '</button>';
 
                 tools_html += '</div>';
             }
@@ -813,10 +822,13 @@
         }
 
         if(total_rows > 0) {
-            if(showSelectButtons) {
+            if(showSelectButtons && rowSelectionMode == 'multiple') {
+
+                $("#" + selected_label_id).removeClass().addClass(tbSelectedLabelClass);
+                $("#" + selected_id).removeClass().addClass(tbSelectedClass);
 
                 $("#" + select_all_id).button({
-                    label: rsc_jui_dg.select_all,
+                    label: rsc_jui_dg.tb_select_all,
                     text: showSelectAllButtonText,
                     icons: {
                         primary: tbSelectAllIconClass
@@ -824,7 +836,7 @@
                 });
 
                 $("#" + select_none_id).button({
-                    label: rsc_jui_dg.select_none,
+                    label: rsc_jui_dg.tb_select_none,
                     text: showSelectNoneButtonText,
                     icons: {
                         primary: tbSelectNoneIconClass
@@ -832,7 +844,7 @@
                 });
 
                 $("#" + select_inv_id).button({
-                    label: rsc_jui_dg.select_inverse,
+                    label: rsc_jui_dg.tb_select_inverse,
                     text: showSelectInverseButtonText,
                     icons: {
                         primary: tbSelectInverseIconClass

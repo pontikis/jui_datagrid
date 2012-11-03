@@ -58,8 +58,13 @@ table.grid_table.tr.trhover {
 }
 
 /* toolbar */
-.selectLabelClass {
-    margin: auto 5px auto 5px;
+.selectedLabelClass {
+    margin: auto 3px auto 5px;
+    font-size: 13px;
+}
+
+.selectedClass {
+    margin: auto 5px auto 1px;
     font-size: 13px;
 }
 

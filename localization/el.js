@@ -19,10 +19,10 @@ var rsc_jui_dg = {
     pref_show_export: 'Εξαγωγή',
     pref_show_filters: 'Κριτήρια',
 
-    select_all: 'Όλα',
-    select_none: 'Κανένα',
-    select_inverse: 'Αναστροφή',
-
+    tb_selected_label: 'Επιλεγμένα',
+    tb_select_all: 'Όλα',
+    tb_select_none: 'Κανένα',
+    tb_select_inverse: 'Αναστροφή',
     tb_refresh: 'Ανανέωση',
     tb_delete: 'Διαγραφή',
     tb_print: 'Εκτύπωση',
