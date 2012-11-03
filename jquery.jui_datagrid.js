@@ -86,7 +86,6 @@
                 } else {
                     elem_header.show().text(settings.title).removeClass().addClass(settings.headerClass);
                 }
-
                 elem_grid.removeClass().addClass(settings.datagridClass);
                 elem_tools.removeClass().addClass(settings.toolsClass);
                 elem_pag.removeClass().addClass(settings.paginationClass);
