@@ -100,6 +100,7 @@
                     },
                     success: function(data) {
                         var a_data = $.parseJSON(data);
+                        var row_primary_key = a_data['row_primary_key'];
                         var total_rows = a_data['total_rows'];
                         var page_data = a_data['page_data'];
 
@@ -107,7 +108,7 @@
                             display_no_data(container_id);
                             display_tools(container_id, total_rows);
                         } else {
-                            display_grid(container_id, total_rows, page_data);
+                            display_grid(container_id, total_rows, page_data, row_primary_key);
                             apply_grid_style(container_id);
                             display_tools(container_id, total_rows);
                             display_pagination(container_id, total_rows);
@@ -152,6 +153,21 @@
                             elem.off('click', selector).on('click', selector, function() {
                                 $("#" + container_id).jui_datagrid('refresh');
                             });
+                        }
+
+                        /* click on Select All (in page) button */
+                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'select_all';
+                            elem.off('click', selector).on('click', selector, function() {
+                                elem_table.find("td").addClass(settings.selectedTrTdClass);
+                            });
+
+
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'select_none';
+                            elem.off('click', selector).on('click', selector, function() {
+                                elem_table.find("td").removeClass(settings.selectedTrTdClass);
+                            });
+
                         }
 
                         /* click on Delete button */
@@ -609,7 +625,7 @@
      * @param total_rows
      * @param page_data
      */
-    var display_grid = function(container_id, total_rows, page_data) {
+    var display_grid = function(container_id, total_rows, page_data, row_primary_key) {
 
         var elem = $("#" + container_id);
         var page_rows = page_data.length;
@@ -670,6 +686,8 @@
         var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
         var toolsClass = elem.jui_datagrid('getOption', 'toolsClass');
 
+        var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
+
         var tbButtonContainer = elem.jui_datagrid('getOption', 'tbButtonContainer');
 
         var showPrefButton = elem.jui_datagrid('getOption', 'showPrefButton');
@@ -715,7 +733,7 @@
             tools_html += '</div>';
         }
         if(total_rows > 0) {
-            if(showSelectButtons) {
+            if(showSelectButtons && rowSelectionMode == 'multiple') {
                 tools_html += '<div class="' + tbButtonContainer + '">';
 
                 var select_all_id = tools_id + '_' + 'select_all';
@@ -730,6 +748,7 @@
                 tools_html += '</div>';
             }
         }
+
         if(showRefreshButton) {
             tools_html += '<div class="' + tbButtonContainer + '">';
 
