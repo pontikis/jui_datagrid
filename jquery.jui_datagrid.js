@@ -118,6 +118,7 @@
                         } else {
                             display_grid(container_id, total_rows, page_data, row_primary_key);
                             apply_grid_style(container_id);
+                            apply_selections(container_id);
                             display_tools(container_id, total_rows);
                             display_pagination(container_id, total_rows);
                         }
@@ -720,6 +721,38 @@
         }
 
     };
+
+
+    var apply_selections = function(container_id) {
+        var elem = $("#" + container_id);
+        var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
+        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+        var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+        var elem_table = $("#" + table_id);
+        var prefix_len = (table_id + '_tr_').length;
+
+        if(rowSelectionMode == 'multiple') {
+            var selector_rows = '#' + table_id + ' tbody tr';
+            $(selector_rows).each(function() {
+                // get row id
+                var row_id = parseInt($(this).attr("id").substr(prefix_len));
+
+                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                if(idx > -1) {
+                    $(this).children("td").addClass(selectedTrTdClass);
+                }
+            });
+
+        } else {
+            elem.data(pluginStatus)['a_selected_ids'] = [];
+            elem.data(pluginStatus)['count_selected_ids'] = 0;
+            elem_table.find("td").removeClass(selectedTrTdClass);
+        }
+
+
+
+
+    }
 
     /**
      * Display tools
