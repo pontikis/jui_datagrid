@@ -48,7 +48,7 @@ $(function() {
     $("#demo_grid2").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
         containerClass: 'grid2_container ui-state-default ui-corner-all',
-        rowSelectionMode: 'single',
+        //rowSelectionMode: 'single',
         paginationOptions: {
             sliderAnimation: false
         }

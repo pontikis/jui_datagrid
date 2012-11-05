@@ -20,9 +20,10 @@ var rsc_jui_dg = {
     pref_show_filters: 'Κριτήρια',
 
     tb_selected_label: 'Επιλεγμένα',
-    tb_select_all: 'Όλα στη σελίδα',
-    tb_select_none: 'Κανένα στη σελίδα',
-    tb_select_inverse: 'Αναστροφή',
+    tb_select_all_in_page: 'Όλα στη σελίδα',
+    tb_select_none_in_page: 'Κανένα στη σελίδα',
+    tb_select_inverse_in_page: 'Αναστροφή',
+    tb_select_none: 'Κανένα επιλεγμένο',
     tb_refresh: 'Ανανέωση',
     tb_delete: 'Διαγραφή',
     tb_print: 'Εκτύπωση',

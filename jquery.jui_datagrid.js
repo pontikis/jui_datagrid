@@ -129,7 +129,7 @@
                          * (for NAVIGATION events, see 'display_pagination()')
                          * *************************************************
                          */
-                        var selector;
+                        var selector, tools_id, drop_select_id;
 
                         // GRID EVENTS -------------------------------------
                         if(total_rows > 0) {
@@ -172,56 +172,20 @@
                                     }
 
                                     var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
-                                    var elem_selected_label = $("#" + tools_id + '_selected_label');
-                                    var elem_selected = $("#" + tools_id + '_selected');
-                                    if(selected_rows > 0) {
-                                        elem_selected_label.show();
-                                        elem_selected.text(selected_rows).show();
-                                    } else {
-                                        elem_selected_label.hide();
-                                        elem_selected.text(selected_rows).hide();
-                                    }
+                                    tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
+                                    drop_select_id = tools_id + '_drop_select';
+
+                                    $("#" + drop_select_id + '_launcher').button({
+                                        label: rsc_jui_dg.tb_selected_label + ': ' + selected_rows
+                                    });
+
                                 }
-
-
 
                                 elem.triggerHandler("onRowClick", row_index);
                             });
                         }
 
                         // TOOLBAR EVENTS ----------------------------------
-
-                        /* click on Refresh button */
-                        if(settings.showRefreshButton) {
-                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
-                            elem.off('click', selector).on('click', selector, function() {
-                                $("#" + container_id).jui_datagrid('refresh');
-                            });
-                        }
-
-                        /* click on Select All (in page) button */
-                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
-                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'select_all';
-                            elem.off('click', selector).on('click', selector, function() {
-                                elem_table.find("td").addClass(settings.selectedTrTdClass);
-                            });
-
-
-                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'select_none';
-                            elem.off('click', selector).on('click', selector, function() {
-                                elem_table.find("td").removeClass(settings.selectedTrTdClass);
-                            });
-
-                        }
-
-                        /* click on Delete button */
-                        if(settings.showDeleteButton) {
-                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
-                            elem.off('click', selector).on('click', selector, function() {
-                                elem.triggerHandler("onDelete");
-                            });
-                        }
-
 
                         /* click on Preferences button */
                         if(settings.showPrefButton) {
@@ -235,7 +199,7 @@
                                 $("#" + pref_tabs_id).tabs();
                             });
 
-                            // PREFERENCES EVENTS --------------------------
+                            // PREFERENCES EVENTS ------------------------------
                             var a_id_ext, a_opt;
 
                             // tools tab
@@ -252,6 +216,39 @@
                                 util_pref_nav(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
                             }
 
+                        }
+
+                        /* Selection dropdown */
+                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
+
+                            tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
+                            drop_select_id = tools_id + '_drop_select';
+
+                            $("#" + drop_select_id).jui_dropdown({
+                                onSelect: function(event, data) {
+                                    console.log(data.index);
+                                }
+                            });
+
+                            //elem_table.find("td").addClass(settings.selectedTrTdClass);
+                            //elem_table.find("td").removeClass(settings.selectedTrTdClass);
+
+                        }
+
+                        /* click on Refresh button */
+                        if(settings.showRefreshButton) {
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'refresh';
+                            elem.off('click', selector).on('click', selector, function() {
+                                $("#" + container_id).jui_datagrid('refresh');
+                            });
+                        }
+
+                        /* click on Delete button */
+                        if(settings.showDeleteButton) {
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
+                            elem.off('click', selector).on('click', selector, function() {
+                                elem.triggerHandler("onDelete");
+                            });
                         }
 
                         // trigger event
@@ -285,9 +282,6 @@
                 showExportButton: true,
                 showFiltersButton: true,
                 showPrefButtonText: false,
-                showSelectAllButtonText: false,
-                showSelectNoneButtonText: false,
-                showSelectInverseButtonText: false,
                 showRefreshButtonText: false,
                 showDeleteButtonText: true,
                 showPrintButtonText: false,
@@ -325,11 +319,6 @@
                 //toolbar classes
                 tbButtonContainer: 'tbBtnContainer',
                 tbPrefIconClass: 'ui-icon-gear',
-                tbSelectedLabelClass: 'selectedLabelClass',
-                tbSelectedClass: 'selectedClass',
-                tbSelectAllIconClass: 'ui-icon-circle-check',
-                tbSelectNoneIconClass: 'ui-icon-circle-close',
-                tbSelectInverseIconClass: 'ui-icon-check',
                 tbRefreshIconClass: 'ui-icon-refresh',
                 tbDeleteIconClass: 'ui-icon-trash',
                 tbPrintIconClass: 'ui-icon-print',
@@ -722,7 +711,10 @@
 
     };
 
-
+    /**
+     *
+     * @param container_id
+     */
     var apply_selections = function(container_id) {
         var elem = $("#" + container_id);
         var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
@@ -748,11 +740,7 @@
             elem.data(pluginStatus)['count_selected_ids'] = 0;
             elem_table.find("td").removeClass(selectedTrTdClass);
         }
-
-
-
-
-    }
+    };
 
     /**
      * Display tools
@@ -773,14 +761,6 @@
         var tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass');
 
         var showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons');
-        var tbSelectedClass = elem.jui_datagrid('getOption', 'tbSelectedClass');
-        var tbSelectedLabelClass = elem.jui_datagrid('getOption', 'tbSelectedLabelClass');
-        var tbSelectAllIconClass = elem.jui_datagrid('getOption', 'tbSelectAllIconClass');
-        var tbSelectNoneIconClass = elem.jui_datagrid('getOption', 'tbSelectNoneIconClass');
-        var tbSelectInverseIconClass = elem.jui_datagrid('getOption', 'tbSelectInverseIconClass');
-        var showSelectAllButtonText = elem.jui_datagrid('getOption', 'showSelectAllButtonText');
-        var showSelectNoneButtonText = elem.jui_datagrid('getOption', 'showSelectNoneButtonText');
-        var showSelectInverseButtonText = elem.jui_datagrid('getOption', 'showSelectInverseButtonText');
 
         var showRefreshButton = elem.jui_datagrid('getOption', 'showRefreshButton');
         var showRefreshButtonText = elem.jui_datagrid('getOption', 'showRefreshButtonText');
@@ -814,22 +794,27 @@
         }
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple') {
+
+                var drop_select_id = tools_id + '_drop_select';
+                var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
+
                 tools_html += '<div class="' + tbButtonContainer + '">';
 
-                var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
-                var selected_label_id = tools_id + '_' + 'selected_label';
-                var selected_id = tools_id + '_' + 'selected';
-                tools_html += '<span id="' + selected_label_id + '">' + rsc_jui_dg.tb_selected_label + ':' + '</span>';
-                tools_html += '<span id="' + selected_id + '">' + selected_rows + '</span>';
+                tools_html += '<div id="' + drop_select_id + '">';
 
-                var select_all_id = tools_id + '_' + 'select_all';
-                tools_html += '<button id="' + select_all_id + '">' + rsc_jui_dg.tb_select_all + '</button>';
+                tools_html += '<div id="' + drop_select_id + '_launcher_container' + '">';
+                tools_html += '<button id="' + drop_select_id + '_launcher' + '">' + rsc_jui_dg.tb_selected_label + ': ' + selected_rows + '</button>';
+                tools_html += '</div>';
 
-                var select_none_id = tools_id + '_' + 'select_none';
-                tools_html += '<button id="' + select_none_id + '">' + rsc_jui_dg.tb_select_none + '</button>';
+                tools_html += '<ul id="' + drop_select_id + '_menu' + '">';
+                tools_html += '<li id="' + drop_select_id + '_all_in_page' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_all_in_page + '</a></li>';
+                tools_html += '<li id="' + drop_select_id + '_none_in_page' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_none_in_page + '</a></li>';
+                tools_html += '<li id="' + drop_select_id + '_inv_in_page' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_inverse_in_page + '</a></li>';
+                tools_html += '<hr>';
+                tools_html += '<li id="' + drop_select_id + 'none' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_none + '</a></li>';
+                tools_html += '</ul>';
 
-                var select_inv_id = tools_id + '_' + 'select_inverse';
-                tools_html += '<button id="' + select_inv_id + '">' + rsc_jui_dg.tb_select_inverse + '</button>';
+                tools_html += '</div>';
 
                 tools_html += '</div>';
             }
@@ -901,42 +886,13 @@
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple') {
 
-                var elem_selected_label = $("#" + selected_label_id);
-                var elem_selected = $("#" + selected_id);
-                elem_selected_label.removeClass().addClass(tbSelectedLabelClass);
-                elem_selected.removeClass().addClass(tbSelectedClass);
-
-                if(selected_rows > 0) {
-                    elem_selected_label.show();
-                    elem_selected.show();
-                } else {
-                    elem_selected_label.hide();
-                    elem_selected.hide();
-                }
-
-                $("#" + select_all_id).button({
-                    label: rsc_jui_dg.tb_select_all,
-                    text: showSelectAllButtonText,
-                    icons: {
-                        primary: tbSelectAllIconClass
-                    }
+                $("#" + drop_select_id).jui_dropdown({
+                    launcher_id: drop_select_id + '_launcher',
+                    launcher_container_id: drop_select_id + '_launcher_container',
+                    menu_id: drop_select_id + '_menu',
+                    menuClass: 'drop_select_menu'
                 });
 
-                $("#" + select_none_id).button({
-                    label: rsc_jui_dg.tb_select_none,
-                    text: showSelectNoneButtonText,
-                    icons: {
-                        primary: tbSelectNoneIconClass
-                    }
-                });
-
-                $("#" + select_inv_id).button({
-                    label: rsc_jui_dg.tb_select_inverse,
-                    text: showSelectInverseButtonText,
-                    icons: {
-                        primary: tbSelectInverseIconClass
-                    }
-                });
             }
         }
 

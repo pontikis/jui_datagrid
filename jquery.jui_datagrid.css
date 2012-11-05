@@ -58,17 +58,17 @@ table.grid_table.tr.trhover {
 }
 
 /* toolbar */
-.selectedLabelClass {
-    margin: auto 3px auto 5px;
-    font-size: 13px;
-}
-
-.selectedClass {
-    margin: auto 5px auto 1px;
-    font-size: 13px;
-}
-
 .tbBtnContainer {
     display: inline-block;
     margin: 0 5px;
+}
+
+.drop_select_menu {
+    position: absolute;
+    width: 150px;
+    margin-top: 3px !important;
+}
+
+.drop_select_menu li {
+    text-align: left;
 }
