@@ -200,19 +200,19 @@
                             });
 
                             // PREFERENCES EVENTS ------------------------------
-                            var a_id_ext, a_opt;
+                            var a_id_ext, a_opt, i;
 
                             // tools tab
                             a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
                             a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
-                            for(var i in a_id_ext) {
+                            for(i in a_id_ext) {
                                 util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
                             }
 
                             // navigation tab
                             a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
                             a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
-                            for(var i in a_id_ext) {
+                            for(i in a_id_ext) {
                                 util_pref_nav(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
                             }
 
@@ -595,12 +595,12 @@
 
         $("#" + dialog_id).html(pref_html);
 
-        var a_id_ext, a_opt;
+        var a_id_ext, a_opt, i;
         /* TAB TOOLS set values --------------------------------------------- */
         a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
         a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
 
-        for(var i in a_id_ext) {
+        for(i in a_id_ext) {
             $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getOption', a_opt[i]));
         }
 
@@ -608,7 +608,7 @@
         a_id_ext = ['_slider', '_goto_page', '_rows_per_page', '_rows_info', '_nav_buttons'];
         a_opt = ['useSlider', 'showGoToPage', 'showRowsPerPage', 'showRowsInfo', 'showNavButtons'];
 
-        for(var i in a_id_ext) {
+        for(i in a_id_ext) {
             $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getPaginationOption', a_opt[i]));
         }
 
@@ -652,7 +652,7 @@
             open: create_preferences(plugin_container_id)
         });
 
-    }
+    };
 
     /**
      * Display datagrid
