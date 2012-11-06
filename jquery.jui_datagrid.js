@@ -1,7 +1,7 @@
 /**
  * jquery plugin which displays data in tabular format (datagrid)
- * Requires jquery, jquery-ui Themes CSS
- * It uses jui_pagination plugin (which requires jquery-ui)
+ * Requires jquery, jquery-ui, jquery-ui themes
+ * It uses jui_dropdown and jui_pagination plugin
  * Copyright 2012 Christos Pontikis http://pontikis.net
  * Project page https://github.com/pontikis/jui_datagrid
  * UPCOMING Release: 1.00 (?? Nov 2012)
