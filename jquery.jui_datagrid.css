@@ -67,6 +67,7 @@ table.grid_table.tr.trhover {
     position: absolute;
     width: 150px;
     margin-top: 3px !important;
+    z-index: 1000;
 }
 
 .drop_select_menu li {
