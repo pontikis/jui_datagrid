@@ -288,6 +288,12 @@
                 showExportButtonText: false,
                 showFiltersButtonText: false,
 
+                // select dropdown options
+                dropdownSelectOptions: {
+                    menuClass: 'dropdown_select_menu',
+                    launcherClass: 'dropdown_select_launcher'
+                }, // 'launcher_id', 'launcher_container_id', 'menu_id', 'onSelect' will be ignored
+
                 // pagination options
                 usePagination: true,
                 paginationOptions: {
@@ -886,12 +892,42 @@
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple') {
 
-                $("#" + drop_select_id).jui_dropdown({
-                    launcher_id: drop_select_id + '_launcher',
-                    launcher_container_id: drop_select_id + '_launcher_container',
-                    menu_id: drop_select_id + '_menu',
-                    menuClass: 'drop_select_menu'
-                });
+                // fixed dropdown options
+                var launcher_id = drop_select_id + '_launcher';
+                var launcher_container_id =  drop_select_id + '_launcher_container';
+                var menu_id = drop_select_id + '_menu';
+
+                // CREATE DROPDOWN OPTIONS
+                var given_dropdown_select_options = elem.jui_datagrid('getOption', 'dropdownSelectOptions');
+                var elem_dropdown_select = $("#" + drop_select_id);
+
+                // remove unacceptable settings
+                var internal_defined = ['launcher_id', 'launcher_container_id', 'menu_id', 'onSelect'];
+                for(var i in internal_defined) {
+                    if(typeof(given_dropdown_select_options[internal_defined[i]]) != 'undefined') {
+                        delete given_dropdown_select_options[internal_defined[i]];
+                    }
+                }
+
+                var dropdown_select_options = elem_dropdown_select.data('jui_dropdown');
+                if(typeof(dropdown_select_options) === 'undefined') {
+                    var default_options = elem.jui_datagrid('getDefaults');
+                    var default_dropdown_select_options = default_options.dropdownSelectOptions;
+                    dropdown_select_options = $.extend({}, default_dropdown_select_options, given_dropdown_select_options);
+
+                } else {
+                    dropdown_select_options = $.extend({}, dropdown_select_options, given_dropdown_select_options);
+                }
+
+                var internal_pagination_options = {
+                    launcher_id: launcher_id,
+                    launcher_container_id: launcher_container_id,
+                    menu_id: menu_id
+                };
+
+                dropdown_select_options = $.extend({}, dropdown_select_options, internal_pagination_options);
+
+                elem_dropdown_select.jui_dropdown(dropdown_select_options);
 
             }
         }

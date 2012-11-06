@@ -71,13 +71,21 @@ table.grid_table.tr.trhover {
     margin: 0 5px;
 }
 
-.drop_select_menu {
+.dropdown_select_menu {
     position: absolute;
     width: 150px;
     margin-top: 3px !important;
     z-index: 1000;
 }
 
-.drop_select_menu li {
+.dropdown_select_menu li {
     text-align: left;
+}
+
+.dropdown_select_menu li a {
+    color: inherit !important;
+}
+
+.dropdown_select_launcher {
+    padding: 0;
 }
