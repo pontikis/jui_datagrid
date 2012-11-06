@@ -17,7 +17,7 @@ $(function() {
         onCellClick: function(event, data) {
             //alert('cell: col ' + data.col + ' row ' + data.row);
         },
-        onRowClick: function(event, row_index) {
+        onRowClick: function(event, data) {
             //alert('tr ' + row_index);
         },
         onDisplay: function() {

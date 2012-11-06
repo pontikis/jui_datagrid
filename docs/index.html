@@ -72,20 +72,24 @@
             plugin</a> (documentation <a
                 href="http://pontikis.github.com/jui_pagination/v1.10/docs/">here</a>)
 
+    <li><a href="https://github.com/pontikis/jui_dropdown">jui_dropdown
+        plugin</a> (documentation <a
+            href="http://pontikis.github.com/jui_dropdown/v1.00/docs/">here</a>)
+
         <li>For touch event support <a href="http://touchpunch.furf.com/"
                                        target="_blank">jquery.ui.touch-punch.min.js</a>
             could be used (see folder /lib//jui_pagination/lib)
     </ul>
 
-    <p>Tested with jquery 1.8.2 and jquery-ui 1.9.0
+    <p>Tested with jquery 1.8.2 and >= jquery-ui 1.8.23 (recommended jquery-ui >= 1.9)
 
-    <p>UPCOMING Release 1.00 (?? Oct 2012) Download <a
+    <p>UPCOMING Release 1.00 (?? Nov 2012) Download <a
             href="https://github.com/pontikis/jui_datagrid/zipball/v1.0.0">here</a> (not yet available)
 
     <p>CHANGELOG <a
             href="https://github.com/pontikis/jui_datagrid/blob/master/CHANGELOG.md">here</a>
 
-    <p>DEMO <a href="http://pontikis.github.com/jui_datagrid/v1.00/demo/">http://pontikis.github.com/jui_datagrid/v1.10/demo/</a> (not yet available)
+    <p>DEMO <a href="http://pontikis.net/jui_datagrid/v1.00/demo/">http://pontikis.net/jui_datagrid/v1.00/demo/</a> (not yet available)
 
     <p>
         <small>Syntax highlight using <a
@@ -101,9 +105,12 @@
 <div class="level2">
     <ul>
         <li>Diplay tabular data
-        <li>Get data in JSON format using AJAX (any server-side technology)
-        <li>Powerful pagination
         <li>CSS based themes compatible with jQuery-UI Theming
+        <li>Get data in JSON format using AJAX (any server-side technology)
+        <li>Single or multi-select rows
+        <li>Powerful pagination
+        <li>Preferences dialog available to user
+        <li>Localization
     </ul>
 </div>
 
@@ -116,6 +123,7 @@
 <div class="level3">
     <pre class="brush: xml">
     &lt;link rel="stylesheet" href="/path/to/jqueryui_theme/jquery-ui.css">
+    &lt;link rel="stylesheet" href="/path/to/jquery.jui_dropdown.css">
     &lt;link rel="stylesheet" href="/path/to/jquery.jui_pagination.css">
     &lt;link rel="stylesheet" href="/path/to/jquery.jui_datagrid.css">
     &lt;!--  if custom classes used -->
@@ -127,10 +135,12 @@
     &lt;!--  if touch event support for touch devices is needed (see folder /lib) -->
     &lt;script src="/path/to/jquery.ui.touch-punch.min.js" type="text/javascript">&lt;/script>
 
-    &lt;script type="text/javascript" src="/path/to/jquery.jui_pagination.js" type="text/javascript">&lt;/script>
+    &lt;script type="text/javascript" src="/path/to/jquery.jui_dropdown.min.js" type="text/javascript">&lt;/script>
+
+    &lt;script type="text/javascript" src="/path/to/jquery.jui_pagination.min.js" type="text/javascript">&lt;/script>
     &lt;script type="text/javascript" src="/path/to/jui_pagination/localization/en.js" type="text/javascript">&lt;/script>
 
-    &lt;script type="text/javascript" src="/path/to/jquery.jui_datagrid.js" type="text/javascript">&lt;/script>
+    &lt;script type="text/javascript" src="/path/to/jquery.jui_datagrid.min.js" type="text/javascript">&lt;/script>
     &lt;script type="text/javascript" src="/path/to/jui_datagrid/localization/en.js" type="text/javascript">&lt;/script>
     </pre>
 </div>
@@ -156,6 +166,7 @@
 <div class="level3">
     <pre class="brush: js">
     {
+        "row_primary_key": "id",
         "total_rows": "200",
         "page_data": [
             {
@@ -203,14 +214,17 @@
         showExportButton: true,
         showFiltersButton: true,
         showPrefButtonText: false,
-        showSelectAllButtonText: false,
-        showSelectNoneButtonText: false,
-        showSelectInverseButtonText: false,
         showRefreshButtonText: false,
         showDeleteButtonText: true,
         showPrintButtonText: false,
         showExportButtonText: false,
         showFiltersButtonText: false,
+
+        // select dropdown options
+        dropdownSelectOptions: {
+            menuClass: 'dropdown_select_menu',
+            launcherClass: 'dropdown_select_launcher'
+        }, // 'launcher_id', 'launcher_container_id', 'menu_id', 'onSelect' will be ignored
 
         // pagination options
         usePagination: true,
@@ -243,11 +257,6 @@
         //toolbar classes
         tbButtonContainer: 'tbBtnContainer',
         tbPrefIconClass: 'ui-icon-gear',
-        tbSelectedLabelClass: 'selectedLabelClass',
-        tbSelectedClass: 'selectedClass',
-        tbSelectAllIconClass: 'ui-icon-circle-check',
-        tbSelectNoneIconClass: 'ui-icon-circle-close',
-        tbSelectInverseIconClass: 'ui-icon-check',
         tbRefreshIconClass: 'ui-icon-refresh',
         tbDeleteIconClass: 'ui-icon-trash',
         tbPrintIconClass: 'ui-icon-print',
@@ -395,6 +404,31 @@
 <!-- Events ---------------------------------------------------------------- -->
 <h2>Events</h2>
 
+<h3>onCellClick</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        onCellClick: function(event, data) {
+        // your code here
+        }
+    });
+    </pre>
+</div>
+
+<h3>onRowClick</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        onRowClick: function(event, data) {
+        // your code here
+        }
+    });
+    </pre>
+</div>
+
+
 <h3>onDelete</h3>
 
 <div class="level3">
@@ -424,8 +458,8 @@
 <h2>Screenshots</h2>
 
 <div class="level2">
-    <img src="../demo/images/sample.png"
-         title="sample.png">
+    <img src="../demo/samples/v1.00/sample.png"
+         title="jui_datagrid">
 </div>
 
 
