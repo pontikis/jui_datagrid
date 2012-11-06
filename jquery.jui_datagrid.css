@@ -9,6 +9,14 @@ http://www.ke-cai.net/2010/01/theme-your-table-with-jquery-ui.html
 http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.html
 */
 
+.ui-state-default {
+    font-weight: normal;
+}
+
+.ui-state-hover {
+    font-weight: inherit;
+}
+
 /* main divs classes */
 .grid_container {
     width: 600px;
