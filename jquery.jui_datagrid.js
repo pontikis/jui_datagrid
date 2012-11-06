@@ -811,7 +811,7 @@
                 tools_html += '<li id="' + drop_select_id + '_none_in_page' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_none_in_page + '</a></li>';
                 tools_html += '<li id="' + drop_select_id + '_inv_in_page' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_inverse_in_page + '</a></li>';
                 tools_html += '<hr>';
-                tools_html += '<li id="' + drop_select_id + 'none' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_none + '</a></li>';
+                tools_html += '<li id="' + drop_select_id + '_none' + '"><a href="javascript:void(0);">' + rsc_jui_dg.tb_select_none + '</a></li>';
                 tools_html += '</ul>';
 
                 tools_html += '</div>';
