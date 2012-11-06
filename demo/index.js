@@ -19,11 +19,13 @@ $(function() {
         },
         onRowClick: function(event, row_index) {
             //alert('tr ' + row_index);
-        }
-/*        onDisplay: function() {
+        },
+        onDisplay: function() {
+
+            //$("#tbl_demo_grid1").find('tbody tr').find('td:eq(3)').css({"font-weight": "bold", "color": "red"});
             //console.log('test ' + $("#tbl_demo_grid1").find('tbody tr:eq(1)').find('td:eq(2)').length);
-            $("#tbl_demo_grid1").find('tbody tr').find('td:eq(3)').html('<a href="http://google.com" target="_blank">google</a>');
-        }*/
+            //$("#tbl_demo_grid1").find('tbody tr').find('td:eq(3)').html('<a href="http://google.com" target="_blank">google</a>');
+        }
     });
 
     $("#selection_multiple").click(function() {
