@@ -636,7 +636,6 @@
 
         elem_pref_dialog.dialog({
             autoOpen: true,
-            show: "blind",
             hide: "explode",
             width: 400,
             height: 350,
