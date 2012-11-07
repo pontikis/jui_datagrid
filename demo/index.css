@@ -3,13 +3,8 @@ body {
     font-size: 13px;
 }
 
-#demo_grid1, #demo_grid2 {
-    margin-top: 20px;
-}
-
-#demo_grid1_test {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.spacer {
+    margin: 20px 0;
 }
 
 /* demo_grid1 --------------------------------------------------------------- */

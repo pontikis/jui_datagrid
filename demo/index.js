@@ -47,7 +47,6 @@ $(function() {
     });
 
     // demo grid2 --------------------------------------------------------------
-
     $("#demo_grid2").dialog({
         autoOpen: false,
         title: "Customers dialog",
@@ -55,7 +54,6 @@ $(function() {
         hide: "fade",
         zIndex: 500
     });
-
 
     $("#demo_grid2").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
@@ -68,8 +66,15 @@ $(function() {
 
 
     $("#dlg_demo_grid2").button({
-    }).click(function() {
-            $("#demo_grid2").dialog("open");
-        });
+        icons: {
+            primary: 'ui-icon-newwin'
+        }
+    });
+
+    $("#dlg_demo_grid2").click(function() {
+        $("#demo_grid2").dialog("open");
+        return false;
+    });
+
 
 });
