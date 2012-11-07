@@ -10,11 +10,11 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
 */
 
 .ui-state-default {
-    font-weight: normal;
+    font-weight: normal !important;
 }
 
 .ui-state-hover {
-    font-weight: inherit;
+    font-weight: inherit !important;
 }
 
 /* main divs classes */
