@@ -231,6 +231,32 @@
                                 onSelect: function(event, data) {
                                     switch(data.index) {
                                         case 1:
+
+                                            $("#" + table_id + ' tbody tr').each(function() {
+                                                // get row id
+                                                var prefix_len = (table_id + '_tr_').length;
+                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
+
+
+                                                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                                                if(idx > -1) { // deselect row
+                                                    elem.data(pluginStatus)['a_selected_ids'].splice(idx, 1);
+                                                    elem.data(pluginStatus)['count_selected_ids'] -= 1;
+                                                    $(this).children("td").removeClass(settings.selectedTrTdClass);
+                                                } else {  // select row
+                                                    elem.data(pluginStatus)['a_selected_ids'].push(row_id);
+                                                    elem.data(pluginStatus)['count_selected_ids'] += 1;
+                                                    $(this).children("td").addClass(settings.selectedTrTdClass);
+                                                }
+
+
+                                            });
+
+
+
+
+                                            update_selected_rows_counter(container_id);
+
                                             break;
 
                                         case 2:
@@ -1113,6 +1139,41 @@
         $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
         $("#" + pagination_id).hide();
 
+    };
+
+    /**
+     *
+     * @param plugin_container_id
+     * @param row_id
+     */
+    var row_select = function(plugin_container_id, row_id) {
+        var elem = $("#" + plugin_container_id);
+        var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
+        var table_id = create_id(table_id_prefix, plugin_container_id);
+        var elem_row = $(table_id + '_tr_' + row_id);
+        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+
+        elem.data(pluginStatus)['a_selected_ids'].push(row_id);
+        elem.data(pluginStatus)['count_selected_ids'] += 1;
+        elem_row.children("td").addClass(selectedTrTdClass);
+    };
+
+    /**
+     *
+     * @param plugin_container_id
+     * @param row_id
+     * @param row_idx
+     */
+    var row_deselect = function(plugin_container_id, row_id, row_idx) {
+        var elem = $("#" + plugin_container_id);
+        var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
+        var table_id = create_id(table_id_prefix, plugin_container_id);
+        var elem_row = $(table_id + '_tr_' + row_id);
+        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+
+        elem.data(pluginStatus)['a_selected_ids'].splice(row_idx, 1);
+        elem.data(pluginStatus)['count_selected_ids'] -= 1;
+        elem_row.children("td").removeClass(selectedTrTdClass);
     };
 
     /**
