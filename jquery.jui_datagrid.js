@@ -171,14 +171,7 @@
                                         $(this).children("td").addClass(settings.selectedTrTdClass);
                                     }
 
-                                    // update selected rows counter
-                                    var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
-                                    tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
-                                    drop_select_id = tools_id + '_drop_select';
-
-                                    $("#" + drop_select_id + '_launcher').button({
-                                        label: rsc_jui_dg.tb_selected_label + ': ' + selected_rows
-                                    });
+                                    update_selected_rows_counter(container_id);
 
                                 }
 
@@ -236,12 +229,28 @@
 
                             $("#" + drop_select_id).jui_dropdown({
                                 onSelect: function(event, data) {
-                                    console.log(data.index);
+                                    switch(data.index) {
+                                        case 1:
+                                            break;
+
+                                        case 2:
+                                            break;
+
+                                        case 3:
+                                            break;
+
+                                        case 4:
+                                            // deselect all rows
+                                            elem.data(pluginStatus)['a_selected_ids'] = [];
+                                            elem.data(pluginStatus)['count_selected_ids'] = 0;
+                                            elem_table.find("td").removeClass(settings.selectedTrTdClass);
+
+                                            update_selected_rows_counter(container_id);
+                                            break;
+
+                                    }
                                 }
                             });
-
-                            //elem_table.find("td").addClass(settings.selectedTrTdClass);
-                            //elem_table.find("td").removeClass(settings.selectedTrTdClass);
 
                         }
 
@@ -1104,6 +1113,21 @@
         $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
         $("#" + pagination_id).hide();
 
+    };
+
+    /**
+     *
+     * @param plugin_container_id
+     */
+    var update_selected_rows_counter = function(plugin_container_id) {
+        var elem = $("#" + plugin_container_id);
+        var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
+        var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), plugin_container_id);
+        var drop_select_id = tools_id + '_drop_select';
+
+        $("#" + drop_select_id + '_launcher').button({
+            label: rsc_jui_dg.tb_selected_label + ': ' + selected_rows
+        });
     };
 
 
