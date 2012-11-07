@@ -197,7 +197,16 @@
                                 create_dialog_pref(container_id, pref_dialog_id);
 
                                 var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
-                                $("#" + pref_tabs_id).tabs();
+                                $("#" + pref_tabs_id).tabs({
+                                    // just to prevent 'outline' in active tab (mainly in Chrome)
+                                    create: function(event, ui) {
+                                        $("#" + pref_tabs_id + ' li a').blur();
+                                    },
+                                    activate: function(event, ui) {
+                                        $("#" + pref_tabs_id + ' li a').blur();
+                                    }
+                                });
+
                             });
 
                             // PREFERENCES EVENTS ------------------------------
