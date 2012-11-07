@@ -154,22 +154,24 @@
                                     var row_id = parseInt($(this).attr("id").substr(prefix_len));
 
                                     if(settings.rowSelectionMode == 'single') {
+                                        // deselect all rows
                                         elem.data(pluginStatus)['a_selected_ids'] = [];
                                         elem.data(pluginStatus)['count_selected_ids'] = 0;
                                         elem_table.find("td").removeClass(settings.selectedTrTdClass);
                                     }
 
                                     var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                    if(idx > -1) {
+                                    if(idx > -1) { // deselect row
                                         elem.data(pluginStatus)['a_selected_ids'].splice(idx, 1);
                                         elem.data(pluginStatus)['count_selected_ids'] -= 1;
                                         $(this).children("td").removeClass(settings.selectedTrTdClass);
-                                    } else {
+                                    } else {  // select row
                                         elem.data(pluginStatus)['a_selected_ids'].push(row_id);
                                         elem.data(pluginStatus)['count_selected_ids'] += 1;
                                         $(this).children("td").addClass(settings.selectedTrTdClass);
                                     }
 
+                                    // update selected rows counter
                                     var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
                                     tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
                                     drop_select_id = tools_id + '_drop_select';
@@ -180,7 +182,7 @@
 
                                 }
 
-                                elem.triggerHandler("onRowClick", row_index);
+                                elem.triggerHandler("onRowClick", {});
                             });
                         }
 
