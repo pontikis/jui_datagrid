@@ -154,10 +154,7 @@
                                     var row_id = parseInt($(this).attr("id").substr(prefix_len));
 
                                     if(settings.rowSelectionMode == 'single') {
-                                        // deselect all rows
-                                        elem.data(pluginStatus)['a_selected_ids'] = [];
-                                        elem.data(pluginStatus)['count_selected_ids'] = 0;
-                                        elem_table.find("td").removeClass(settings.selectedTrTdClass);
+                                        rows_all_deselect(container_id);
                                     }
 
                                     var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
@@ -167,10 +164,9 @@
                                         row_select(container_id, row_id);
                                     }
                                     update_selected_rows_counter(container_id);
-
                                 }
 
-                                elem.triggerHandler("onRowClick", {});
+                                elem.triggerHandler("onRowClick", {row_id: row_id});
                             });
                         }
 
@@ -218,58 +214,67 @@
 
                         /* Selection dropdown */
                         if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
-
+                            var elem_row = $("#" + table_id + ' tbody tr')
                             tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
                             drop_select_id = tools_id + '_drop_select';
+                            var SELECT = {
+                                'all_in_page': 1,
+                                'none_in_page': 2,
+                                'inv_in_page': 3,
+                                'none': 4
+                            };
 
                             $("#" + drop_select_id).jui_dropdown({
                                 onSelect: function(event, data) {
                                     switch(data.index) {
-                                        case 1:
+                                        case SELECT.all_in_page:
 
-                                            $("#" + table_id + ' tbody tr').each(function() {
+                                            elem_row.each(function() {
                                                 // get row id
                                                 var prefix_len = (table_id + '_tr_').length;
                                                 var row_id = parseInt($(this).attr("id").substr(prefix_len));
 
+                                                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                                                if(idx > -1) {
+                                                } else {
+                                                    row_select(container_id, row_id);
+                                                }
+                                            });
+                                            break;
+
+                                        case SELECT.none_in_page:
+                                            elem_row.each(function() {
+                                                // get row id
+                                                var prefix_len = (table_id + '_tr_').length;
+                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
 
                                                 var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                                if(idx > -1) { // deselect row
-                                                    elem.data(pluginStatus)['a_selected_ids'].splice(idx, 1);
-                                                    elem.data(pluginStatus)['count_selected_ids'] -= 1;
-                                                    $(this).children("td").removeClass(settings.selectedTrTdClass);
-                                                } else {  // select row
-                                                    elem.data(pluginStatus)['a_selected_ids'].push(row_id);
-                                                    elem.data(pluginStatus)['count_selected_ids'] += 1;
-                                                    $(this).children("td").addClass(settings.selectedTrTdClass);
+                                                if(idx > -1) {
+                                                    row_deselect(container_id, row_id, idx);
                                                 }
-
-
                                             });
-
-
-
-
-                                            update_selected_rows_counter(container_id);
-
                                             break;
 
-                                        case 2:
+                                        case SELECT.inv_in_page:
+                                            elem_row.each(function() {
+                                                // get row id
+                                                var prefix_len = (table_id + '_tr_').length;
+                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
+
+                                                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                                                if(idx > -1) {
+                                                    row_deselect(container_id, row_id, idx);
+                                                } else {
+                                                    row_select(container_id, row_id);
+                                                }
+                                            });
                                             break;
 
-                                        case 3:
+                                        case SELECT.none:
+                                            rows_all_deselect(container_id);
                                             break;
-
-                                        case 4:
-                                            // deselect all rows
-                                            elem.data(pluginStatus)['a_selected_ids'] = [];
-                                            elem.data(pluginStatus)['count_selected_ids'] = 0;
-                                            elem_table.find("td").removeClass(settings.selectedTrTdClass);
-
-                                            update_selected_rows_counter(container_id);
-                                            break;
-
                                     }
+                                    update_selected_rows_counter(container_id);
                                 }
                             });
 
