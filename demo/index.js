@@ -47,6 +47,15 @@ $(function() {
     });
 
     // demo grid2 --------------------------------------------------------------
+
+    $("#demo_grid2").dialog({
+        autoOpen: false,
+        title: "Customers dialog",
+        width: 'auto',
+        hide: "fade"
+    });
+
+
     $("#demo_grid2").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
         containerClass: 'grid2_container ui-state-default ui-corner-all',
@@ -56,5 +65,10 @@ $(function() {
         }
     });
 
+
+    $("#dlg_demo_grid2").button({
+    }).click(function() {
+            $("#demo_grid2").dialog("open");
+        });
 
 });
