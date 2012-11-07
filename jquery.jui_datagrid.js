@@ -124,10 +124,9 @@
                         }
 
                         /**
-                         * *************************************************
+                         * *****************************************************
                          * EVENTS HANDLING
-                         * (for NAVIGATION events, see 'display_pagination()')
-                         * *************************************************
+                         * *****************************************************
                          */
                         var selector, tools_id, drop_select_id;
 
@@ -185,7 +184,7 @@
                             });
                         }
 
-                        // TOOLBAR EVENTS ----------------------------------
+                        // TOOLBAR EVENTS --------------------------------------
 
                         /* click on Preferences button */
                         if(settings.showPrefButton) {
@@ -251,7 +250,51 @@
                             });
                         }
 
-                        // trigger event
+                        // PAGINATION events -----------------------------------
+                        if(total_rows > 0) {
+
+                            var currentPage = settings.pageNum;
+                            var rowsPerPage = settings.rowsPerPage;
+                            var maxRowsPerPage = settings.maxRowsPerPage;
+                            var elem_pagination = $("#" + pagination_id);
+                            var showRowsInfo = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
+
+                            elem_pagination.jui_pagination({
+
+                                onSetRowsPerPage: function(event, rpp) {
+                                    if(isNaN(rpp) || rpp <= 0) {
+                                        elem.jui_datagrid('refresh');
+                                    } else {
+                                        maxRowsPerPage = parseInt(maxRowsPerPage);
+                                        if(maxRowsPerPage > 0) {
+                                            if(rpp > maxRowsPerPage) {
+                                                rpp = maxRowsPerPage;
+                                            }
+                                        }
+                                        elem.jui_datagrid({
+                                            pageNum: 1,
+                                            rowsPerPage: rpp
+                                        });
+                                    }
+                                },
+                                onChangePage: function(event, page_number) {
+                                    elem.jui_datagrid({
+                                        pageNum: page_number
+                                    });
+                                },
+                                onDisplay: function() {
+                                    if(showRowsInfo) {
+                                        var page_first_row = ((currentPage - 1) * rowsPerPage) + 1;
+                                        var page_last_row = Math.min(page_first_row + rowsPerPage - 1, total_rows);
+                                        var rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
+                                        $(this).jui_pagination('setRowsInfo', rows_info);
+                                    }
+                                }
+                            });
+                        }
+
+                        // JUI_DATAGRID completed
+                        // trigger event onDisplay
                         elem.triggerHandler("onDisplay");
 
                     }
@@ -891,15 +934,15 @@
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple') {
 
+                var elem_dropdown_select = $("#" + drop_select_id);
+
                 // fixed dropdown options
                 var launcher_id = drop_select_id + '_launcher';
-                var launcher_container_id =  drop_select_id + '_launcher_container';
+                var launcher_container_id = drop_select_id + '_launcher_container';
                 var menu_id = drop_select_id + '_menu';
 
                 // CREATE DROPDOWN OPTIONS
                 var given_dropdown_select_options = elem.jui_datagrid('getOption', 'dropdownSelectOptions');
-                var elem_dropdown_select = $("#" + drop_select_id);
-
                 // remove unacceptable settings
                 var internal_defined = ['launcher_id', 'launcher_container_id', 'menu_id', 'onSelect'];
                 for(var i in internal_defined) {
@@ -1003,11 +1046,10 @@
         var paginationClass = elem.jui_datagrid('getOption', 'paginationClass');
 
         var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
+        var elem_pagination = $("#" + pagination_id);
 
         // CREATE PAGINATION OPTIONS
         var given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions');
-        var elem_pagination = $("#" + pagination_id);
-
         // remove unacceptable settings
         var internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
         for(var i in internal_defined) {
@@ -1015,7 +1057,6 @@
                 delete given_pagination_options[internal_defined[i]];
             }
         }
-
 
         var pagination_options = elem_pagination.data('jui_pagination');
         if(typeof(pagination_options) === 'undefined') {
@@ -1027,47 +1068,14 @@
             pagination_options = $.extend({}, pagination_options, given_pagination_options);
         }
 
-        var showRowsInfo = pagination_options.showRowsInfo;
-
         var internal_pagination_options = {
             currentPage: currentPage,
             rowsPerPage: rowsPerPage,
             totalPages: total_pages,
-            containerClass: paginationClass,
-
-            onSetRowsPerPage: function(event, rpp) {
-                if(isNaN(rpp) || rpp <= 0) {
-                    elem.jui_datagrid('refresh');
-                } else {
-                    maxRowsPerPage = parseInt(maxRowsPerPage);
-                    if(maxRowsPerPage > 0) {
-                        if(rpp > maxRowsPerPage) {
-                            rpp = maxRowsPerPage;
-                        }
-                    }
-                    elem.jui_datagrid({
-                        pageNum: 1,
-                        rowsPerPage: rpp
-                    });
-                }
-            },
-            onChangePage: function(event, page_number) {
-                elem.jui_datagrid({
-                    pageNum: page_number
-                });
-            },
-            onDisplay: function() {
-                if(showRowsInfo) {
-                    var page_first_row = ((currentPage - 1) * rowsPerPage) + 1;
-                    var page_last_row = Math.min(page_first_row + rowsPerPage - 1, total_rows);
-                    var rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
-                    $(this).jui_pagination('setRowsInfo', rows_info);
-                }
-            }
+            containerClass: paginationClass
         };
 
         pagination_options = $.extend({}, pagination_options, internal_pagination_options);
-
 
         elem_pagination.jui_pagination(pagination_options);
 
