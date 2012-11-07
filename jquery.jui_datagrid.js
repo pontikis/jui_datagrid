@@ -226,50 +226,35 @@
 
                             $("#" + drop_select_id).jui_dropdown({
                                 onSelect: function(event, data) {
-                                    switch(data.index) {
+                                    var do_select = data.index;
+                                    switch(do_select) {
                                         case SELECT.all_in_page:
-
-                                            elem_row.each(function() {
-                                                // get row id
-                                                var prefix_len = (table_id + '_tr_').length;
-                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
-
-                                                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                                if(idx > -1) {
-                                                } else {
-                                                    row_select(container_id, row_id);
-                                                }
-                                            });
-                                            break;
-
                                         case SELECT.none_in_page:
-                                            elem_row.each(function() {
-                                                // get row id
-                                                var prefix_len = (table_id + '_tr_').length;
-                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
-
-                                                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                                if(idx > -1) {
-                                                    row_deselect(container_id, row_id, idx);
-                                                }
-                                            });
-                                            break;
-
                                         case SELECT.inv_in_page:
                                             elem_row.each(function() {
                                                 // get row id
                                                 var prefix_len = (table_id + '_tr_').length;
                                                 var row_id = parseInt($(this).attr("id").substr(prefix_len));
-
                                                 var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                                if(idx > -1) {
-                                                    row_deselect(container_id, row_id, idx);
-                                                } else {
-                                                    row_select(container_id, row_id);
+
+                                                if(do_select == SELECT.all_in_page) {
+                                                    if(idx > -1) {
+                                                    } else {
+                                                        row_select(container_id, row_id);
+                                                    }
+                                                } else if(do_select == SELECT.none_in_page) {
+                                                    if(idx > -1) {
+                                                        row_deselect(container_id, row_id, idx);
+                                                    }
+                                                } else if(do_select == SELECT.inv_in_page) {
+                                                    if(idx > -1) {
+                                                        row_deselect(container_id, row_id, idx);
+                                                    } else {
+                                                        row_select(container_id, row_id);
+                                                    }
                                                 }
                                             });
                                             break;
-
                                         case SELECT.none:
                                             rows_all_deselect(container_id);
                                             break;
@@ -277,7 +262,6 @@
                                     update_selected_rows_counter(container_id);
                                 }
                             });
-
                         }
 
                         /* click on Refresh button */
