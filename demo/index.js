@@ -51,8 +51,9 @@ $(function() {
     $("#demo_grid2").dialog({
         autoOpen: false,
         title: "Customers dialog",
-        width: 'auto',
-        hide: "fade"
+        width: '700',
+        hide: "fade",
+        zIndex: 500
     });
 
 
