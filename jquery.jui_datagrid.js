@@ -522,6 +522,16 @@
             }
             $(table_selector).find("td").removeClass().addClass(tdClass);
 
+            var cols = $(header_table_selector + ' th').length - 1;
+            var w;
+            for(var i = 0; i < cols; i++) {
+                w = $(table_selector).find("tr").eq(0).find("td").eq(i).width();
+                $(header_table_selector + ' th').eq(i).width(w);
+            }
+
+
+
+
         },
 
         /**
