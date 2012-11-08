@@ -118,8 +118,8 @@
                         } else {
                             display_grid(container_id, total_rows, page_data, row_primary_key);
                             apply_grid_style(container_id);
-                            apply_selections(container_id);
-                            display_tools(container_id, total_rows);
+                            apply_selections(container_id, row_primary_key);
+                            display_tools(container_id, total_rows, row_primary_key);
                             display_pagination(container_id, total_rows);
                         }
 
@@ -128,11 +128,12 @@
                          * EVENTS HANDLING
                          * *****************************************************
                          */
-                        var selector, tools_id, drop_select_id;
+                        var selector, tools_id, drop_select_id, row_prefix_len;
 
                         // GRID EVENTS -------------------------------------
                         if(total_rows > 0) {
                             var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+                            row_prefix_len = (table_id + '_tr_').length;
                             var elem_table = $("#" + table_id);
                             var col_index, row_index;
 
@@ -150,8 +151,7 @@
 
                                 if(settings.rowSelectionMode != false) {
                                     // get row id
-                                    var prefix_len = (table_id + '_tr_').length;
-                                    var row_id = parseInt($(this).attr("id").substr(prefix_len));
+                                    var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
 
                                     if(settings.rowSelectionMode == 'single') {
                                         rows_all_deselect(container_id);
@@ -213,7 +213,8 @@
                         }
 
                         /* Selection dropdown */
-                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
+                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple' && row_primary_key) {
+                            row_prefix_len = (table_id + '_tr_').length;
                             var elem_row = $("#" + table_id + ' tbody tr');
                             tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
                             drop_select_id = tools_id + '_drop_select';
@@ -233,8 +234,7 @@
                                         case SELECT.inv_in_page:
                                             elem_row.each(function() {
                                                 // get row id
-                                                var prefix_len = (table_id + '_tr_').length;
-                                                var row_id = parseInt($(this).attr("id").substr(prefix_len));
+                                                var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
                                                 var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
 
                                                 if(do_select == SELECT.all_in_page) {
@@ -273,7 +273,7 @@
                         }
 
                         /* click on Delete button */
-                        if(settings.showDeleteButton) {
+                        if(settings.showDeleteButton && row_primary_key) {
                             selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'delete';
                             elem.off('click', selector).on('click', selector, function() {
                                 elem.triggerHandler("onDelete");
@@ -743,11 +743,13 @@
         var page_rows = page_data.length;
         var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
         var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+        var row_id_html;
 
         var tbl = '<table id="' + table_id + '">';
 
         tbl += '<thead>';
-        tbl += '<tr id="' + table_id + '_tr_0">';
+        row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_0"' : '');
+        tbl += '<tr' + row_id_html + '>';
         $.each(page_data[0], function(index) {
             tbl += '<th>' + index + '</th>';
         });
@@ -756,7 +758,8 @@
 
         tbl += '<tbody>';
         for(var i = 0; i < page_rows; i++) {
-            tbl += '<tr id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '">';
+            row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
+            tbl += '<tr' + row_id_html + '>';
             $.each(page_data[i], function(index, value) {
                 tbl += '<td>' + value + '</td>';
             });
@@ -790,40 +793,44 @@
 
     /**
      *
-     * @param container_id
+     * @param plugin_container_id
+     * @param row_primary_key
      */
-    var apply_selections = function(container_id) {
-        var elem = $("#" + container_id);
-        var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
-        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
-        var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var elem_table = $("#" + table_id);
-        var prefix_len = (table_id + '_tr_').length;
+    var apply_selections = function(plugin_container_id, row_primary_key) {
 
-        if(rowSelectionMode == 'multiple') {
-            var selector_rows = '#' + table_id + ' tbody tr';
-            $(selector_rows).each(function() {
-                // get row id
-                var row_id = parseInt($(this).attr("id").substr(prefix_len));
+        if(row_primary_key) {
+            var elem = $("#" + plugin_container_id);
+            var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
+            var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+            var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), plugin_container_id);
+            var row_prefix_len = (table_id + '_tr_').length;
 
-                var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                if(idx > -1) {
-                    $(this).children("td").addClass(selectedTrTdClass);
-                }
-            });
+            if(rowSelectionMode == 'multiple') {
+                var selector_rows = '#' + table_id + ' tbody tr';
+                $(selector_rows).each(function() {
+                    // get row id
+                    var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
 
+                    var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                    if(idx > -1) {
+                        $(this).children("td").addClass(selectedTrTdClass);
+                    }
+                });
+
+            } else {
+                rows_all_deselect(plugin_container_id);
+            }
         } else {
-            elem.data(pluginStatus)['a_selected_ids'] = [];
-            elem.data(pluginStatus)['count_selected_ids'] = 0;
-            elem_table.find("td").removeClass(selectedTrTdClass);
+            rows_all_deselect(plugin_container_id);
         }
+
     };
 
     /**
      * Display tools
      * @param container_id
      */
-    var display_tools = function(container_id, total_rows) {
+    var display_tools = function(container_id, total_rows, row_primary_key) {
 
         var elem = $("#" + container_id);
         var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
@@ -870,7 +877,7 @@
             tools_html += '</div>';
         }
         if(total_rows > 0) {
-            if(showSelectButtons && rowSelectionMode == 'multiple') {
+            if(showSelectButtons && rowSelectionMode == 'multiple' && row_primary_key) {
 
                 var drop_select_id = tools_id + '_drop_select';
                 var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
@@ -907,7 +914,7 @@
         }
 
         if(total_rows > 0) {
-            if(showDeleteButton) {
+            if(showDeleteButton && row_primary_key) {
                 tools_html += '<div class="' + tbButtonContainer + '">';
 
                 var delete_id = tools_id + '_' + 'delete';
@@ -961,7 +968,7 @@
         }
 
         if(total_rows > 0) {
-            if(showSelectButtons && rowSelectionMode == 'multiple') {
+            if(showSelectButtons && rowSelectionMode == 'multiple' && row_primary_key) {
 
                 var elem_dropdown_select = $("#" + drop_select_id);
 
