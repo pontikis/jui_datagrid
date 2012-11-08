@@ -151,8 +151,9 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
-        containerClass: 'grid1_container ui-state-default ui-corner-all',
         title: 'Customers',
+        containerClass: 'grid1_container ui-state-default ui-corner-all',
+        datagridClass: 'grid1_data ui-state-default',
         paginationOptions: {
             sliderAnimation: false
         }
@@ -240,14 +241,16 @@
 
         // main divs classes
         containerClass: 'grid_container ui-state-default ui-corner-all',
-        headerClass: 'grid_geader ui-widget-header ui-corner-top',
-        datagridClass: 'grid_data',
+        headerClass: 'grid_header ui-widget-header ui-corner-top',
+        datagridHeaderClass: 'grid_data_header',
+        datagridClass: 'grid_data ui-state-default',
         toolsClass: 'grid_tools ui-state-default ui-corner-all',
         paginationClass: 'grid_pagination',
 
         // data table classes
         applyUIGridStyle: true,
         tableClass: 'grid_table',
+        headerTableClass: 'grid_header_table',
         trHoverClass: 'ui-state-hover trhover',
         thClass: 'ui-state-default',
         tdClass: 'ui-widget-content',
@@ -264,9 +267,11 @@
         tbFiltersIconClass: 'ui-icon-search',
 
         // elements id prefix
-        datagrid_id_prefix: 'dg_',
         header_id_prefix: 'header_',
+        datagrid_header_id_prefix: 'dgh_',
+        datagrid_id_prefix: 'dg_',
         table_id_prefix: 'tbl_',
+        header_table_id_prefix: 'tblh_',
         tools_id_prefix: 'tools_',
         pagination_id_prefix: 'pag_',
 
