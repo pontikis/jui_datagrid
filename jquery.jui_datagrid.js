@@ -61,8 +61,9 @@
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
-                var header_id, datagrid_id, tools_id, pagination_id, pref_dialog_id, elem_html;
+                var header_id, datagrid_header_id, datagrid_id, tools_id, pagination_id, pref_dialog_id, elem_html;
                 header_id = create_id(settings.header_id_prefix, container_id);
+                datagrid_header_id = create_id(settings.datagrid_header_id_prefix, container_id);
                 datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
                 tools_id = create_id(settings.tools_id_prefix, container_id);
                 pagination_id = create_id(settings.pagination_id_prefix, container_id);
@@ -71,6 +72,7 @@
                 if(!elem.data(pluginStatus)['initialize']) {
 
                     elem_html = '<div id="' + header_id + '">' + settings.title + '</div>';
+                    elem_html += '<div id="' + datagrid_header_id + '"></div>';
                     elem_html += '<div id="' + datagrid_id + '"></div>';
                     elem_html += '<div id="' + tools_id + '"></div>';
                     elem_html += '<div id="' + pagination_id + '"></div>';
@@ -81,6 +83,7 @@
                 }
 
                 var elem_header = $("#" + header_id);
+                var elem_grid_header = $("#" + datagrid_header_id);
                 var elem_grid = $("#" + datagrid_id);
                 var elem_tools = $("#" + tools_id);
                 var elem_pag = $("#" + pagination_id);
@@ -94,6 +97,7 @@
                 } else {
                     elem_header.show().text(settings.title).removeClass().addClass(settings.headerClass);
                 }
+                elem_grid_header.removeClass().addClass(settings.datagridHeaderClass);
                 elem_grid.removeClass().addClass(settings.datagridClass);
                 elem_tools.removeClass().addClass(settings.toolsClass);
                 elem_pag.removeClass().addClass(settings.paginationClass);
@@ -383,14 +387,16 @@
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
-                headerClass: 'grid_geader ui-widget-header ui-corner-top',
-                datagridClass: 'grid_data',
+                headerClass: 'grid_header ui-widget-header ui-corner-top',
+                datagridHeaderClass: 'grid_data_header',
+                datagridClass: 'grid_data ui-state-default',
                 toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
 
                 // data table classes
                 applyUIGridStyle: true,
                 tableClass: 'grid_table',
+                headerTableClass: 'grid_header_table',
                 trHoverClass: 'ui-state-hover trhover',
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
@@ -407,9 +413,11 @@
                 tbFiltersIconClass: 'ui-icon-search',
 
                 // elements id prefix
-                datagrid_id_prefix: 'dg_',
                 header_id_prefix: 'header_',
+                datagrid_header_id_prefix: 'dgh_',
+                datagrid_id_prefix: 'dg_',
                 table_id_prefix: 'tbl_',
+                header_table_id_prefix: 'tblh_',
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
 
@@ -491,14 +499,19 @@
 
         /**
          * Apply styles to datagrid table
+         * @param headerTableClass
          * @param tableClass
          * @param trHoverClass
          * @param thClass
          * @param tdClass
          */
-        setGridStyle: function(tableClass, trHoverClass, thClass, tdClass) {
+        setGridStyle: function(headerTableClass, tableClass, trHoverClass, thClass, tdClass) {
             var elem = this;
+            var header_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'header_table_id_prefix'), elem.attr("id"));
             var table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), elem.attr("id"));
+
+            $(header_table_selector).removeClass().addClass(headerTableClass);
+            $(header_table_selector).find("th").removeClass().addClass(thClass);
 
             $(table_selector).removeClass().addClass(tableClass);
 
@@ -507,9 +520,8 @@
                     $(this).children().toggleClass(trHoverClass, event.type == 'mouseover');
                 });
             }
-
-            $(table_selector).find("th").removeClass().addClass(thClass);
             $(table_selector).find("td").removeClass().addClass(tdClass);
+
         },
 
         /**
@@ -743,14 +755,16 @@
 
         var elem = $("#" + container_id);
         var page_rows = page_data.length;
+        var datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id);
         var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
+        var header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
         var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var row_id_html;
+        var row_id_html, i, tbl;
 
-        var tbl = '<table id="' + table_id + '">';
+        tbl = '<table id="' + header_table_id + '">';
 
         tbl += '<thead>';
-        row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_0"' : '');
+        row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
         tbl += '<tr' + row_id_html + '>';
         $.each(page_data[0], function(index) {
             tbl += '<th>' + index + '</th>';
@@ -758,8 +772,15 @@
         tbl += '<tr>';
         tbl += '</thead>';
 
+        tbl += '</table>';
+
+        $("#" + datagrid_header_id).html(tbl);
+        tbl='';
+
+        tbl = '<table id="' + table_id + '">';
+
         tbl += '<tbody>';
-        for(var i = 0; i < page_rows; i++) {
+        for(i = 0; i < page_rows; i++) {
             row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
             tbl += '<tr' + row_id_html + '>';
             $.each(page_data[i], function(index, value) {
@@ -785,6 +806,7 @@
         var elem = $("#" + container_id);
         if(elem.jui_datagrid('getOption', 'applyUIGridStyle')) {
             elem.jui_datagrid('setGridStyle',
+                elem.jui_datagrid('getOption', 'headerTableClass'),
                 elem.jui_datagrid('getOption', 'tableClass'),
                 elem.jui_datagrid('getOption', 'trHoverClass'),
                 elem.jui_datagrid('getOption', 'thClass'),
