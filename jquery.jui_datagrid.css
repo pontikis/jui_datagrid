@@ -24,29 +24,47 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     background: none;
 }
 
-.grid_geader {
-    padding: 2px 5px;
-    margin: 5px 5px -5px 5px;
+.grid_header {
+    padding: 2px 4px;
+    margin: 0;
+}
+
+.grid_data_header {
+    padding: 0;
+    margin: 0;
 }
 
 .grid_data {
-    padding: 5px;
-    margin: 0px 0px 5px 0px;
+    padding: 0;
+    margin: 0 0 5px 0;
 }
 
 .grid_tools {
-    padding: 4px 5px 4px 5px;
     font-size: 11px !important;
-    margin: 5px 5px 5px 5px;
     text-align: center;
+    margin: 5px 0;
+    padding: 2px;
 }
 
 .grid_pagination {
-    padding: 5px 5px 5px 5px;
-    margin: 5px 0px 0px 0px;
+    margin: 5px 0 0 0;
+    padding: 0;
 }
 
-/* data table class affecting table dimensions */
+/* header table class */
+.grid_header_table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: auto;
+}
+
+table.grid_header_table th {
+    padding: 2px 4px;
+    border-bottom: none !important;
+/*    border-top: none !important;*/
+}
+
+/* data table class */
 .grid_table {
     border-collapse: collapse;
     width: 100%;
@@ -57,8 +75,16 @@ table.grid_table td {
     padding: 2px 4px;
 }
 
-table.grid_table th {
-    padding: 2px 4px;
+table.grid_table tr:first-of-type td {
+    border-top: none;
+}
+
+table.grid_table td:first-of-type {
+    border-left: none;
+}
+
+table.grid_table td:last-of-type {
+    border-right: none;
 }
 
 table.grid_table.tr.trhover {
