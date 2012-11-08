@@ -214,7 +214,7 @@
 
                         /* Selection dropdown */
                         if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple') {
-                            var elem_row = $("#" + table_id + ' tbody tr')
+                            var elem_row = $("#" + table_id + ' tbody tr');
                             tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
                             drop_select_id = tools_id + '_drop_select';
                             var SELECT = {
