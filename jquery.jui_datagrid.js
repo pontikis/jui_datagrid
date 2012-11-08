@@ -150,20 +150,22 @@
                             elem_table.off('click', selector).on('click', selector, function() {
 
                                 if(settings.rowSelectionMode != false) {
-                                    // get row id
-                                    var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
+                                    if(row_primary_key) {
+                                        // get row id
+                                        var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
 
-                                    if(settings.rowSelectionMode == 'single') {
-                                        rows_all_deselect(container_id);
-                                    }
+                                        if(settings.rowSelectionMode == 'single') {
+                                            rows_all_deselect(container_id);
+                                        }
 
-                                    var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
-                                    if(idx > -1) {
-                                        row_deselect(container_id, row_id, idx);
-                                    } else {
-                                        row_select(container_id, row_id);
+                                        var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
+                                        if(idx > -1) {
+                                            row_deselect(container_id, row_id, idx);
+                                        } else {
+                                            row_select(container_id, row_id);
+                                        }
+                                        update_selected_rows_counter(container_id);
                                     }
-                                    update_selected_rows_counter(container_id);
                                 }
 
                                 elem.triggerHandler("onRowClick", {row_id: row_id});
