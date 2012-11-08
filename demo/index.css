@@ -48,3 +48,10 @@ body {
     padding: 5px;
     background: none;
 }
+
+.grid2_data {
+    height: 260px;
+    overflow: auto;
+    padding: 5px;
+    margin: 0px 0px 5px 0px;
+}

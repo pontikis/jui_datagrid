@@ -47,10 +47,11 @@ $(function() {
     });
 
     // demo grid2 --------------------------------------------------------------
-    $("#demo_grid2").dialog({
+    $("#dlg_demo_grid2").dialog({
         autoOpen: false,
         title: "Customers dialog",
-        width: '700',
+        width: 'auto',
+        height: 450,
         hide: "fade",
         zIndex: 500
     });
@@ -59,20 +60,21 @@ $(function() {
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
         containerClass: 'grid2_container ui-state-default ui-corner-all',
         //rowSelectionMode: 'single',
+        datagridClass: 'grid2_data',
         paginationOptions: {
             sliderAnimation: false
         }
     });
 
 
-    $("#dlg_demo_grid2").button({
+    $("#dlg_demo_grid2_opener").button({
         icons: {
             primary: 'ui-icon-newwin'
         }
     });
 
-    $("#dlg_demo_grid2").click(function() {
-        $("#demo_grid2").dialog("open");
+    $("#dlg_demo_grid2_opener").click(function() {
+        $("#dlg_demo_grid2").dialog("open");
         return false;
     });
 
