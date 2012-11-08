@@ -15,43 +15,26 @@ body {
 }
 
 .grid1_data {
-    width: 100%;
-    padding: 10px;
-}
-
-.grid1_table_dim {
-    width: 100%;
-}
-
-.grid1_tools {
-    padding: 10px;
-}
-
-.grid1_pagination {
-    padding: 5px;
-}
-
-.grid1_slider {
-    width: 400px;
-    margin: 15px auto;
-}
-
-.grid1_slider_inside {
-    float: left;
-    width: 20%;
-    margin: 6px 15px 1px 15px;
+    padding: 0;
+    height: 250px;
+    overflow: auto;
+    margin: 0 0 5px 0;
 }
 
 /* demo_grid2 --------------------------------------------------------------- */
+.dlg_demo_grid2 {
+    padding-left: 3px !important;
+}
+
 .grid2_container {
-    width: 700px;
+    width: 100%;
     padding: 5px;
     background: none;
 }
 
 .grid2_data {
+    padding: 0;
     height: 260px;
     overflow: auto;
-    padding: 5px;
-    margin: 0px 0px 5px 0px;
+    margin: 0 0 5px 0;
 }

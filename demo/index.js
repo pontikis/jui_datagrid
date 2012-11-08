@@ -9,7 +9,10 @@ $(function() {
     // demo grid1 --------------------------------------------------------------
     $("#demo_grid1").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
+
         containerClass: 'grid1_container ui-state-default ui-corner-all',
+        datagridClass: 'grid1_data ui-state-default',
+
         title: 'Customers',
         onDelete: function() {
             alert('Delete pressed');
@@ -50,7 +53,7 @@ $(function() {
     $("#dlg_demo_grid2").dialog({
         autoOpen: false,
         title: "Customers dialog",
-        width: 'auto',
+        width: 750,
         height: 450,
         hide: "fade",
         zIndex: 500
@@ -58,9 +61,9 @@ $(function() {
 
     $("#demo_grid2").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
+
         containerClass: 'grid2_container ui-state-default ui-corner-all',
-        //rowSelectionMode: 'single',
-        datagridClass: 'grid2_data',
+        datagridClass: 'grid2_data ui-state-default',
         paginationOptions: {
             sliderAnimation: false
         }
