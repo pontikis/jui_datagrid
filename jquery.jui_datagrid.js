@@ -388,7 +388,7 @@
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
                 headerClass: 'grid_header ui-widget-header ui-corner-top',
-                datagridHeaderClass: 'grid_data_header',
+                datagridHeaderClass: 'grid_data_header ui-state-default',
                 datagridClass: 'grid_data ui-state-default',
                 toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
@@ -523,13 +523,28 @@
             $(table_selector).find("td").removeClass().addClass(tdClass);
 
             var cols = $(header_table_selector + ' th').length - 1;
-            var w;
+            var t, cw, cow, w, bl, br;
+            var a_col_cw = [];
             for(var i = 0; i < cols; i++) {
-                w = $(table_selector).find("tr").eq(0).find("td").eq(i).width();
-                $(header_table_selector + ' th').eq(i).width(w);
+               var elem_cur = $(table_selector).find("tr").eq(0).find("td").eq(i);
+                //t = elem_cur.text();
+                cw = elem_cur.width();
+                //cow = elem_cur.outerWidth();
+                //w = elem_cur.css("width");
+                //bl = elem_cur.css("borderLeftWidth");
+                //br = elem_cur.css("borderRightWidth");
+                //console.log(t + ': ' + cw + ' ' + w + ' ' + bl + ' ' + br);
+
+                //if(i==0) {cw+=1};
+
+                a_col_cw.push(cw);
+
+                $(header_table_selector + ' th').eq(i).width(cw);
             }
 
-
+            for(var i = 0; i < cols; i++) {
+                $(table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
+            }
 
 
         },

@@ -17,7 +17,7 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     font-weight: inherit !important;
 }
 
-/* main divs classes */
+/* main divs ---------------------------------------------------------------- */
 .grid_container {
     width: 600px;
     padding: 5px;
@@ -32,6 +32,8 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
 .grid_data_header {
     padding: 0;
     margin: 0;
+    border-bottom: none !important;
+    border-top: none !important;
 }
 
 .grid_data {
@@ -51,47 +53,66 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     padding: 0;
 }
 
-/* header table class */
+/* header table ------------------------------------------------------------- */
+/* GENERAL */
 .grid_header_table {
     border-collapse: collapse;
     width: 100%;
-    margin: auto;
+    margin: 0;
 }
 
 table.grid_header_table th {
     padding: 2px 4px;
-    border-bottom: none !important;
-/*    border-top: none !important;*/
 }
 
-/* data table class */
+/* PREVENT DOUBLE BORDERS */
+/* remove border except right */
+table.grid_header_table th {
+    border-bottom: none;
+    border-top: none;
+    border-left: none !important;
+}
+
+/* remove border right from last th */
+table.grid_header_table th:last-of-type {
+    border-right: none;
+}
+
+/* data table --------------------------------------------------------------- */
+/* GENERAL */
 .grid_table {
     border-collapse: collapse;
     width: 100%;
-    margin: auto;
+    margin: 0;
 }
 
 table.grid_table td {
     padding: 2px 4px;
 }
 
+/* PREVENT DOUBLE BORDERS */
+/* remove border top of first tr  */
 table.grid_table tr:first-of-type td {
     border-top: none;
 }
 
-table.grid_table td:first-of-type {
-    border-left: none;
+/* remove border left from all td */
+table.grid_table td {
+    border-top: none;
+    border-left: none !important;
 }
 
+/* remove border right from last td of any tr */
 table.grid_table td:last-of-type {
     border-right: none;
 }
 
-table.grid_table.tr.trhover {
-    font-weight: inherit;
+/* TR HOVER */
+table.grid_table tr:not(:last-of-type) td.trhover {
+/*    border-bottom-width: 0;*/
 }
 
-/* toolbar */
+/* toolbar ------------------------------------------------------------------ */
 .tbBtnContainer {
     display: inline-block;
     margin: 0 5px;
@@ -115,3 +136,4 @@ table.grid_table.tr.trhover {
 .dropdown_select_launcher {
     padding: 0;
 }
+/* -------------------------------------------------------------------------- */
