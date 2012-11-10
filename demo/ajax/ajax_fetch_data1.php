@@ -32,8 +32,8 @@ if($rs === false) {
 
 // get data
 $offset = ($page_num - 1) * $rows_per_page;
-$orderSQL = ' ORDER BY id';
-$sql = 'SELECT c.id, c.lastname, c.firstname, c.email, g.gender ' .
+$orderSQL = ' ORDER BY customer_id';
+$sql = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
 	'FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)' .
 	$orderSQL;
 $rs = $conn->SelectLimit($sql, $rows_per_page, $offset);
@@ -51,7 +51,7 @@ if($rs)
 if($conn)
 	$conn->Close();
 
-$result['row_primary_key'] = 'id';
+$result['row_primary_key'] = 'customer_id';
 $result['total_rows'] = $total_rows;
 $result['page_data'] = $a_data;
 
