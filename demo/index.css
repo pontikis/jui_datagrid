@@ -8,14 +8,14 @@
 
 /* demo_grid1 --------------------------------------------------------------- */
 .grid1_container {
-    width: 800px;
+    width: 750px;
     padding: 5px;
     background: none;
 }
 
 .grid1_data {
     padding: 0;
-    height: 250px;
+    height: 200px;
     overflow: auto;
     margin: 0 0 5px 0;
 }
