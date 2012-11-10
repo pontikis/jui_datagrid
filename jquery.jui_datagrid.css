@@ -78,6 +78,11 @@ table.grid_header_table th:last-of-type {
     border-right: none;
 }
 
+/* UTILITY CLASS - DO NOT EDIT */
+.shrink {
+    width: 1px;
+}
+
 /* data table --------------------------------------------------------------- */
 /* GENERAL */
 .grid_table {

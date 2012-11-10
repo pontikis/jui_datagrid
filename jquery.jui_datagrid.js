@@ -45,6 +45,7 @@
                     elem.data(pluginStatus, {});
                     elem.data(pluginStatus)['a_selected_ids'] = [];
                     elem.data(pluginStatus)['count_selected_ids'] = 0;
+                    elem.data(pluginStatus)['col-min-width'] = [];
                 }
 
                 if(settings.rowSelectionMode == 'single' || settings.rowSelectionMode == false) {
@@ -522,26 +523,39 @@
             }
             $(table_selector).find("td").removeClass().addClass(tdClass);
 
-            var cols = $(header_table_selector + ' th').length - 1;
-            var i, t, cw, cow, w, bl, br;
+            var cols = $(header_table_selector + ' th').length;
+            var i, cw, cw_min, elem_th, elem_td; // cw = computed width
             var a_col_cw = [];
-            for(i = 0; i < cols; i++) {
+
+            // column min-widths
+            if(elem.data(pluginStatus)['col-min-width'].length == 0) {
+                $(header_table_selector).addClass("shrink");
+                for(i = 0; i < cols; i++) {
+                    elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
+                    cw_min = elem_th.width();
+
+                    elem.data(pluginStatus)['col-min-width'].push(cw_min);
+
+                    elem_td = $(table_selector).find("tr").eq(0).find("td").eq(i);
+                    elem_td.css("min-width", cw_min + 'px');
+                }
+                $(header_table_selector).removeClass("shrink");
+            } else {
+                for(i in elem.data(pluginStatus)['col-min-width']) {
+                    elem_td = $(table_selector).find("tr").eq(0).find("td").eq(i);
+                    elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
+                }
+            }
+
+            // apply first tr td wodths to header
+            for(i = 0; i < cols - 1; i++) {
                var elem_cur = $(table_selector).find("tr").eq(0).find("td").eq(i);
-                //t = elem_cur.text();
                 cw = elem_cur.width();
-                //cow = elem_cur.outerWidth();
-                //w = elem_cur.css("width");
-                //bl = elem_cur.css("borderLeftWidth");
-                //br = elem_cur.css("borderRightWidth");
-                //console.log(t + ': ' + cw + ' ' + w + ' ' + bl + ' ' + br);
-
-                //if(i==0) {cw+=1};
-
                 a_col_cw.push(cw);
-
                 $(header_table_selector + ' th').eq(i).width(cw);
             }
 
+            // re-apply first tr td widths to data table
             for(i = 0; i < cols; i++) {
                 $(table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
             }
