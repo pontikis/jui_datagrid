@@ -523,9 +523,9 @@
             $(table_selector).find("td").removeClass().addClass(tdClass);
 
             var cols = $(header_table_selector + ' th').length - 1;
-            var t, cw, cow, w, bl, br;
+            var i, t, cw, cow, w, bl, br;
             var a_col_cw = [];
-            for(var i = 0; i < cols; i++) {
+            for(i = 0; i < cols; i++) {
                var elem_cur = $(table_selector).find("tr").eq(0).find("td").eq(i);
                 //t = elem_cur.text();
                 cw = elem_cur.width();
@@ -542,7 +542,7 @@
                 $(header_table_selector + ' th').eq(i).width(cw);
             }
 
-            for(var i = 0; i < cols; i++) {
+            for(i = 0; i < cols; i++) {
                 $(table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
             }
 
