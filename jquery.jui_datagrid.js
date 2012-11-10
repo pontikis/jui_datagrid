@@ -395,7 +395,6 @@
                 paginationClass: 'grid_pagination',
 
                 // data table classes
-                applyUIGridStyle: true,
                 tableClass: 'grid_table',
                 headerTableClass: 'grid_header_table',
                 trHoverClass: 'ui-state-hover trhover',
@@ -496,19 +495,6 @@
                 $("#" + pagination_container_id).removeData();
                 $this.removeData();
             });
-        },
-
-        /**
-         * Apply styles to datagrid table
-         * @param headerTableClass
-         * @param tableClass
-         * @param trHoverClass
-         * @param thClass
-         * @param tdClass
-         */
-        setGridStyle: function(headerTableClass, tableClass, trHoverClass, thClass, tdClass) {
-
-
         },
 
         /**
