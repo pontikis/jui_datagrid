@@ -1,6 +1,5 @@
-body {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    font-size: 13px;
+.wrap {
+    padding: 5px;
 }
 
 .spacer {
