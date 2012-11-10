@@ -56,7 +56,11 @@ $(function() {
         width: 750,
         height: 450,
         hide: "fade",
-        zIndex: 500
+        zIndex: 500,
+        open: function() {
+            // just to fix column widths
+            $("#demo_grid2").jui_datagrid('refresh');
+        }
     });
 
     $("#demo_grid2").jui_datagrid({

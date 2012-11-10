@@ -68,7 +68,7 @@ table.grid_header_table th {
 /* PREVENT DOUBLE BORDERS */
 /* remove border except right */
 table.grid_header_table th {
-    border-bottom: none;
+    border-bottom: none !important;
     border-top: none;
     border-left: none !important;
 }
