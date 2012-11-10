@@ -507,58 +507,6 @@
          * @param tdClass
          */
         setGridStyle: function(headerTableClass, tableClass, trHoverClass, thClass, tdClass) {
-            var elem = this;
-            var header_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'header_table_id_prefix'), elem.attr("id"));
-            var table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), elem.attr("id"));
-
-            $(header_table_selector).removeClass().addClass(headerTableClass);
-            $(header_table_selector).find("th").removeClass().addClass(thClass);
-
-            $(table_selector).removeClass().addClass(tableClass);
-
-            if(trHoverClass != '') {
-                $(table_selector).on('mouseover mouseout', 'tbody tr', function(event) {
-                    $(this).children().toggleClass(trHoverClass, event.type == 'mouseover');
-                });
-            }
-            $(table_selector).find("td").removeClass().addClass(tdClass);
-
-            var cols = $(header_table_selector + ' th').length;
-            var i, cw, cw_min, elem_th, elem_td; // cw = computed width
-            var a_col_cw = [];
-
-            // column min-widths
-            if(elem.data(pluginStatus)['col-min-width'].length == 0) {
-                $(header_table_selector).addClass("shrink");
-                for(i = 0; i < cols; i++) {
-                    elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
-                    cw_min = elem_th.width();
-
-                    elem.data(pluginStatus)['col-min-width'].push(cw_min);
-
-                    elem_td = $(table_selector).find("tr").eq(0).find("td").eq(i);
-                    elem_td.css("min-width", cw_min + 'px');
-                }
-                $(header_table_selector).removeClass("shrink");
-            } else {
-                for(i in elem.data(pluginStatus)['col-min-width']) {
-                    elem_td = $(table_selector).find("tr").eq(0).find("td").eq(i);
-                    elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
-                }
-            }
-
-            // apply first tr td wodths to header
-            for(i = 0; i < cols - 1; i++) {
-               var elem_cur = $(table_selector).find("tr").eq(0).find("td").eq(i);
-                cw = elem_cur.width();
-                a_col_cw.push(cw);
-                $(header_table_selector + ' th').eq(i).width(cw);
-            }
-
-            // re-apply first tr td widths to data table
-            for(i = 0; i < cols; i++) {
-                $(table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
-            }
 
 
         },
@@ -843,13 +791,68 @@
     var apply_grid_style = function(container_id) {
 
         var elem = $("#" + container_id);
-        if(elem.jui_datagrid('getOption', 'applyUIGridStyle')) {
-            elem.jui_datagrid('setGridStyle',
-                elem.jui_datagrid('getOption', 'headerTableClass'),
-                elem.jui_datagrid('getOption', 'tableClass'),
-                elem.jui_datagrid('getOption', 'trHoverClass'),
-                elem.jui_datagrid('getOption', 'thClass'),
-                elem.jui_datagrid('getOption', 'tdClass'));
+
+        var header_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
+        var data_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), container_id);
+        var elem_header_table = $(header_table_selector);
+        var elem_data_table = $(data_table_selector);
+
+        var headerTableClass = elem.jui_datagrid('getOption', 'headerTableClass');
+        var tableClass = elem.jui_datagrid('getOption', 'tableClass');
+        var trHoverClass = elem.jui_datagrid('getOption', 'trHoverClass');
+        var thClass = elem.jui_datagrid('getOption', 'thClass');
+        var tdClass = elem.jui_datagrid('getOption', 'tdClass');
+
+        // header table style --------------------------------------------------
+        elem_header_table.removeClass().addClass(headerTableClass);
+        elem_header_table.find("th").removeClass().addClass(thClass);
+
+        // data table style ----------------------------------------------------
+        elem_data_table.removeClass().addClass(tableClass);
+
+        if(trHoverClass != '') {
+            elem_data_table.on('mouseover mouseout', 'tbody tr', function(event) {
+                $(this).children().toggleClass(trHoverClass, event.type == 'mouseover');
+            });
+        }
+        elem_data_table.find("td").removeClass().addClass(tdClass);
+
+        // sync header and data tables column width ----------------------------
+        var cols = $(header_table_selector + ' th').length;
+        var i, cw, cw_min, elem_th, elem_td; // cw = computed width
+        var a_col_cw = [];
+
+        // define column min-widths
+        if(elem.data(pluginStatus)['col-min-width'].length == 0) {
+            $(header_table_selector).addClass("shrink");
+            for(i = 0; i < cols; i++) {
+                elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
+                cw_min = elem_th.width();
+
+                elem.data(pluginStatus)['col-min-width'].push(cw_min);
+
+                elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                elem_td.css("min-width", cw_min + 'px');
+            }
+            $(header_table_selector).removeClass("shrink");
+        } else {
+            for(i in elem.data(pluginStatus)['col-min-width']) {
+                elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
+            }
+        }
+
+        // apply first tr td widths to header
+        for(i = 0; i < cols - 1; i++) {
+            var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+            cw = elem_cur.width();
+            a_col_cw.push(cw);
+            $(header_table_selector + ' th').eq(i).width(cw);
+        }
+
+        // re-apply first tr td widths to data table
+        for(i = 0; i < cols; i++) {
+            $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
         }
 
     };
