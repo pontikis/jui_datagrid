@@ -59,7 +59,7 @@ Write your own classes in other css file.
     margin: 0px 3px 0px 3px !important;
     font-size: 12px;
     text-align: center;
-    padding: 0px 5px 0px 5px;
+    padding: 3px 5px 3px 5px;
     cursor: pointer;
     vertical-align: middle;
 }
