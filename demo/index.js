@@ -18,10 +18,10 @@ $(function() {
             alert('Delete pressed');
         },
         onCellClick: function(event, data) {
-            //alert('cell: col ' + data.col + ' row ' + data.row);
+            //console.log('cell: col ' + data.col + ' row ' + data.row);
         },
         onRowClick: function(event, data) {
-            //alert('tr ' + row_index);
+            //console.log('tr click');
         },
         onDisplay: function() {
 
