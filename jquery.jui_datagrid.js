@@ -402,6 +402,7 @@
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
 
+                selectedTrTrClass: '',
                 selectedTrTdClass: 'ui-state-highlight',
 
                 //toolbar classes
@@ -860,6 +861,7 @@
         if(row_primary_key) {
             var elem = $("#" + plugin_container_id);
             var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
+            var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
             var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
             var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), plugin_container_id);
             var row_prefix_len = (table_id + '_tr_').length;
@@ -872,7 +874,7 @@
 
                     var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
                     if(idx > -1) {
-                        $(this).children("td").addClass(selectedTrTdClass);
+                        style_row_selected($(this), true, selectedTrTrClass, selectedTrTdClass);
                     }
                 });
 
@@ -1193,6 +1195,32 @@
 
     /**
      *
+     * @param elem_row
+     * @param status
+     * @param trClass
+     * @param tdClass
+     */
+    var style_row_selected = function(elem_row, status, trClass, tdClass) {
+        if(status == true) {
+            if(trClass) {
+                elem_row.addClass(trClass);
+            }
+            if(tdClass) {
+                elem_row.children("td").addClass(tdClass);
+            }
+        } else {
+            if(trClass) {
+                elem_row.removeClass(trClass);
+            }
+            if(tdClass) {
+                elem_row.children("td").removeClass(tdClass);
+            }
+        }
+    };
+
+
+    /**
+     *
      * @param plugin_container_id
      * @param row_id
      */
@@ -1201,11 +1229,12 @@
         var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
         var table_id = create_id(table_id_prefix, plugin_container_id);
         var elem_row = $("#" + table_id + '_tr_' + row_id);
+        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
         var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'].push(row_id);
         elem.data(pluginStatus)['count_selected_ids'] += 1;
-        elem_row.children("td").addClass(selectedTrTdClass);
+        style_row_selected(elem_row, true, selectedTrTrClass, selectedTrTdClass);
     };
 
     /**
@@ -1219,11 +1248,12 @@
         var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
         var table_id = create_id(table_id_prefix, plugin_container_id);
         var elem_row = $("#" + table_id + '_tr_' + row_id);
+        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
         var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'].splice(row_idx, 1);
         elem.data(pluginStatus)['count_selected_ids'] -= 1;
-        elem_row.children("td").removeClass(selectedTrTdClass);
+        style_row_selected(elem_row, false, selectedTrTrClass, selectedTrTdClass);
     };
 
     /**
@@ -1235,12 +1265,14 @@
         var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
         var table_id = create_id(table_id_prefix, plugin_container_id);
         var elem_table = $("#" + table_id);
+        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
         var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'] = [];
         elem.data(pluginStatus)['count_selected_ids'] = 0;
+        elem_table.find("tr").removeClass(selectedTrTrClass);
         elem_table.find("td").removeClass(selectedTrTdClass);
-    }
+    };
 
     /**
      *
