@@ -729,45 +729,98 @@
     var display_grid = function(container_id, total_rows, page_data, row_primary_key) {
 
         var elem = $("#" + container_id);
+        var columns = elem.jui_datagrid('getOption', 'columns');
         var page_rows = page_data.length;
         var datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id);
         var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
+        var elem_datagrid_header = $("#" + datagrid_header_id);
+        var elem_datagrid = $("#" + datagrid_id);
         var header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
         var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var row_id_html, i, tbl;
+        var row_id_html, i, row, tblh_html, tbl_html, idx;
 
-        tbl = '<table id="' + header_table_id + '">';
+        if(typeof columns === 'undefined') {
+            tblh_html = '';
+            tblh_html += '<table id="' + header_table_id + '">';
 
-        tbl += '<thead>';
-        row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
-        tbl += '<tr' + row_id_html + '>';
-        $.each(page_data[0], function(index) {
-            tbl += '<th>' + index + '</th>';
-        });
-        tbl += '<tr>';
-        tbl += '</thead>';
-
-        tbl += '</table>';
-
-        $("#" + datagrid_header_id).html(tbl);
-        tbl='';
-
-        tbl = '<table id="' + table_id + '">';
-
-        tbl += '<tbody>';
-        for(i = 0; i < page_rows; i++) {
-            row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
-            tbl += '<tr' + row_id_html + '>';
-            $.each(page_data[i], function(index, value) {
-                tbl += '<td>' + value + '</td>';
+            tblh_html += '<thead>';
+            row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
+            tblh_html += '<tr' + row_id_html + '>';
+            $.each(page_data[0], function(index) {
+                tblh_html += '<th>' + index + '</th>';
             });
-            tbl += '</tr>';
+            tblh_html += '<tr>';
+            tblh_html += '</thead>';
+
+            tblh_html += '</table>';
+
+            elem_datagrid_header.html(tblh_html);
+
+            tbl_html = '';
+            tbl_html += '<table id="' + table_id + '">';
+
+            tbl_html += '<tbody>';
+            for(i = 0; i < page_rows; i++) {
+                row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
+                tbl_html += '<tr' + row_id_html + '>';
+                $.each(page_data[i], function(index, value) {
+                    tbl_html += '<td>' + value + '</td>';
+                });
+                tbl_html += '</tr>';
+            }
+            tbl_html += '<tbody>';
+
+            tbl_html += '</table>';
+
+            elem_datagrid.html(tbl_html);
+
+        } else {
+            tblh_html = '';
+            tblh_html += '<table id="' + header_table_id + '">';
+
+            tblh_html += '<thead>';
+            row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
+            tblh_html += '<tr' + row_id_html + '>';
+            for(i in columns.columnsOrder) {
+                if(columns.columnsVisibility[i]) {
+                    idx = $.inArray(columns.columnsOrder[i], columns.fields);
+                    tblh_html += '<th>' + columns.headers[idx] + '</th>';
+                }
+            }
+            tblh_html += '<tr>';
+            tblh_html += '</thead>';
+
+            tblh_html += '</table>';
+
+            elem_datagrid_header.html(tblh_html);
+
+
+            tbl_html = '';
+            tbl_html += '<table id="' + table_id + '">';
+
+            tbl_html += '<tbody>';
+            for(row in page_data) {
+                row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[row][row_primary_key] + '"' : '');
+                tbl_html += '<tr' + row_id_html + '>';
+
+                    for(i in columns.columnsOrder) {
+                        if(columns.columnsVisibility[i]) {
+                            tbl_html += '<td>' + page_data[row][columns.columnsOrder[i]] + '</td>';
+                        }
+                    }
+
+                tbl_html += '</tr>';
+            }
+            tbl_html += '<tbody>';
+
+            tbl_html += '</table>';
+
+            elem_datagrid.html(tbl_html);
+
         }
-        tbl += '<tbody>';
 
-        tbl += '</table>';
 
-        $("#" + datagrid_id).html(tbl);
+
 
     };
 

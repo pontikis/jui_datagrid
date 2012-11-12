@@ -8,6 +8,15 @@ $(function() {
 
     // demo grid1 --------------------------------------------------------------
     $("#demo_grid1").jui_datagrid({
+        columns: {
+            fields: ["customer_id", "lastname", "firstname", "email", "gender"],
+            headers: ["Code", "Lastname", "Firstname", "Email", "Gender"],
+            headerClasses: ["thclass1", "thclass2", "thclass3", "thclass4", "thclass5"],
+            dataClasses: ["tdclass1", "tdclass2", "tdclass3", "tdclass4", "tdclass5"],
+            sortColumnData: ["ascending", "", "", "", ""],
+            columnsOrder: ["customer_id", "lastname", "firstname", "email", "gender"],
+            columnsVisibility: [true, true, true, true, true]
+        },
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
         containerClass: 'grid1_container ui-state-default ui-corner-all',
