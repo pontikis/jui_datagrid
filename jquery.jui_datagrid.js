@@ -352,6 +352,7 @@
                 maxRowsPerPage: 100,
 
                 rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
+                showRowIndex: false,
 
                 // toolbar options
                 showPrefButton: true,
@@ -730,6 +731,9 @@
 
         var elem = $("#" + container_id);
         var columns = elem.jui_datagrid('getOption', 'columns');
+        var pageNum = parseInt(elem.jui_datagrid('getOption', 'pageNum'));
+        var rowsPerPage = parseInt(elem.jui_datagrid('getOption', 'rowsPerPage'));
+        var showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex');
         var page_rows = page_data.length;
         var datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id);
         var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
@@ -737,7 +741,9 @@
         var elem_datagrid = $("#" + datagrid_id);
         var header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
         var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var row_id_html, i, row, tblh_html, tbl_html, idx;
+        var row_id_html, i, row, tblh_html, tbl_html, idx, row_index, offset;
+
+        offset = ((pageNum - 1) * rowsPerPage);
 
         if(typeof columns === 'undefined') {
             tblh_html = '';
@@ -781,6 +787,11 @@
             tblh_html += '<thead>';
             row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
             tblh_html += '<tr' + row_id_html + '>';
+
+            if(showRowIndex) {
+                tblh_html += '<th>#</th>';
+            }
+
             for(i in columns.columnsOrder) {
                 if(columns.columnsVisibility[i]) {
                     idx = $.inArray(columns.columnsOrder[i], columns.fields);
@@ -803,11 +814,16 @@
                 row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[row][row_primary_key] + '"' : '');
                 tbl_html += '<tr' + row_id_html + '>';
 
-                    for(i in columns.columnsOrder) {
-                        if(columns.columnsVisibility[i]) {
-                            tbl_html += '<td>' + page_data[row][columns.columnsOrder[i]] + '</td>';
-                        }
+                if(showRowIndex) {
+                    row_index = offset + parseInt(row) + 1;
+                    tbl_html += '<td>' + row_index + '</td>';
+                }
+
+                for(i in columns.columnsOrder) {
+                    if(columns.columnsVisibility[i]) {
+                        tbl_html += '<td>' + page_data[row][columns.columnsOrder[i]] + '</td>';
                     }
+                }
 
                 tbl_html += '</tr>';
             }
@@ -818,8 +834,6 @@
             elem_datagrid.html(tbl_html);
 
         }
-
-
 
 
     };
