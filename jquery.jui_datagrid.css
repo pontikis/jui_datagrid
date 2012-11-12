@@ -112,11 +112,6 @@ table.grid_table td:last-of-type {
     border-right: none;
 }
 
-/* TR HOVER */
-table.grid_table tr:not(:last-of-type) td.trhover {
-/*    border-bottom-width: 0;*/
-}
-
 /* toolbar ------------------------------------------------------------------ */
 .tbBtnContainer {
     display: inline-block;

@@ -397,7 +397,8 @@
                 // data table classes
                 tableClass: 'grid_table',
                 headerTableClass: 'grid_header_table',
-                trHoverClass: 'ui-state-hover trhover',
+                trHoverTrClass: '',
+                trHoverTdClass: 'ui-state-hover',
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
 
@@ -785,7 +786,8 @@
 
         var headerTableClass = elem.jui_datagrid('getOption', 'headerTableClass');
         var tableClass = elem.jui_datagrid('getOption', 'tableClass');
-        var trHoverClass = elem.jui_datagrid('getOption', 'trHoverClass');
+        var trHoverTrClass = elem.jui_datagrid('getOption', 'trHoverTrClass');
+        var trHoverTdClass = elem.jui_datagrid('getOption', 'trHoverTdClass');
         var thClass = elem.jui_datagrid('getOption', 'thClass');
         var tdClass = elem.jui_datagrid('getOption', 'tdClass');
 
@@ -796,9 +798,14 @@
         // data table style ----------------------------------------------------
         elem_data_table.removeClass().addClass(tableClass);
 
-        if(trHoverClass != '') {
+        if(trHoverTrClass != '') {
             elem_data_table.on('mouseover mouseout', 'tbody tr', function(event) {
-                $(this).children().toggleClass(trHoverClass, event.type == 'mouseover');
+                $(this).toggleClass(trHoverTrClass, event.type == 'mouseover');
+            });
+        }
+        if(trHoverTdClass != '') {
+            elem_data_table.on('mouseover mouseout', 'tbody tr', function(event) {
+                $(this).children().toggleClass(trHoverTdClass, event.type == 'mouseover');
             });
         }
         elem_data_table.find("td").removeClass().addClass(tdClass);
