@@ -23,7 +23,7 @@ $(function() {
         datagridClass: 'grid1_data ui-state-default',
 
         title: 'Customers',
-        showRowIndex: true,
+
         onDelete: function() {
             alert('Delete pressed');
         },

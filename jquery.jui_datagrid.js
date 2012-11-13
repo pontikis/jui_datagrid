@@ -203,6 +203,13 @@
                             // PREFERENCES EVENTS ------------------------------
                             var a_id_ext, a_opt, i;
 
+                            // tools grid
+                            a_id_ext = ['_row_index'];
+                            a_opt = ['showRowIndex'];
+                            for(i in a_id_ext) {
+                                util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
+                            }
+
                             // tools tab
                             a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
                             a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
@@ -352,6 +359,7 @@
                 maxRowsPerPage: 100,
 
                 rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
+
                 showRowIndex: false,
 
                 // toolbar options
@@ -402,6 +410,9 @@
                 trHoverTdClass: 'ui-state-hover',
                 thClass: 'ui-state-default',
                 tdClass: 'ui-widget-content',
+
+                rowIndexHeaderClass: '',
+                rowIndexClass: '',
 
                 selectedTrTrClass: '',
                 selectedTrTdClass: 'ui-state-highlight',
@@ -630,7 +641,11 @@
 
         /* TAB GRID --------------------------------------------------------- */
         pref_html += '<div id="' + tabs_id + '_grid">';
-        pref_html += 'Under construction 1';
+
+        pref_html += '<ul style="list-style-type: none;">';
+        pref_html += util_pref_li(dialog_id + '_row_index', rsc_jui_dg.pref_show_row_index);
+        pref_html += '</ul>';
+
         pref_html += '</div>';
 
         /* TAB TOOLS -------------------------------------------------------- */
@@ -665,6 +680,15 @@
         $("#" + dialog_id).html(pref_html);
 
         var a_id_ext, a_opt, i;
+
+        /* TAB GRID set values --------------------------------------------- */
+        a_id_ext = ['_row_index'];
+        a_opt = ['showRowIndex'];
+
+        for(i in a_id_ext) {
+            $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getOption', a_opt[i]));
+        }
+
         /* TAB TOOLS set values --------------------------------------------- */
         a_id_ext = ['_btn_select', '_btn_refresh', '_btn_delete', '_btn_print', '_btn_export', '_btn_filters'];
         a_opt = ['showSelectButtons', 'showRefreshButton', 'showDeleteButton', 'showPrintButton', 'showExportButton', 'showFiltersButton'];
@@ -752,6 +776,11 @@
             tblh_html += '<thead>';
             row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
             tblh_html += '<tr' + row_id_html + '>';
+
+            if(showRowIndex) {
+                tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
+            }
+
             $.each(page_data[0], function(index) {
                 tblh_html += '<th>' + index + '</th>';
             });
@@ -769,6 +798,12 @@
             for(i = 0; i < page_rows; i++) {
                 row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
                 tbl_html += '<tr' + row_id_html + '>';
+
+                if(showRowIndex) {
+                    row_index = offset + parseInt(i) + 1;
+                    tbl_html += '<td>' + row_index + '</td>';
+                }
+
                 $.each(page_data[i], function(index, value) {
                     tbl_html += '<td>' + value + '</td>';
                 });
@@ -789,7 +824,7 @@
             tblh_html += '<tr' + row_id_html + '>';
 
             if(showRowIndex) {
-                tblh_html += '<th>#</th>';
+                tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
             }
 
             for(i in columns.columnsOrder) {

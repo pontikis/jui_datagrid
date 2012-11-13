@@ -12,6 +12,7 @@ var rsc_jui_dg = {
     pref_tab_tools: 'Tools',
     pref_tab_nav: 'Navigation',
 
+    pref_show_row_index: 'Row index',
     pref_show_select: 'Select buttons',
     pref_show_refresh: 'Refresh button',
     pref_show_delete: 'Delete button',
@@ -29,6 +30,8 @@ var rsc_jui_dg = {
     tb_print: 'Print',
     tb_export: 'Export',
     tb_filters: 'Filters',
+
+    row_index_header: '#',
 
     rows_info_of: 'of',
     rows_info_records: 'records',
