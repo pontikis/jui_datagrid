@@ -8,15 +8,28 @@ $(function() {
 
     // demo grid1 --------------------------------------------------------------
     $("#demo_grid1").jui_datagrid({
-        columns: {
-            fields: ["customer_id", "lastname", "firstname", "email", "gender"],
-            headers: ["Code", "Lastname", "Firstname", "Email", "Gender"],
-            headerClasses: ["thclass1", "thclass2", "thclass3", "thclass4", "thclass5"],
-            dataClasses: ["tdclass1", "tdclass2", "tdclass3", "tdclass4", "tdclass5"],
-            sortColumnData: ["ascending", "", "", "", ""],
-            columnsOrder: ["customer_id", "lastname", "firstname", "email", "gender"],
-            columnsVisibility: [true, true, true, true, true]
-        },
+
+        columns: [
+            {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
+            {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
+            {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
+            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"}
+        ],
+
+        sorting: [
+            {"sortingName": "Code", field: "customer_id", order: ""},
+            {"sortingName": "Lastname", field: "lastname", order: "ascending"},
+            {"sortingName": "Firstname", field: "firstname", order: "ascending"}
+        ],
+
+        filters: [
+            {"filterName": "", "filterType": "", field: "", operator: "",
+                value: "", value_range: {lower: "", upper: ""}, value_array: [],
+                foreignKey: {ref_table: "", ref_pk: "", ref_col: "", condition: ""},
+                ajax_autocomplete_url: ""
+            }
+        ],
+
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
         containerClass: 'grid1_container ui-state-default ui-corner-all',
@@ -74,6 +87,20 @@ $(function() {
     });
 
     $("#demo_grid2").jui_datagrid({
+
+        columns: [
+            {field: "id", visible: "no", "header": 'Code', "headerClass": "", "dataClass": ""},
+            {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "", "dataClass": ""},
+            {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "", "dataClass": ""},
+            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "", "dataClass": ""}
+        ],
+
+        sorting: [
+            {"sortingName": "Code", field: "id", order: "ascending"},
+            {"sortingName": "Lastname", field: "lastname", order: ""},
+            {"sortingName": "Firstname", field: "firstname", order: ""}
+        ],
+
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
 
         containerClass: 'grid2_container ui-state-default ui-corner-all',

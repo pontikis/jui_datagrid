@@ -15,6 +15,22 @@ $result = array();
 // get params
 $page_num = $_POST['page_num'];
 $rows_per_page = $_POST['rows_per_page'];
+$sorting = $_POST['sorting'];
+
+$sortingSQL = '';
+if(isset($sorting)) {
+	foreach($sorting as $sort) {
+		if($sort['order'] == 'ascending') {
+			$sortingSQL .= $sort['field'] . ' ASC, ';
+		} else if($sorting[$i] == 'descending') {
+			$sortingSQL .= ' ' . $sort['field'] . ' DESC, ';
+		}
+	}
+	$len = mb_strlen($sortingSQL);
+	if($len > 0) {
+		$sortingSQL = ' ORDER BY ' . substr($sortingSQL, 0, $len - 2) . ' ';
+	}
+}
 
 // connect to database
 $dsn = $mysql_driver . '://' . $mysql_user . ':' . rawurlencode($mysql_passwd) . '@' . $mysql_server . '/' . $mysql_db . '?fetchmode=' . ADODB_FETCH_ASSOC;
@@ -32,10 +48,9 @@ if($rs === false) {
 
 // get data
 $offset = ($page_num - 1) * $rows_per_page;
-$orderSQL = ' ORDER BY customer_id';
 $sql = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
 	'FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)' .
-	$orderSQL;
+	$sortingSQL;
 $rs = $conn->SelectLimit($sql, $rows_per_page, $offset);
 if($rs === false) {
 	die('Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg());

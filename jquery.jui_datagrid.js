@@ -109,7 +109,8 @@
                     url: settings.ajaxFetchDataURL,
                     data: {
                         page_num: settings.pageNum,
-                        rows_per_page: settings.rowsPerPage
+                        rows_per_page: settings.rowsPerPage,
+                        sorting: settings.sorting
                     },
                     success: function(data) {
                         var a_data = $.parseJSON(data);
@@ -769,107 +770,56 @@
 
         offset = ((pageNum - 1) * rowsPerPage);
 
-        if(typeof columns === 'undefined') {
-            tblh_html = '';
-            tblh_html += '<table id="' + header_table_id + '">';
+        tblh_html = '';
+        tblh_html += '<table id="' + header_table_id + '">';
 
-            tblh_html += '<thead>';
-            row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
-            tblh_html += '<tr' + row_id_html + '>';
+        tblh_html += '<thead>';
+        row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
+        tblh_html += '<tr' + row_id_html + '>';
 
-            if(showRowIndex) {
-                tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
-            }
-
-            $.each(page_data[0], function(index) {
-                tblh_html += '<th>' + index + '</th>';
-            });
-            tblh_html += '<tr>';
-            tblh_html += '</thead>';
-
-            tblh_html += '</table>';
-
-            elem_datagrid_header.html(tblh_html);
-
-            tbl_html = '';
-            tbl_html += '<table id="' + table_id + '">';
-
-            tbl_html += '<tbody>';
-            for(i = 0; i < page_rows; i++) {
-                row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[i][row_primary_key] + '"' : '');
-                tbl_html += '<tr' + row_id_html + '>';
-
-                if(showRowIndex) {
-                    row_index = offset + parseInt(i) + 1;
-                    tbl_html += '<td>' + row_index + '</td>';
-                }
-
-                $.each(page_data[i], function(index, value) {
-                    tbl_html += '<td>' + value + '</td>';
-                });
-                tbl_html += '</tr>';
-            }
-            tbl_html += '<tbody>';
-
-            tbl_html += '</table>';
-
-            elem_datagrid.html(tbl_html);
-
-        } else {
-            tblh_html = '';
-            tblh_html += '<table id="' + header_table_id + '">';
-
-            tblh_html += '<thead>';
-            row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
-            tblh_html += '<tr' + row_id_html + '>';
-
-            if(showRowIndex) {
-                tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
-            }
-
-            for(i in columns.columnsOrder) {
-                if(columns.columnsVisibility[i]) {
-                    idx = $.inArray(columns.columnsOrder[i], columns.fields);
-                    tblh_html += '<th>' + columns.headers[idx] + '</th>';
-                }
-            }
-            tblh_html += '<tr>';
-            tblh_html += '</thead>';
-
-            tblh_html += '</table>';
-
-            elem_datagrid_header.html(tblh_html);
-
-
-            tbl_html = '';
-            tbl_html += '<table id="' + table_id + '">';
-
-            tbl_html += '<tbody>';
-            for(row in page_data) {
-                row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[row][row_primary_key] + '"' : '');
-                tbl_html += '<tr' + row_id_html + '>';
-
-                if(showRowIndex) {
-                    row_index = offset + parseInt(row) + 1;
-                    tbl_html += '<td>' + row_index + '</td>';
-                }
-
-                for(i in columns.columnsOrder) {
-                    if(columns.columnsVisibility[i]) {
-                        tbl_html += '<td>' + page_data[row][columns.columnsOrder[i]] + '</td>';
-                    }
-                }
-
-                tbl_html += '</tr>';
-            }
-            tbl_html += '<tbody>';
-
-            tbl_html += '</table>';
-
-            elem_datagrid.html(tbl_html);
-
+        if(showRowIndex) {
+            tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
         }
 
+        for(i in columns) {
+            if(columns[i].visible == "yes") {
+                tblh_html += '<th>' + columns[i].header + '</th>';
+            }
+        }
+        tblh_html += '<tr>';
+        tblh_html += '</thead>';
+
+        tblh_html += '</table>';
+
+        elem_datagrid_header.html(tblh_html);
+
+
+        tbl_html = '';
+        tbl_html += '<table id="' + table_id + '">';
+
+        tbl_html += '<tbody>';
+        for(row in page_data) {
+            row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[row][row_primary_key] + '"' : '');
+            tbl_html += '<tr' + row_id_html + '>';
+
+            if(showRowIndex) {
+                row_index = offset + parseInt(row) + 1;
+                tbl_html += '<td>' + row_index + '</td>';
+            }
+
+            for(i in columns) {
+                if(columns[i].visible == 'yes') {
+                    tbl_html += '<td>' + page_data[row][columns[i].field] + '</td>';
+                }
+            }
+
+            tbl_html += '</tr>';
+        }
+        tbl_html += '<tbody>';
+
+        tbl_html += '</table>';
+
+        elem_datagrid.html(tbl_html);
 
     };
 
