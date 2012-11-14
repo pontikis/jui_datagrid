@@ -18,6 +18,7 @@ var rsc_jui_dg = {
     pref_show_delete: 'Διαγραφή',
     pref_show_print: 'Εκτύπωση',
     pref_show_export: 'Εξαγωγή',
+    pref_show_sorting: 'Ταξινόμηση',
     pref_show_filters: 'Κριτήρια',
 
     tb_selected_label: 'Επιλεγμένα',
@@ -29,6 +30,7 @@ var rsc_jui_dg = {
     tb_delete: 'Διαγραφή',
     tb_print: 'Εκτύπωση',
     tb_export: 'Εξαγωγή',
+    tb_sorting: 'Ταξινόμηση',
     tb_filters: 'Κριτήρια',
 
     row_index_header: '#',

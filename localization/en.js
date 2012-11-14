@@ -18,6 +18,7 @@ var rsc_jui_dg = {
     pref_show_delete: 'Delete button',
     pref_show_print: 'Print button',
     pref_show_export: 'Export button',
+    pref_show_sorting: 'Sorting button',
     pref_show_filters: 'Filters button',
 
     tb_selected_label: 'Selected',
@@ -29,6 +30,7 @@ var rsc_jui_dg = {
     tb_delete: 'Delete',
     tb_print: 'Print',
     tb_export: 'Export',
+    tb_sorting: 'Sorting',
     tb_filters: 'Filters',
 
     row_index_header: '#',
