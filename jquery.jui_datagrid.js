@@ -10,8 +10,8 @@
 "use strict";
 (function($) {
 
-    var pluginName = 'jui_datagrid';
-    var pluginStatus = 'jui_datagrid_status';
+    var pluginName = 'jui_datagrid',
+        pluginStatus = 'jui_datagrid_status';
 
     // public methods
     var methods = {
@@ -83,12 +83,12 @@
                     elem.data(pluginStatus)['initialize'] = true;
                 }
 
-                var elem_header = $("#" + header_id);
-                var elem_grid_header = $("#" + datagrid_header_id);
-                var elem_grid = $("#" + datagrid_id);
-                var elem_tools = $("#" + tools_id);
-                var elem_pag = $("#" + pagination_id);
-                var elem_pref_dialog = $("#" + pref_dialog_id);
+                var elem_header = $("#" + header_id),
+                    elem_grid_header = $("#" + datagrid_header_id),
+                    elem_grid = $("#" + datagrid_id),
+                    elem_tools = $("#" + tools_id),
+                    elem_pag = $("#" + pagination_id),
+                    elem_pref_dialog = $("#" + pref_dialog_id);
 
                 // apply style
                 elem.removeClass().addClass(settings.containerClass);
@@ -138,10 +138,10 @@
 
                         // GRID EVENTS -------------------------------------
                         if(total_rows > 0) {
-                            var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+                            var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id),
+                                elem_table = $("#" + table_id),
+                                col_index, row_index;
                             row_prefix_len = (table_id + '_tr_').length;
-                            var elem_table = $("#" + table_id);
-                            var col_index, row_index;
 
                             /* click on cell */
                             selector = "tbody tr td";
@@ -298,11 +298,11 @@
                         // PAGINATION events -----------------------------------
                         if(total_rows > 0) {
 
-                            var currentPage = settings.pageNum;
-                            var rowsPerPage = settings.rowsPerPage;
-                            var maxRowsPerPage = settings.maxRowsPerPage;
-                            var elem_pagination = $("#" + pagination_id);
-                            var showRowsInfo = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
+                            var currentPage = settings.pageNum,
+                                rowsPerPage = settings.rowsPerPage,
+                                maxRowsPerPage = settings.maxRowsPerPage,
+                                elem_pagination = $("#" + pagination_id),
+                                showRowsInfo = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
 
                             elem_pagination.jui_pagination({
 
@@ -329,9 +329,9 @@
                                 },
                                 onDisplay: function() {
                                     if(showRowsInfo) {
-                                        var page_first_row = ((currentPage - 1) * rowsPerPage) + 1;
-                                        var page_last_row = Math.min(page_first_row + rowsPerPage - 1, total_rows);
-                                        var rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
+                                        var page_first_row = ((currentPage - 1) * rowsPerPage) + 1,
+                                            page_last_row = Math.min(page_first_row + rowsPerPage - 1, total_rows),
+                                            rows_info = page_first_row + '-' + page_last_row + ' ' + rsc_jui_dg.rows_info_of + ' ' + total_rows + ' ' + rsc_jui_dg.rows_info_records;
                                         $(this).jui_pagination('setRowsInfo', rows_info);
                                     }
                                 }
@@ -520,9 +520,9 @@
          */
         destroy: function() {
             return $(this).each(function() {
-                var $this = $(this);
-                var datagrid_container_id = $this.attr("id");
-                var pagination_container_id = $this.jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
+                var $this = $(this),
+                    datagrid_container_id = $this.attr("id"),
+                    pagination_container_id = $this.jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
 
                 $("#" + pagination_container_id).removeData();
                 $this.removeData();
@@ -535,8 +535,8 @@
          * @return {*}
          */
         getPaginationOption: function(opt) {
-            var datagrid_container_id = this.attr("id");
-            var pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
+            var datagrid_container_id = this.attr("id"),
+                pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
             return $("#" + pagination_id).jui_pagination('getOption', opt);
         },
 
@@ -546,8 +546,8 @@
          * @return {*}
          */
         getAllPaginationOptions: function() {
-            var datagrid_container_id = this.attr("id");
-            var pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
+            var datagrid_container_id = this.attr("id"),
+                pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
             return $("#" + pagination_id).jui_pagination('getAllOptions');
         }
 
@@ -771,19 +771,19 @@
      */
     var display_grid = function(container_id, total_rows, page_data, row_primary_key) {
 
-        var elem = $("#" + container_id);
-        var columns = elem.jui_datagrid('getOption', 'columns');
-        var pageNum = parseInt(elem.jui_datagrid('getOption', 'pageNum'));
-        var rowsPerPage = parseInt(elem.jui_datagrid('getOption', 'rowsPerPage'));
-        var showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex');
-        var page_rows = page_data.length;
-        var datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id);
-        var datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id);
-        var elem_datagrid_header = $("#" + datagrid_header_id);
-        var elem_datagrid = $("#" + datagrid_id);
-        var header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
-        var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var row_id_html, i, row, tblh_html, tbl_html, idx, row_index, offset;
+        var elem = $("#" + container_id),
+            columns = elem.jui_datagrid('getOption', 'columns'),
+            pageNum = parseInt(elem.jui_datagrid('getOption', 'pageNum')),
+            rowsPerPage = parseInt(elem.jui_datagrid('getOption', 'rowsPerPage')),
+            showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex'),
+            page_rows = page_data.length,
+            datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id),
+            datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id),
+            elem_datagrid_header = $("#" + datagrid_header_id),
+            elem_datagrid = $("#" + datagrid_id),
+            header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
+            table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id),
+            row_id_html, i, row, tblh_html, tbl_html, idx, row_index, offset;
 
         offset = ((pageNum - 1) * rowsPerPage);
 
@@ -847,19 +847,19 @@
      */
     var apply_grid_style = function(container_id) {
 
-        var elem = $("#" + container_id);
+        var elem = $("#" + container_id),
 
-        var header_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'header_table_id_prefix'), container_id);
-        var data_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), container_id);
-        var elem_header_table = $(header_table_selector);
-        var elem_data_table = $(data_table_selector);
+            header_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
+            data_table_selector = '#' + create_id($(elem).jui_datagrid('getOption', 'table_id_prefix'), container_id),
+            elem_header_table = $(header_table_selector),
+            elem_data_table = $(data_table_selector),
 
-        var headerTableClass = elem.jui_datagrid('getOption', 'headerTableClass');
-        var tableClass = elem.jui_datagrid('getOption', 'tableClass');
-        var trHoverTrClass = elem.jui_datagrid('getOption', 'trHoverTrClass');
-        var trHoverTdClass = elem.jui_datagrid('getOption', 'trHoverTdClass');
-        var thClass = elem.jui_datagrid('getOption', 'thClass');
-        var tdClass = elem.jui_datagrid('getOption', 'tdClass');
+            headerTableClass = elem.jui_datagrid('getOption', 'headerTableClass'),
+            tableClass = elem.jui_datagrid('getOption', 'tableClass'),
+            trHoverTrClass = elem.jui_datagrid('getOption', 'trHoverTrClass'),
+            trHoverTdClass = elem.jui_datagrid('getOption', 'trHoverTdClass'),
+            thClass = elem.jui_datagrid('getOption', 'thClass'),
+            tdClass = elem.jui_datagrid('getOption', 'tdClass');
 
         // header table style --------------------------------------------------
         elem_header_table.removeClass().addClass(headerTableClass);
@@ -881,9 +881,9 @@
         elem_data_table.find("td").removeClass().addClass(tdClass);
 
         // sync header and data tables column width ----------------------------
-        var cols = $(header_table_selector + ' th').length;
-        var i, cw, cw_min, elem_th, elem_td; // cw = computed width
-        var a_col_cw = [];
+        var cols = $(header_table_selector + ' th').length,
+            i, cw, cw_min, elem_th, elem_td, // cw = computed width
+            a_col_cw = [];
 
         // define column min-widths
         if(elem.data(pluginStatus)['col-min-width'].length == 0) {
@@ -928,12 +928,12 @@
     var apply_selections = function(plugin_container_id, row_primary_key) {
 
         if(row_primary_key) {
-            var elem = $("#" + plugin_container_id);
-            var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
-            var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
-            var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
-            var table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), plugin_container_id);
-            var row_prefix_len = (table_id + '_tr_').length;
+            var elem = $("#" + plugin_container_id),
+                rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode'),
+                selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass'),
+                selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass'),
+                table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), plugin_container_id),
+                row_prefix_len = (table_id + '_tr_').length;
 
             if(rowSelectionMode == 'multiple') {
                 var selector_rows = '#' + table_id + ' tbody tr';
@@ -962,39 +962,39 @@
      */
     var display_tools = function(container_id, total_rows, row_primary_key) {
 
-        var elem = $("#" + container_id);
-        var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
-        var toolsClass = elem.jui_datagrid('getOption', 'toolsClass');
+        var elem = $("#" + container_id),
+            tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id),
+            toolsClass = elem.jui_datagrid('getOption', 'toolsClass'),
 
-        var rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode');
+            rowSelectionMode = elem.jui_datagrid('getOption', 'rowSelectionMode'),
 
-        var tbButtonContainer = elem.jui_datagrid('getOption', 'tbButtonContainer');
+            tbButtonContainer = elem.jui_datagrid('getOption', 'tbButtonContainer'),
 
-        var showPrefButton = elem.jui_datagrid('getOption', 'showPrefButton');
-        var showPrefButtonText = elem.jui_datagrid('getOption', 'showPrefButtonText');
-        var tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass');
+            showPrefButton = elem.jui_datagrid('getOption', 'showPrefButton'),
+            showPrefButtonText = elem.jui_datagrid('getOption', 'showPrefButtonText'),
+            tbPrefIconClass = elem.jui_datagrid('getOption', 'tbPrefIconClass'),
 
-        var showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons');
+            showSelectButtons = elem.jui_datagrid('getOption', 'showSelectButtons'),
 
-        var showRefreshButton = elem.jui_datagrid('getOption', 'showRefreshButton');
-        var showRefreshButtonText = elem.jui_datagrid('getOption', 'showRefreshButtonText');
-        var tbRefreshIconClass = elem.jui_datagrid('getOption', 'tbRefreshIconClass');
+            showRefreshButton = elem.jui_datagrid('getOption', 'showRefreshButton'),
+            showRefreshButtonText = elem.jui_datagrid('getOption', 'showRefreshButtonText'),
+            tbRefreshIconClass = elem.jui_datagrid('getOption', 'tbRefreshIconClass'),
 
-        var showDeleteButton = elem.jui_datagrid('getOption', 'showDeleteButton');
-        var showDeleteButtonText = elem.jui_datagrid('getOption', 'showDeleteButtonText');
-        var tbDeleteIconClass = elem.jui_datagrid('getOption', 'tbDeleteIconClass');
+            showDeleteButton = elem.jui_datagrid('getOption', 'showDeleteButton'),
+            showDeleteButtonText = elem.jui_datagrid('getOption', 'showDeleteButtonText'),
+            tbDeleteIconClass = elem.jui_datagrid('getOption', 'tbDeleteIconClass'),
 
-        var showPrintButton = elem.jui_datagrid('getOption', 'showPrintButton');
-        var showPrintButtonText = elem.jui_datagrid('getOption', 'showPrintButtonText');
-        var tbPrintIconClass = elem.jui_datagrid('getOption', 'tbPrintIconClass');
+            showPrintButton = elem.jui_datagrid('getOption', 'showPrintButton'),
+            showPrintButtonText = elem.jui_datagrid('getOption', 'showPrintButtonText'),
+            tbPrintIconClass = elem.jui_datagrid('getOption', 'tbPrintIconClass'),
 
-        var showExportButton = elem.jui_datagrid('getOption', 'showExportButton');
-        var showExportButtonText = elem.jui_datagrid('getOption', 'showExportButtonText');
-        var tbExportIconClass = elem.jui_datagrid('getOption', 'tbExportIconClass');
+            showExportButton = elem.jui_datagrid('getOption', 'showExportButton'),
+            showExportButtonText = elem.jui_datagrid('getOption', 'showExportButtonText'),
+            tbExportIconClass = elem.jui_datagrid('getOption', 'tbExportIconClass'),
 
-        var showFiltersButton = elem.jui_datagrid('getOption', 'showFiltersButton');
-        var showFiltersButtonText = elem.jui_datagrid('getOption', 'showFiltersButtonText');
-        var tbFiltersIconClass = elem.jui_datagrid('getOption', 'tbFiltersIconClass');
+            showFiltersButton = elem.jui_datagrid('getOption', 'showFiltersButton'),
+            showFiltersButtonText = elem.jui_datagrid('getOption', 'showFiltersButtonText'),
+            tbFiltersIconClass = elem.jui_datagrid('getOption', 'tbFiltersIconClass');
 
         var tools_html = '';
 
@@ -1100,17 +1100,17 @@
         if(total_rows > 0) {
             if(showSelectButtons && rowSelectionMode == 'multiple' && row_primary_key) {
 
-                var elem_dropdown_select = $("#" + drop_select_id);
+                var elem_dropdown_select = $("#" + drop_select_id),
 
-                // fixed dropdown options
-                var launcher_id = drop_select_id + '_launcher';
-                var launcher_container_id = drop_select_id + '_launcher_container';
-                var menu_id = drop_select_id + '_menu';
+                    // fixed dropdown options
+                    launcher_id = drop_select_id + '_launcher',
+                    launcher_container_id = drop_select_id + '_launcher_container',
+                    menu_id = drop_select_id + '_menu',
 
-                // CREATE DROPDOWN OPTIONS
-                var given_dropdown_select_options = elem.jui_datagrid('getOption', 'dropdownSelectOptions');
-                // remove unacceptable settings
-                var internal_defined = ['launcher_id', 'launcher_container_id', 'menu_id', 'onSelect'];
+                    // CREATE DROPDOWN OPTIONS
+                    given_dropdown_select_options = elem.jui_datagrid('getOption', 'dropdownSelectOptions'),
+                    // remove unacceptable settings
+                    internal_defined = ['launcher_id', 'launcher_container_id', 'menu_id', 'onSelect'];
                 for(var i in internal_defined) {
                     if(typeof(given_dropdown_select_options[internal_defined[i]]) != 'undefined') {
                         delete given_dropdown_select_options[internal_defined[i]];
@@ -1202,22 +1202,22 @@
      */
     var display_pagination = function(container_id, total_rows) {
 
-        var elem = $("#" + container_id);
+        var elem = $("#" + container_id),
 
-        // fixed pagination options
-        var currentPage = elem.jui_datagrid('getOption', 'pageNum');
-        var rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage');
-        var maxRowsPerPage = elem.jui_datagrid('getOption', 'maxRowsPerPage');
-        var total_pages = Math.ceil(total_rows / rowsPerPage);
-        var paginationClass = elem.jui_datagrid('getOption', 'paginationClass');
+            // fixed pagination options
+            currentPage = elem.jui_datagrid('getOption', 'pageNum'),
+            rowsPerPage = elem.jui_datagrid('getOption', 'rowsPerPage'),
+            maxRowsPerPage = elem.jui_datagrid('getOption', 'maxRowsPerPage'),
+            total_pages = Math.ceil(total_rows / rowsPerPage),
+            paginationClass = elem.jui_datagrid('getOption', 'paginationClass'),
 
-        var pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id);
-        var elem_pagination = $("#" + pagination_id);
+            pagination_id = create_id(elem.jui_datagrid('getOption', 'pagination_id_prefix'), container_id),
+            elem_pagination = $("#" + pagination_id),
 
-        // CREATE PAGINATION OPTIONS
-        var given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions');
-        // remove unacceptable settings
-        var internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
+            // CREATE PAGINATION OPTIONS
+            given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions'),
+            // remove unacceptable settings
+            internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
         for(var i in internal_defined) {
             if(typeof(given_pagination_options[internal_defined[i]]) != 'undefined') {
                 delete given_pagination_options[internal_defined[i]];
@@ -1253,9 +1253,9 @@
      */
     var display_no_data = function(container_id) {
 
-        var elem = $("#" + container_id);
-        var datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id;
-        var pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
+        var elem = $("#" + container_id),
+            datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id,
+            pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
 
         $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
         $("#" + pagination_id).hide();
@@ -1294,12 +1294,12 @@
      * @param row_id
      */
     var row_select = function(plugin_container_id, row_id) {
-        var elem = $("#" + plugin_container_id);
-        var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
-        var table_id = create_id(table_id_prefix, plugin_container_id);
-        var elem_row = $("#" + table_id + '_tr_' + row_id);
-        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
-        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+        var elem = $("#" + plugin_container_id),
+            table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix'),
+            table_id = create_id(table_id_prefix, plugin_container_id),
+            elem_row = $("#" + table_id + '_tr_' + row_id),
+            selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass'),
+            selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'].push(row_id);
         elem.data(pluginStatus)['count_selected_ids'] += 1;
@@ -1313,12 +1313,12 @@
      * @param row_idx
      */
     var row_deselect = function(plugin_container_id, row_id, row_idx) {
-        var elem = $("#" + plugin_container_id);
-        var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
-        var table_id = create_id(table_id_prefix, plugin_container_id);
-        var elem_row = $("#" + table_id + '_tr_' + row_id);
-        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
-        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+        var elem = $("#" + plugin_container_id),
+            table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix'),
+            table_id = create_id(table_id_prefix, plugin_container_id),
+            elem_row = $("#" + table_id + '_tr_' + row_id),
+            selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass'),
+            selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'].splice(row_idx, 1);
         elem.data(pluginStatus)['count_selected_ids'] -= 1;
@@ -1330,12 +1330,12 @@
      * @param plugin_container_id
      */
     var rows_all_deselect = function(plugin_container_id) {
-        var elem = $("#" + plugin_container_id);
-        var table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix');
-        var table_id = create_id(table_id_prefix, plugin_container_id);
-        var elem_table = $("#" + table_id);
-        var selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass');
-        var selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
+        var elem = $("#" + plugin_container_id),
+            table_id_prefix = elem.jui_datagrid('getOption', 'table_id_prefix'),
+            table_id = create_id(table_id_prefix, plugin_container_id),
+            elem_table = $("#" + table_id),
+            selectedTrTrClass = elem.jui_datagrid('getOption', 'selectedTrTrClass'),
+            selectedTrTdClass = elem.jui_datagrid('getOption', 'selectedTrTdClass');
 
         elem.data(pluginStatus)['a_selected_ids'] = [];
         elem.data(pluginStatus)['count_selected_ids'] = 0;
@@ -1348,10 +1348,10 @@
      * @param plugin_container_id
      */
     var update_selected_rows_counter = function(plugin_container_id) {
-        var elem = $("#" + plugin_container_id);
-        var selected_rows = elem.data(pluginStatus)['count_selected_ids'];
-        var tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), plugin_container_id);
-        var drop_select_id = tools_id + '_drop_select';
+        var elem = $("#" + plugin_container_id),
+            selected_rows = elem.data(pluginStatus)['count_selected_ids'],
+            tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), plugin_container_id),
+            drop_select_id = tools_id + '_drop_select';
 
         $("#" + drop_select_id + '_launcher').button({
             label: rsc_jui_dg.tb_selected_label + ': ' + selected_rows
