@@ -355,6 +355,23 @@
          */
         getDefaults: function() {
             return {
+
+                columns: [
+                    {field: "", visible: "no", "header": '', "headerClass": "", "dataClass": ""}
+                ],
+
+                sorting: [
+                    {"sortingName": "", field: "", order: ""}
+                ],
+
+                filters: [
+                    {"filterName": "", "filterType": "", field: "", operator: "",
+                        value: "", value_range: {lower: "", upper: ""}, value_array: [],
+                        foreignKey: {ref_table: "", ref_pk: "", ref_col: "", condition: ""},
+                        ajax_autocomplete_url: ""
+                    }
+                ],
+
                 pageNum: 1,
                 rowsPerPage: 10,
                 maxRowsPerPage: 100,
