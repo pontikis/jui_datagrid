@@ -45,7 +45,12 @@
                     elem.data(pluginStatus, {});
                     elem.data(pluginStatus)['a_selected_ids'] = [];
                     elem.data(pluginStatus)['count_selected_ids'] = 0;
-                    elem.data(pluginStatus)['col-min-width'] = [];
+
+                    if($.browser.mozilla || ($.browser.msie && parseInt($.browser.version) >= 10)) {
+                        elem.data(pluginStatus)['fix_border_collapse_td_width'] = 0;
+                    } else {
+                        elem.data(pluginStatus)['fix_border_collapse_td_width'] = settings.fix_border_collapse_td_width;
+                    }
                 }
 
                 if(settings.rowSelectionMode == 'single' || settings.rowSelectionMode == false) {
@@ -459,6 +464,8 @@
 
                 pref_dialog_id_prefix: 'pref_dlg_',
                 pref_tabs_id_prefix: 'pref_tabs_',
+
+                fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 
                 onCellClick: function() {
                 },
@@ -884,7 +891,6 @@
             tdClass = elem.jui_datagrid('getOption', 'tdClass'),
 
             columns = elem.jui_datagrid('getOption', 'columns'),
-            autoSetColumnsWidth = elem.jui_datagrid('getOption', 'autoSetColumnsWidth'),
             showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex'),
 
             headerClass, dataClass, i, col;
@@ -909,71 +915,83 @@
         }
 
 
-
-        if(autoSetColumnsWidth) {
-            // sync header and data tables column width ----------------------------
-            var cols = $(header_table_selector + ' th').length,
-                cw, cw_min, elem_th, elem_td, // cw = computed width
-                a_col_cw = [];
-
-            // define column min-widths
-            if(elem.data(pluginStatus)['col-min-width'].length == 0) {
-                $(header_table_selector).addClass("shrink");
-                for(i = 0; i < cols; i++) {
-                    elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
-                    cw_min = elem_th.width();
-
-                    elem.data(pluginStatus)['col-min-width'].push(cw_min);
-
-                    elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                    elem_td.css("min-width", cw_min + 'px');
-                }
-                $(header_table_selector).removeClass("shrink");
-            } else {
-                for(i in elem.data(pluginStatus)['col-min-width']) {
-                    elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                    elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
-                }
+        // apply given styles --------------------------------------------------
+        for(i in columns) {
+            col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
+            headerClass = columns[i]['headerClass'];
+            if(headerClass !== "") {
+                $(header_table_selector + ' th').eq(col).addClass(headerClass);
+                //console.log(header_table_selector + '_col_' + col);
+                //console.log(headerClass);
             }
+        }
 
-            // apply first tr td widths to header
-            for(i = 0; i < cols - 1; i++) {
-                var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                cw = elem_cur.width();
-                a_col_cw.push(cw);
-                $(header_table_selector + ' th').eq(i).width(cw);
-            }
-
-            // re-apply first tr td widths to data table
-            for(i = 0; i < cols; i++) {
-                $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
-            }
-        } else {
-            // apply given styles --------------------------------------------------
-            for(i in columns) {
-                col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
-                headerClass = columns[i]['headerClass'];
-                if(headerClass !== "") {
-                    $(header_table_selector + ' th').eq(col).addClass(headerClass);
-                    //console.log(header_table_selector + '_col_' + col);
-                    //console.log(headerClass);
-                }
-            }
-
-            for(i in columns) {
-                col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
-                dataClass = columns[i]['dataClass'];
-                if(dataClass !== "") {
-                    $(data_table_selector + ' tr').each(function() {
-                        $(this).find("td").eq(col).addClass(dataClass);
-                    });
-                    //console.log(data_table_selector + '_col_' + col);
-                    //console.log(dataClass);
-                }
+        for(i in columns) {
+            col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
+            dataClass = columns[i]['dataClass'];
+            if(dataClass !== "") {
+                $(data_table_selector + ' tr').each(function() {
+                    $(this).find("td").eq(col).addClass(dataClass);
+                });
+                //console.log(data_table_selector + '_col_' + col);
+                //console.log(dataClass);
             }
         }
 
 
+        // try to detect id header columns width need syncronization with data table columns
+        var cols = $(header_table_selector + ' th').length,
+            cols_except_last = cols - 1,
+            th_cow, td_first_row_cow, // cow = computed outer width
+            fix_columns_width_needed = false;
+        for(i = 0; i < cols_except_last; i++) {
+            th_cow = $(header_table_selector + ' th').eq(i).width();
+            td_first_row_cow = $(data_table_selector).find("tr").eq(0).find("td").eq(i).width();
+            //console.log(th_cow + ' ' + td_first_row_cow);
+            if(th_cow !== td_first_row_cow) {
+                fix_columns_width_needed = true;
+                //break;
+            }
+        }
+
+
+        if(fix_columns_width_needed) {
+
+            //console.log('fix_columns_width_needed');
+
+            // sync header and data tables column width ----------------------------
+            var cw, cw_min, elem_th, elem_td, // cw = computed width
+                a_col_cw = [],
+                fix_td_width = parseInt(elem.data(pluginStatus)['fix_border_collapse_td_width']);
+
+            // define column min-widths
+            $(header_table_selector).addClass("shrink");
+            for(i = 0; i < cols; i++) {
+                elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
+                cw_min = elem_th.width();
+
+                elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                elem_td.css("min-width", cw_min + 'px');
+            }
+            $(header_table_selector).removeClass("shrink");
+
+            // apply first tr td widths to header
+            for(i = 0; i < cols_except_last; i++) {
+                var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                cw = elem_cur.width() + fix_td_width;
+                a_col_cw.push(cw);
+                $(header_table_selector + ' th').eq(i).width(cw);
+                //console.log(cw);
+            }
+
+            // re-apply first tr td widths to data table
+            for(i = 0; i < cols_except_last; i++) {
+                $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
+                //console.log(a_col_cw[i]);
+            }
+
+
+        }
     };
 
 
