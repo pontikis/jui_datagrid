@@ -13,7 +13,7 @@ $(function() {
             {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
             {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
             {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
-            {field: "gender", visible: "yes", "header": 'G', "headerClass": "th_gender", "dataClass": "td_gender"}
+            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "", "dataClass": ""}
         ],
 
         sorting: [

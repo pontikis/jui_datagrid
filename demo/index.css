@@ -26,8 +26,37 @@
     text-align: left;
 }
 
-
 .th_lastname {
+    width: 20%;
+}
+.th_firstname {
+    width: 15%;
+}
+.th_email {
+    width: 55%;
+}
+.th_gender {
+    width: 10%;
+}
+
+
+.td_lastname {
+    width: 20%;
+}
+.td_firstname {
+    width: 15%;
+}
+.td_email {
+    width: 55%;
+    color: blue;
+    text-align: right;
+}
+.td_gender {
+    width: 10%;
+}
+
+
+/*.th_lastname {
     width: 140px;
 }
 .th_firstname {
@@ -37,7 +66,7 @@
     width: 412px;
 }
 .th_gender {
-/*    width: 50px;*/
+*//*    width: 50px;*//*
 }
 
 
@@ -53,8 +82,8 @@
     text-align: right;
 }
 .td_gender {
-/*    width: 50px;*/
-}
+*//*    width: 50px;*//*
+}*/
 
 /* demo_grid2 --------------------------------------------------------------- */
 .dlg_demo_grid2 {
