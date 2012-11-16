@@ -9,6 +9,7 @@ http://www.ke-cai.net/2010/01/theme-your-table-with-jquery-ui.html
 http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.html
 */
 
+/* jQuery UI classes modifications ------------------------------------------ */
 .ui-state-default {
     font-weight: normal !important;
 }
@@ -17,65 +18,34 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     font-weight: inherit !important;
 }
 
-/* main divs ---------------------------------------------------------------- */
+/* plugin container --------------------------------------------------------- */
 .grid_container {
     width: 600px;
     padding: 5px;
     background: none;
 }
 
-.grid_header {
+/* grid caption ------------------------------------------------------------- */
+.grid_caption {
     padding: 2px 4px;
     margin: 0;
 }
 
-.grid_data_header {
+/* grid headers ------------------------------------------------------------- */
+.grid_header {
     padding: 0;
     margin: 0;
-    border-bottom: none !important;
-    border-top: none !important;
+    border: none !important;
 }
 
-.grid_data {
-    padding: 0;
-    margin: 0 0 5px 0;
-}
-
-.grid_tools {
-    font-size: 11px !important;
-    text-align: center;
-    margin: 5px 0;
-    padding: 2px;
-}
-
-.grid_pagination {
-    margin: 5px 0 0 0;
-    padding: 0;
-}
-
-/* header table ------------------------------------------------------------- */
-/* GENERAL */
 .grid_header_table {
     border-collapse: collapse;
     width: 100%;
-    margin: 0;
+    margin: 0 0 -1px 0;
 }
 
-table.grid_header_table th {
+.grid_th {
     padding: 2px 4px;
-}
-
-/* PREVENT DOUBLE BORDERS */
-/* remove border except right */
-table.grid_header_table th {
-    border-bottom: none !important;
-    border-top: none;
-    border-left: none !important;
-}
-
-/* remove border right from last th */
-table.grid_header_table th:last-of-type {
-    border-right: none;
 }
 
 /* UTILITY CLASS - DO NOT EDIT */
@@ -83,36 +53,31 @@ table.grid_header_table th:last-of-type {
     width: 1px;
 }
 
-/* data table --------------------------------------------------------------- */
-/* GENERAL */
-.grid_table {
+/* grid data ---------------------------------------------------------------- */
+.grid_data {
+    padding: 0;
+    margin: 0 0 5px 0;
+    border: none;
+}
+
+.grid_data_table {
     border-collapse: collapse;
     width: 100%;
     margin: 0;
 }
 
-table.grid_table td {
+.grid_td {
     padding: 2px 4px;
 }
 
-/* PREVENT DOUBLE BORDERS */
-/* remove border top of first tr  */
-table.grid_table tr:first-of-type td {
-    border-top: none;
+/* grid toolbar ------------------------------------------------------------- */
+.grid_tools {
+    font-size: 11px !important;
+    text-align: center;
+    margin: 5px 0;
+    padding: 2px;
 }
 
-/* remove border left from all td */
-table.grid_table td {
-    border-top: none;
-    border-left: none !important;
-}
-
-/* remove border right from last td of any tr */
-table.grid_table td:last-of-type {
-    border-right: none;
-}
-
-/* toolbar ------------------------------------------------------------------ */
 .tbBtnContainer {
     display: inline-block;
     margin: 0 5px;
@@ -134,6 +99,12 @@ table.grid_table td:last-of-type {
 }
 
 .dropdown_select_launcher {
+    padding: 0;
+}
+
+/* grid pagination ---------------------------------------------------------- */
+.grid_pagination {
+    margin: 5px 0 0 0;
     padding: 0;
 }
 /* -------------------------------------------------------------------------- */

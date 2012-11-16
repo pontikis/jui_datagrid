@@ -62,17 +62,17 @@
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
-                var header_id, datagrid_header_id, datagrid_id, tools_id, pagination_id, pref_dialog_id, elem_html;
-                header_id = create_id(settings.header_id_prefix, container_id);
-                datagrid_header_id = create_id(settings.datagrid_header_id_prefix, container_id);
-                datagrid_id = create_id(settings.datagrid_id_prefix, container_id);
-                tools_id = create_id(settings.tools_id_prefix, container_id);
-                pagination_id = create_id(settings.pagination_id_prefix, container_id);
-                pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id);
+                var caption_id = create_id(settings.caption_id_prefix, container_id),
+                    datagrid_header_id = create_id(settings.datagrid_header_id_prefix, container_id),
+                    datagrid_id = create_id(settings.datagrid_id_prefix, container_id),
+                    tools_id = create_id(settings.tools_id_prefix, container_id),
+                    pagination_id = create_id(settings.pagination_id_prefix, container_id),
+                    pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id),
+                    elem_html;
 
                 if(!elem.data(pluginStatus)['initialize']) {
 
-                    elem_html = '<div id="' + header_id + '">' + settings.title + '</div>';
+                    elem_html = '<div id="' + caption_id + '">' + settings.caption + '</div>';
                     elem_html += '<div id="' + datagrid_header_id + '"></div>';
                     elem_html += '<div id="' + datagrid_id + '"></div>';
                     elem_html += '<div id="' + tools_id + '"></div>';
@@ -83,7 +83,7 @@
                     elem.data(pluginStatus)['initialize'] = true;
                 }
 
-                var elem_header = $("#" + header_id),
+                var elem_caption = $("#" + caption_id),
                     elem_grid_header = $("#" + datagrid_header_id),
                     elem_grid = $("#" + datagrid_id),
                     elem_tools = $("#" + tools_id),
@@ -93,10 +93,10 @@
                 // apply style
                 elem.removeClass().addClass(settings.containerClass);
 
-                if(typeof settings.title === 'undefined') {
-                    elem_header.hide();
+                if(typeof settings.caption === 'undefined') {
+                    elem_caption.hide();
                 } else {
-                    elem_header.show().text(settings.title).removeClass().addClass(settings.headerClass);
+                    elem_caption.show().text(settings.caption).removeClass().addClass(settings.captionClass);
                 }
                 elem_grid_header.removeClass().addClass(settings.datagridHeaderClass);
                 elem_grid.removeClass().addClass(settings.datagridClass);
@@ -378,6 +378,7 @@
 
                 rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
+                autoSetColumnsWidth: true,
                 showRowIndex: false,
 
                 // toolbar options
@@ -391,7 +392,7 @@
                 showFiltersButton: true,
                 showPrefButtonText: false,
                 showRefreshButtonText: false,
-                showDeleteButtonText: true,
+                showDeleteButtonText: false,
                 showPrintButtonText: false,
                 showExportButtonText: false,
                 showSortingButtonText: false,
@@ -417,19 +418,19 @@
 
                 // main divs classes
                 containerClass: 'grid_container ui-state-default ui-corner-all',
-                headerClass: 'grid_header ui-widget-header ui-corner-top',
-                datagridHeaderClass: 'grid_data_header ui-state-default',
-                datagridClass: 'grid_data ui-state-default',
+                captionClass: 'grid_caption ui-widget-header ui-corner-top',
+                datagridHeaderClass: 'grid_header ui-state-default',
+                datagridClass: 'grid_data ui-widget-content',
                 toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
 
                 // data table classes
-                tableClass: 'grid_table',
                 headerTableClass: 'grid_header_table',
+                dataTableClass: 'grid_data_table',
                 trHoverTrClass: '',
                 trHoverTdClass: 'ui-state-hover',
-                thClass: 'ui-state-default',
-                tdClass: 'ui-widget-content',
+                thClass: 'grid_th ui-state-default',
+                tdClass: 'grid_td ui-widget-content',
 
                 rowIndexHeaderClass: '',
                 rowIndexClass: '',
@@ -448,7 +449,7 @@
                 tbFiltersIconClass: 'ui-icon-search',
 
                 // elements id prefix
-                header_id_prefix: 'header_',
+                caption_id_prefix: 'caption_',
                 datagrid_header_id_prefix: 'dgh_',
                 datagrid_id_prefix: 'dg_',
                 table_id_prefix: 'tbl_',
@@ -804,7 +805,7 @@
             elem_datagrid = $("#" + datagrid_id),
             header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
             table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id),
-            row_id_html, i, row, tblh_html, tbl_html, idx, row_index, offset;
+            row_id_html, i, row, col, tblh_html, tbl_html, idx, row_index, offset;
 
         offset = ((pageNum - 1) * rowsPerPage);
 
@@ -876,18 +877,25 @@
             elem_data_table = $(data_table_selector),
 
             headerTableClass = elem.jui_datagrid('getOption', 'headerTableClass'),
-            tableClass = elem.jui_datagrid('getOption', 'tableClass'),
+            dataTableClass = elem.jui_datagrid('getOption', 'dataTableClass'),
             trHoverTrClass = elem.jui_datagrid('getOption', 'trHoverTrClass'),
             trHoverTdClass = elem.jui_datagrid('getOption', 'trHoverTdClass'),
             thClass = elem.jui_datagrid('getOption', 'thClass'),
-            tdClass = elem.jui_datagrid('getOption', 'tdClass');
+            tdClass = elem.jui_datagrid('getOption', 'tdClass'),
+
+            columns = elem.jui_datagrid('getOption', 'columns'),
+            autoSetColumnsWidth = elem.jui_datagrid('getOption', 'autoSetColumnsWidth'),
+            showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex'),
+
+            headerClass, dataClass, i, col;
 
         // header table style --------------------------------------------------
-        elem_header_table.removeClass().addClass(headerTableClass);
-        elem_header_table.find("th").removeClass().addClass(thClass);
+        elem_header_table.removeClass(headerTableClass).addClass(headerTableClass);
+        elem_header_table.find("th").removeClass(thClass).addClass(thClass);
 
         // data table style ----------------------------------------------------
-        elem_data_table.removeClass().addClass(tableClass);
+        elem_data_table.removeClass(dataTableClass).addClass(dataTableClass);
+        elem_data_table.find("td").removeClass(tdClass).addClass(tdClass);
 
         if(trHoverTrClass != '') {
             elem_data_table.on('mouseover mouseout', 'tbody tr', function(event) {
@@ -899,47 +907,75 @@
                 $(this).children().toggleClass(trHoverTdClass, event.type == 'mouseover');
             });
         }
-        elem_data_table.find("td").removeClass().addClass(tdClass);
 
-        // sync header and data tables column width ----------------------------
-        var cols = $(header_table_selector + ' th').length,
-            i, cw, cw_min, elem_th, elem_td, // cw = computed width
-            a_col_cw = [];
 
-        // define column min-widths
-        if(elem.data(pluginStatus)['col-min-width'].length == 0) {
-            $(header_table_selector).addClass("shrink");
+
+        if(autoSetColumnsWidth) {
+            // sync header and data tables column width ----------------------------
+            var cols = $(header_table_selector + ' th').length,
+                cw, cw_min, elem_th, elem_td, // cw = computed width
+                a_col_cw = [];
+
+            // define column min-widths
+            if(elem.data(pluginStatus)['col-min-width'].length == 0) {
+                $(header_table_selector).addClass("shrink");
+                for(i = 0; i < cols; i++) {
+                    elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
+                    cw_min = elem_th.width();
+
+                    elem.data(pluginStatus)['col-min-width'].push(cw_min);
+
+                    elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                    elem_td.css("min-width", cw_min + 'px');
+                }
+                $(header_table_selector).removeClass("shrink");
+            } else {
+                for(i in elem.data(pluginStatus)['col-min-width']) {
+                    elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                    elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
+                }
+            }
+
+            // apply first tr td widths to header
+            for(i = 0; i < cols - 1; i++) {
+                var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
+                cw = elem_cur.width();
+                a_col_cw.push(cw);
+                $(header_table_selector + ' th').eq(i).width(cw);
+            }
+
+            // re-apply first tr td widths to data table
             for(i = 0; i < cols; i++) {
-                elem_th = $(header_table_selector).find("tr").eq(0).find("th").eq(i);
-                cw_min = elem_th.width();
-
-                elem.data(pluginStatus)['col-min-width'].push(cw_min);
-
-                elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                elem_td.css("min-width", cw_min + 'px');
+                $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
             }
-            $(header_table_selector).removeClass("shrink");
         } else {
-            for(i in elem.data(pluginStatus)['col-min-width']) {
-                elem_td = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                elem_td.css("min-width", elem.data(pluginStatus)['col-min-width'][i] + 'px');
+            // apply given styles --------------------------------------------------
+            for(i in columns) {
+                col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
+                headerClass = columns[i]['headerClass'];
+                if(headerClass !== "") {
+                    $(header_table_selector + ' th').eq(col).addClass(headerClass);
+                    //console.log(header_table_selector + '_col_' + col);
+                    //console.log(headerClass);
+                }
+            }
+
+            for(i in columns) {
+                col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
+                dataClass = columns[i]['dataClass'];
+                if(dataClass !== "") {
+                    $(data_table_selector + ' tr').each(function() {
+                        $(this).find("td").eq(col).addClass(dataClass);
+                    });
+                    //console.log(data_table_selector + '_col_' + col);
+                    //console.log(dataClass);
+                }
             }
         }
 
-        // apply first tr td widths to header
-        for(i = 0; i < cols - 1; i++) {
-            var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-            cw = elem_cur.width();
-            a_col_cw.push(cw);
-            $(header_table_selector + ' th').eq(i).width(cw);
-        }
-
-        // re-apply first tr td widths to data table
-        for(i = 0; i < cols; i++) {
-            $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
-        }
 
     };
+
 
     /**
      *

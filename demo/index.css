@@ -10,30 +10,68 @@
 .grid1_container {
     width: 750px;
     padding: 5px;
-    background: none;
+    background: none !important;
 }
 
 .grid1_data {
     padding: 0;
+    margin: 0 0 5px 0;
+    border: none !important;
     height: 200px;
     overflow: auto;
-    margin: 0 0 5px 0;
+}
+
+
+.th_lastname, .th_firstname, .th_email, .th_gender {
+    text-align: left;
+}
+
+
+.th_lastname {
+    width: 140px;
+}
+.th_firstname {
+    width: 91px;
+}
+.th_email {
+    width: 412px;
+}
+.th_gender {
+/*    width: 50px;*/
+}
+
+
+.td_lastname {
+    width: 140px;
+}
+.td_firstname {
+    width: 91px;
+}
+.td_email {
+    width: 412px;
+    color: blue;
+    text-align: right;
+}
+.td_gender {
+/*    width: 50px;*/
 }
 
 /* demo_grid2 --------------------------------------------------------------- */
 .dlg_demo_grid2 {
     padding-left: 3px !important;
+    font-size: 14px;
 }
 
 .grid2_container {
     width: 100%;
     padding: 5px;
-    background: none;
+    background: none !important;
 }
 
 .grid2_data {
     padding: 0;
-    height: 260px;
-    overflow: auto;
     margin: 0 0 5px 0;
+    border: none !important;
+    height: 200px;
+    overflow: auto;
 }

@@ -13,7 +13,7 @@ $(function() {
             {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
             {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
             {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
-            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"}
+            {field: "gender", visible: "yes", "header": 'G', "headerClass": "th_gender", "dataClass": "td_gender"}
         ],
 
         sorting: [
@@ -33,9 +33,11 @@ $(function() {
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
         containerClass: 'grid1_container ui-state-default ui-corner-all',
-        datagridClass: 'grid1_data ui-state-default',
+        datagridClass: 'grid1_data ui-widget-content',
 
-        title: 'Customers',
+        autoSetColumnsWidth: false,
+
+        caption: 'Customers',
 
         onDelete: function() {
             alert('Delete pressed');
@@ -77,7 +79,7 @@ $(function() {
         autoOpen: false,
         title: "Customers dialog",
         width: 750,
-        height: 450,
+        height: 380,
         hide: "fade",
         zIndex: 500,
         open: function() {
@@ -104,7 +106,8 @@ $(function() {
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
 
         containerClass: 'grid2_container ui-state-default ui-corner-all',
-        datagridClass: 'grid2_data ui-state-default',
+        datagridClass: 'grid2_data ui-widget-content',
+
         paginationOptions: {
             sliderAnimation: false
         }
