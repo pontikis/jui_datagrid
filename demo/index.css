@@ -6,6 +6,12 @@
     margin: 20px 0;
 }
 
+#dlg_demo_grid1_log p {
+    padding-bottom: 5px;
+    font-size: 12px;
+    font-family: "courier new";
+}
+
 /* demo_grid1 --------------------------------------------------------------- */
 .grid1_container {
     width: 750px;

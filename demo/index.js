@@ -1,5 +1,9 @@
 $(function() {
 
+    var elem_dlg_log1 = $("#dlg_demo_grid1_log"),
+        log,
+        elem_dlg_demo_grid2_opener = $("#dlg_demo_grid2_opener");
+
     // theme switcher ----------------------------------------------------------
     $("#ui-theme-switcher").change(function() {
         var theme_url = $(this).val();
@@ -40,20 +44,27 @@ $(function() {
         caption: 'Customers',
 
         onDelete: function() {
-            var sel = $(this).jui_datagrid("getSelectedIDs");
-            alert(sel);
+            var a_sel = $(this).jui_datagrid("getSelectedIDs"),
+                sel = a_sel.length;
+            if(sel == 0) {
+                log = 'Nothing selected...';
+                create_log(elem_dlg_log1, log);
+            } else {
+                log = sel + ' Row(s) with ID: ' + a_sel + ' will be deleted.';
+                create_log(elem_dlg_log1, log);
+            }
         },
         onCellClick: function(event, data) {
-            //console.log('cell: col ' + data.col + ' row ' + data.row);
+            log = 'Click on cell: col ' + data.col + ' row ' + data.row + '.';
+            create_log(elem_dlg_log1, log);
         },
         onRowClick: function(event, data) {
-            //console.log('tr click');
+            log = 'Row with ID ' + data.row_id + ' ' + data.row_status + '.';
+            create_log(elem_dlg_log1, log);
         },
         onDisplay: function() {
-
-            //$("#tbl_demo_grid1").find('tbody tr').find('td:eq(3)').css({"font-weight": "bold", "color": "red"});
-            //console.log('test ' + $("#tbl_demo_grid1").find('tbody tr:eq(1)').find('td:eq(2)').length);
-            //$("#tbl_demo_grid1").find('tbody tr').find('td:eq(3)').html('<a href="http://google.com" target="_blank">google</a>');
+            log = 'Datagrid created.';
+            create_log(elem_dlg_log1, log);
         }
     });
 
@@ -73,6 +84,33 @@ $(function() {
         $("#demo_grid1").jui_datagrid({
             rowSelectionMode: false
         })
+    });
+
+
+    elem_dlg_log1.dialog({
+        autoOpen: true,
+        width: 400,
+        height: 200,
+        position: {
+            my: "left",
+            at: "right",
+            of: '#demo_grid1'
+        },
+        title: "Log demo_grid1"
+    });
+
+    $("#log_show").click(function() {
+        elem_dlg_log1.dialog("open");
+        return false;
+    });
+
+    $("#log_hide").click(function() {
+        elem_dlg_log1.dialog("close");
+        return false;
+    });
+
+    $("#log_clear").click(function() {
+        elem_dlg_log1.html('');
     });
 
     // demo grid2 --------------------------------------------------------------
@@ -115,16 +153,21 @@ $(function() {
     });
 
 
-    $("#dlg_demo_grid2_opener").button({
+    elem_dlg_demo_grid2_opener.button({
         icons: {
             primary: 'ui-icon-newwin'
         }
     });
 
-    $("#dlg_demo_grid2_opener").click(function() {
+    elem_dlg_demo_grid2_opener.click(function() {
         $("#dlg_demo_grid2").dialog("open");
         return false;
     });
 
 
 });
+
+function create_log(elem_log, log_line) {
+    var line_number = parseInt(elem_log.find("p").length) + 1;
+    elem_log.prepend('<p>' + line_number + ') ' + log_line);
+}
