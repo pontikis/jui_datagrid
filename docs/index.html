@@ -155,12 +155,56 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
-        title: 'Customers',
+        caption: 'Customers',
+
+        columns: [
+            {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
+            {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
+            {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
+            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"}
+        ],
+
+        sorting: [
+            {"sortingName": "Code", field: "customer_id", order: ""},
+            {"sortingName": "Lastname", field: "lastname", order: "ascending"},
+            {"sortingName": "Firstname", field: "firstname", order: "ascending"}
+        ],
+
+        ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
+
         containerClass: 'grid1_container ui-state-default ui-corner-all',
-        datagridClass: 'grid1_data ui-state-default',
+        datagridClass: 'grid1_data ui-widget-content',
+
+        autoSetColumnsWidth: false,
+
         paginationOptions: {
             sliderAnimation: false
         }
+
+        onDelete: function() {
+            var a_sel = $(this).jui_datagrid("getSelectedIDs"),
+                sel = a_sel.length;
+            if(sel == 0) {
+                log = 'Nothing selected...';
+                create_log(elem_dlg_log1, log);
+            } else {
+                log = sel + ' Row(s) with ID: ' + a_sel + ' will be deleted.';
+                create_log(elem_dlg_log1, log);
+            }
+        },
+        onCellClick: function(event, data) {
+            log = 'Click on cell: col ' + data.col + ' row ' + data.row + '.';
+            create_log(elem_dlg_log1, log);
+        },
+        onRowClick: function(event, data) {
+            log = 'Row with ID ' + data.row_id + ' ' + data.row_status + '.';
+            create_log(elem_dlg_log1, log);
+        },
+        onDisplay: function() {
+            log = 'Datagrid created.';
+            create_log(elem_dlg_log1, log);
+        }
+
     });
     </pre>
 
