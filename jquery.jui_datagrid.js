@@ -540,6 +540,55 @@
             });
         },
 
+
+        /**
+         *
+         * @param col_index
+         * @param headerClass
+         * @param dataClass
+         * @param sync_col_width
+         */
+        setPageColClass: function(col_index, headerClass, dataClass, sync_col_width) {
+            var elem = this,
+                container_id = elem.attr("id"),
+                header_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
+                data_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+
+            $(header_table_selector + ' th').eq(col_index).addClass(headerClass);
+            $(data_table_selector + ' tr').each(function() {
+                $(this).find("td").eq(col_index).addClass(dataClass);
+            });
+
+            if(sync_col_width) {
+                sync_thead_tbody_column_width(container_id);
+            }
+
+        },
+
+        /**
+         *
+         * @param col_index
+         * @param headerClass
+         * @param dataClass
+         * @param sync_col_width
+         */
+        removePageColClass: function(col_index, headerClass, dataClass, sync_col_width) {
+            var elem = this,
+                container_id = elem.attr("id"),
+                header_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
+                data_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
+
+            $(header_table_selector + ' th').eq(col_index).removeClass(headerClass);
+            $(data_table_selector + ' tr').each(function() {
+                $(this).find("td").eq(col_index).removeClass(dataClass);
+            });
+
+            if(sync_col_width) {
+                sync_thead_tbody_column_width(container_id);
+            }
+
+        },
+
         /**
          * Get all pagination options
          * Usage: $(element).jui_datagrid('getAllPaginationOptions');
@@ -920,15 +969,8 @@
         for(i in columns) {
             col = showRowNumbers ? parseInt(i) + 1 : parseInt(i);
             headerClass = columns[i]['headerClass'];
-            if(headerClass !== "") {
-                $(header_table_selector + ' th').eq(col).addClass(headerClass);
-            }
             dataClass = columns[i]['dataClass'];
-            if(dataClass !== "") {
-                $(data_table_selector + ' tr').each(function() {
-                    $(this).find("td").eq(col).addClass(dataClass);
-                });
-            }
+            elem.jui_datagrid("setPageColClass", col, headerClass, dataClass, false);
         }
 
         sync_thead_tbody_column_width(container_id);
