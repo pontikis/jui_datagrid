@@ -465,10 +465,13 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         onCellClick: function(event, data) {
-        // your code here
+            // your code here e.g.
+            console.log('Click on cell: col ' + data.col + ' row ' + data.row + '.');
         }
     });
     </pre>
+
+    <p><code>data</code> is an object with properties: <code>col</code> and <code>row</code> (the index of the column and row).
 </div>
 
 <h3>onRowClick</h3>
@@ -477,10 +480,13 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         onRowClick: function(event, data) {
-        // your code here
+            // your code here e.g.
+            console.log('Row with ID ' + data.row_id + ' ' + data.row_status + '.');
         }
     });
     </pre>
+
+    <p><code>data</code> is an object with properties: <code>row_id</code> and <code>row_status</code> ('selected', 'deselected').
 </div>
 
 
@@ -490,7 +496,14 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         onDelete: function() {
-        // your code here
+            // your code here e.g.
+            var a_sel = $(this).jui_datagrid("getSelectedIDs"),
+                sel = a_sel.length;
+            if(sel == 0) {
+                console.log('Nothing selected...');
+            } else {
+                console.log(sel + ' Row(s) with ID: ' + a_sel + ' will be deleted.');
+            }
         }
     });
     </pre>

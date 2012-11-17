@@ -44,3 +44,9 @@ h3 {
 .level3 {
     margin-left: 46px;
 }
+
+code, samp, kbd {
+    font-family: "Courier New", Courier, monospace, sans-serif;
+    text-align: left;
+    color: #555;
+}
