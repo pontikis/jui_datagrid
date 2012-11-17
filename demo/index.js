@@ -40,7 +40,8 @@ $(function() {
         caption: 'Customers',
 
         onDelete: function() {
-            alert('Delete pressed');
+            var sel = $(this).jui_datagrid("getSelectedIDs");
+            alert(sel);
         },
         onCellClick: function(event, data) {
             //console.log('cell: col ' + data.col + ' row ' + data.row);

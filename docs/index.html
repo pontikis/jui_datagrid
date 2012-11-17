@@ -81,7 +81,7 @@
             could be used (see folder /lib//jui_pagination/lib)
     </ul>
 
-    <p>Tested with jquery 1.8.2 and >= jquery-ui 1.8.23 (recommended jquery-ui >= 1.9)
+    <p>Tested with jquery >= 1.8.2 and >= jquery-ui 1.8.23 (recommended jquery-ui >= 1.9)
 
     <p>UPCOMING Release 1.00 (?? Nov 2012) Download <a
             href="https://github.com/pontikis/jui_datagrid/zipball/v1.0.0">here</a> (not yet available)
@@ -107,6 +107,10 @@
         <li>Diplay tabular data
         <li>CSS based themes compatible with jQuery-UI Theming
         <li>Get data in JSON format using AJAX (any server-side technology)
+        <li>Sort columns data
+        <li>Change columns order
+        <li>Show/hide columns
+        <li>Style columns
         <li>Single or multi-select rows
         <li>Powerful pagination
         <li>Preferences dialog available to user
@@ -222,7 +226,8 @@
 
         rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
-        showRowIndex: false,
+        autoSetColumnsWidth: true,
+        showRowNumbers: false,
 
         // toolbar options
         showPrefButton: true,
@@ -231,12 +236,14 @@
         showDeleteButton: true,
         showPrintButton: true,
         showExportButton: true,
+        showSortingButton: true,
         showFiltersButton: true,
         showPrefButtonText: false,
         showRefreshButtonText: false,
-        showDeleteButtonText: true,
+        showDeleteButtonText: false,
         showPrintButtonText: false,
         showExportButtonText: false,
+        showSortingButtonText: false,
         showFiltersButtonText: false,
 
         // select dropdown options
@@ -259,19 +266,19 @@
 
         // main divs classes
         containerClass: 'grid_container ui-state-default ui-corner-all',
-        headerClass: 'grid_header ui-widget-header ui-corner-top',
-        datagridHeaderClass: 'grid_data_header ui-state-default',
-        datagridClass: 'grid_data ui-state-default',
+        captionClass: 'grid_caption ui-widget-header ui-corner-top',
+        datagridHeaderClass: 'grid_header ui-state-default',
+        datagridClass: 'grid_data ui-widget-content',
         toolsClass: 'grid_tools ui-state-default ui-corner-all',
         paginationClass: 'grid_pagination',
 
         // data table classes
-        tableClass: 'grid_table',
         headerTableClass: 'grid_header_table',
+        dataTableClass: 'grid_data_table',
         trHoverTrClass: '',
         trHoverTdClass: 'ui-state-hover',
-        thClass: 'ui-state-default',
-        tdClass: 'ui-widget-content',
+        thClass: 'grid_th_common ui-state-default',
+        tdClass: 'grid_td_common ui-widget-content',
 
         rowIndexHeaderClass: '',
         rowIndexClass: '',
@@ -286,10 +293,11 @@
         tbDeleteIconClass: 'ui-icon-trash',
         tbPrintIconClass: 'ui-icon-print',
         tbExportIconClass: 'ui-icon-extlink',
+        tbSortingIconClass: 'ui-icon ui-icon-carat-2-n-s',
         tbFiltersIconClass: 'ui-icon-search',
 
         // elements id prefix
-        header_id_prefix: 'header_',
+        caption_id_prefix: 'caption_',
         datagrid_header_id_prefix: 'dgh_',
         datagrid_id_prefix: 'dg_',
         table_id_prefix: 'tbl_',
@@ -299,6 +307,8 @@
 
         pref_dialog_id_prefix: 'pref_dlg_',
         pref_tabs_id_prefix: 'pref_tabs_',
+
+        fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 
         onCellClick: function() {
         },
@@ -379,6 +389,38 @@
 <div class="level3">
     <pre class="brush: js">
     $("#element_id").jui_datagrid('destroy');
+    </pre>
+</div>
+
+<div class="level3" style="margin-top: 50px;">
+    <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">SELECTION</span>
+</div>
+
+<h3>getSelectedIDs</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('getSelectedIDs');
+    </pre>
+</div>
+
+<div class="level3" style="margin-top: 50px;">
+    <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">STYLING</span>
+</div>
+
+<h3>setPageColClass</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('setPageColClass', col_index, headerClass, dataClass, sync_col_width);
+    </pre>
+</div>
+
+<h3>removePageColClass</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid('setPageColClass', col_index, headerClass, dataClass, sync_col_width);
     </pre>
 </div>
 
