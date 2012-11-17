@@ -163,7 +163,8 @@
                                 if(settings.rowSelectionMode != false) {
                                     if(row_primary_key) {
                                         // get row id
-                                        var row_id = parseInt($(this).attr("id").substr(row_prefix_len));
+                                        var row_id = parseInt($(this).attr("id").substr(row_prefix_len)),
+                                            row_status;
 
                                         if(settings.rowSelectionMode == 'single') {
                                             rows_all_deselect(container_id);
@@ -172,14 +173,16 @@
                                         var idx = $.inArray(row_id, elem.data(pluginStatus)['a_selected_ids']);
                                         if(idx > -1) {
                                             row_deselect(container_id, row_id, idx);
+                                            row_status = 'deselected';
                                         } else {
                                             row_select(container_id, row_id);
+                                            row_status = 'selected';
                                         }
                                         update_selected_rows_counter(container_id);
                                     }
                                 }
 
-                                elem.triggerHandler("onRowClick", {row_id: row_id});
+                                elem.triggerHandler("onRowClick", {row_id: row_id, row_status: row_status});
                             });
                         }
 
