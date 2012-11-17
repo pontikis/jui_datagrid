@@ -210,8 +210,8 @@
                             var a_id_ext, a_opt, i;
 
                             // tools grid
-                            a_id_ext = ['_row_index'];
-                            a_opt = ['showRowIndex'];
+                            a_id_ext = ['_row_numbers'];
+                            a_opt = ['showRowNumbers'];
                             for(i in a_id_ext) {
                                 util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
                             }
@@ -384,7 +384,7 @@
                 rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
                 autoSetColumnsWidth: true,
-                showRowIndex: false,
+                showRowNumbers: false,
 
                 // toolbar options
                 showPrefButton: true,
@@ -689,7 +689,7 @@
         pref_html += '<div id="' + tabs_id + '_grid">';
 
         pref_html += '<ul style="list-style-type: none;">';
-        pref_html += util_pref_li(dialog_id + '_row_index', rsc_jui_dg.pref_show_row_index);
+        pref_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
         pref_html += '</ul>';
 
         pref_html += '</div>';
@@ -729,8 +729,8 @@
         var a_id_ext, a_opt, i;
 
         /* TAB GRID set values --------------------------------------------- */
-        a_id_ext = ['_row_index'];
-        a_opt = ['showRowIndex'];
+        a_id_ext = ['_row_numbers'];
+        a_opt = ['showRowNumbers'];
 
         for(i in a_id_ext) {
             $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getOption', a_opt[i]));
@@ -804,7 +804,7 @@
             columns = elem.jui_datagrid('getOption', 'columns'),
             pageNum = parseInt(elem.jui_datagrid('getOption', 'pageNum')),
             rowsPerPage = parseInt(elem.jui_datagrid('getOption', 'rowsPerPage')),
-            showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex'),
+            showRowNumbers = elem.jui_datagrid('getOption', 'showRowNumbers'),
             page_rows = page_data.length,
             datagrid_header_id = create_id(elem.jui_datagrid('getOption', 'datagrid_header_id_prefix'), container_id),
             datagrid_id = create_id(elem.jui_datagrid('getOption', 'datagrid_id_prefix'), container_id),
@@ -823,7 +823,7 @@
         row_id_html = (row_primary_key ? ' id="' + header_table_id + '_tr_0"' : '');
         tblh_html += '<tr' + row_id_html + '>';
 
-        if(showRowIndex) {
+        if(showRowNumbers) {
             tblh_html += '<th>' + rsc_jui_dg.row_index_header + '</th>';
         }
 
@@ -848,7 +848,7 @@
             row_id_html = (row_primary_key ? ' id="' + table_id + '_tr_' + page_data[row][row_primary_key] + '"' : '');
             tbl_html += '<tr' + row_id_html + '>';
 
-            if(showRowIndex) {
+            if(showRowNumbers) {
                 row_index = offset + parseInt(row) + 1;
                 tbl_html += '<td>' + row_index + '</td>';
             }
@@ -891,7 +891,7 @@
             tdClass = elem.jui_datagrid('getOption', 'tdClass'),
 
             columns = elem.jui_datagrid('getOption', 'columns'),
-            showRowIndex = elem.jui_datagrid('getOption', 'showRowIndex'),
+            showRowNumbers = elem.jui_datagrid('getOption', 'showRowNumbers'),
 
             headerClass, dataClass, i, col;
 
@@ -918,7 +918,7 @@
         // COLUMN STYLES
         // apply given styles --------------------------------------------------
         for(i in columns) {
-            col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
+            col = showRowNumbers ? parseInt(i) + 1 : parseInt(i);
             headerClass = columns[i]['headerClass'];
             if(headerClass !== "") {
                 $(header_table_selector + ' th').eq(col).addClass(headerClass);

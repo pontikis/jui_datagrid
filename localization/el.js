@@ -12,7 +12,7 @@ var rsc_jui_dg = {
     pref_tab_tools: 'Εργαλεία',
     pref_tab_nav: 'Πλοήγηση',
 
-    pref_show_row_index: 'Αρίθμηση σειρών',
+    pref_show_row_numbers: 'Αρίθμηση σειρών',
     pref_show_select: 'Εργαλεία επιλογής',
     pref_show_refresh: 'Ανανέωση',
     pref_show_delete: 'Διαγραφή',
