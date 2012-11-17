@@ -35,8 +35,9 @@
 .th_email {
     width: 55%;
 }
+
+/* DO NOT USE WIDTH PROPERTIES IN LAST COL */
 .th_gender {
-    width: 10%;
 }
 
 
@@ -49,10 +50,11 @@
 .td_email {
     width: 55%;
     color: blue;
-    text-align: right;
+    font-family: "courier new";
 }
+/* DO NOT USE WIDTH PROPERTIES IN LAST COL */
 .td_gender {
-    width: 10%;
+    font-size: 11px;
 }
 
 
@@ -66,7 +68,6 @@
     width: 412px;
 }
 .th_gender {
-*//*    width: 50px;*//*
 }
 
 
@@ -79,10 +80,9 @@
 .td_email {
     width: 412px;
     color: blue;
-    text-align: right;
 }
 .td_gender {
-*//*    width: 50px;*//*
+    font-size: 11px;
 }*/
 
 /* demo_grid2 --------------------------------------------------------------- */
