@@ -893,7 +893,7 @@
                 tblh_html += '<th>' + columns[i].header + '</th>';
             }
         }
-        tblh_html += '<tr>';
+        tblh_html += '</tr>';
         tblh_html += '</thead>';
 
         tblh_html += '</table>';
