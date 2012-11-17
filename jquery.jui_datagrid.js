@@ -555,6 +555,26 @@
 
         /**
          *
+         * @return {*}
+         */
+        getGridElemTableID: function() {
+            var elem = this;
+            return create_id(elem.jui_datagrid("getOption", "table_id_prefix"), elem.attr("id"));
+        },
+
+
+        /**
+         *
+         * @return {*}
+         */
+        getGridElemHeaderTableID: function() {
+            var elem = this;
+            return create_id(elem.jui_datagrid("getOption", "header_table_id_prefix"), elem.attr("id"));
+        },
+
+
+        /**
+         *
          * @param col_index
          * @param headerClass
          * @param dataClass
