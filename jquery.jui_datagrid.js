@@ -543,6 +543,15 @@
 
         /**
          *
+         * @return {*}
+         */
+        getSelectedIDs: function() {
+            var elem = this;
+            return elem.data(pluginStatus)["a_selected_ids"];
+        },
+
+        /**
+         *
          * @param col_index
          * @param headerClass
          * @param dataClass
