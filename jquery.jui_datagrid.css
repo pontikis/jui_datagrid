@@ -45,7 +45,7 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     border: none;
 }
 
-.grid_th {
+.grid_th_common {
     padding: 2px 4px;
 }
 
@@ -68,7 +68,7 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     border: none;
 }
 
-.grid_td {
+.grid_td_common {
     padding: 2px 4px;
 }
 

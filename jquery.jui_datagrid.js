@@ -434,8 +434,8 @@
                 dataTableClass: 'grid_data_table',
                 trHoverTrClass: '',
                 trHoverTdClass: 'ui-state-hover',
-                thClass: 'grid_th ui-state-default',
-                tdClass: 'grid_td ui-widget-content',
+                thClass: 'grid_th_common ui-state-default',
+                tdClass: 'grid_td_common ui-widget-content',
 
                 rowIndexHeaderClass: '',
                 rowIndexClass: '',
@@ -895,6 +895,7 @@
 
             headerClass, dataClass, i, col;
 
+        // COMMON STYLES
         // header table style --------------------------------------------------
         elem_header_table.removeClass(headerTableClass).addClass(headerTableClass);
         elem_header_table.find("th").removeClass(thClass).addClass(thClass);
@@ -914,7 +915,7 @@
             });
         }
 
-
+        // COLUMN STYLES
         // apply given styles --------------------------------------------------
         for(i in columns) {
             col = showRowIndex ? parseInt(i) + 1 : parseInt(i);
@@ -947,17 +948,13 @@
         for(i = 0; i < cols_except_last; i++) {
             th_cow = $(header_table_selector + ' th').eq(i).width();
             td_first_row_cow = $(data_table_selector).find("tr").eq(0).find("td").eq(i).width();
-            //console.log(th_cow + ' ' + td_first_row_cow);
             if(th_cow !== td_first_row_cow) {
                 fix_columns_width_needed = true;
-                //break;
+                break;
             }
         }
 
-
         if(fix_columns_width_needed) {
-
-            //console.log('fix_columns_width_needed');
 
             // sync header and data tables column width ----------------------------
             var cw, cw_min, elem_th, elem_td, // cw = computed width
@@ -981,7 +978,6 @@
                 cw = elem_cur.width() + fix_td_width;
                 a_col_cw.push(cw);
                 $(header_table_selector + ' th').eq(i).width(cw);
-                //console.log(cw);
             }
 
             // re-apply first tr td widths to data table
@@ -989,7 +985,6 @@
                 $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
                 //console.log(a_col_cw[i]);
             }
-
 
         }
     };
