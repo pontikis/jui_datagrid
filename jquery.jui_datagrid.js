@@ -1415,7 +1415,6 @@
     };
 
 
-
     $.fn.jui_datagrid = function(method) {
 
         if(this.size() != 1) {
