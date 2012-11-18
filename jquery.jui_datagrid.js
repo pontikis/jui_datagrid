@@ -1518,7 +1518,7 @@
 
             cw, cw_min, elem_th, elem_td, // cw = computed width
             a_col_cw = [],
-            fix_td_width = parseInt(elem.data(pluginStatus)['fix_border_collapse_td_width']);
+            fix_width = parseInt(elem.data(pluginStatus)['fix_border_collapse_td_width']);
 
 
         // try to detect id header columns width need syncronization with data table columns
@@ -1544,16 +1544,19 @@
             }
             $(header_table_selector).removeClass("shrink");
 
+            // set equal width to header and data table
+            $(header_table_selector).width($(data_table_selector).width() + fix_width);
+
             // apply first tr td widths to header
-            for(i = 0; i < cols_except_last; i++) {
+            for(i = 0; i < cols; i++) {
                 var elem_cur = $(data_table_selector).find("tr").eq(0).find("td").eq(i);
-                cw = elem_cur.width() + fix_td_width;
+                cw = elem_cur.width() + fix_width;
                 a_col_cw.push(cw);
                 $(header_table_selector + ' th').eq(i).width(cw);
             }
 
             // re-apply first tr td widths to data table
-            for(i = 0; i < cols_except_last; i++) {
+            for(i = 0; i < cols; i++) {
                 $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
             }
 
