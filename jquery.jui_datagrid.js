@@ -207,6 +207,11 @@
                                     }
                                 });
 
+                                var col_sort_list_id = create_id('col_sort_', container_id),
+                                    elem_col_sort = $("#" + col_sort_list_id);
+                                elem_col_sort.sortable();
+                                elem_col_sort.disableSelection();
+
                             });
 
                             // PREFERENCES EVENTS ------------------------------
@@ -748,14 +753,17 @@
      * @param plugin_container_id
      */
     var create_preferences = function(plugin_container_id) {
-        var elem = $("#" + plugin_container_id);
-        var prefix = elem.jui_datagrid('getOption', 'pref_dialog_id_prefix');
-        var dialog_id = create_id(prefix, plugin_container_id);
-        prefix = elem.jui_datagrid('getOption', 'pref_tabs_id_prefix');
-        var tabs_id = create_id(prefix, plugin_container_id);
+        var elem = $("#" + plugin_container_id),
+            pref_dialog_id_prefix = elem.jui_datagrid('getOption', 'pref_dialog_id_prefix'),
+            dialog_id = create_id(pref_dialog_id_prefix, plugin_container_id),
+            pref_tabs_id_prefix = elem.jui_datagrid('getOption', 'pref_tabs_id_prefix'),
+            tabs_id = create_id(pref_tabs_id_prefix, plugin_container_id),
+            columns = elem.jui_datagrid('getOption', 'columns'),
+            col_sort_list_id = create_id('col_sort_', plugin_container_id),
+            col_visible_id,
+            i, pref_html = '',
 
-        var pref_html = '';
-
+            a_id_ext, a_opt;
 
         pref_html += '<div id="' + tabs_id + '">';
 
@@ -772,6 +780,19 @@
         pref_html += '<ul style="list-style-type: none;">';
         pref_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
         pref_html += '</ul>';
+
+
+        pref_html += '<ul id="' + col_sort_list_id + '" class="sortable">';
+        for(i in columns) {
+            col_visible_id = 'show_column_' + i;
+            pref_html += '<li class="ui-state-default">' +
+                '<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
+                '<input type="checkbox" id="' + col_visible_id + '">' +
+                '<label for="' + col_visible_id + '">' + columns[i].header + '</label>' +
+                '</li>';
+        }
+        pref_html += '</ul>';
+
 
         pref_html += '</div>';
 
@@ -807,7 +828,6 @@
 
         $("#" + dialog_id).html(pref_html);
 
-        var a_id_ext, a_opt, i;
 
         /* TAB GRID set values --------------------------------------------- */
         a_id_ext = ['_row_numbers'];
