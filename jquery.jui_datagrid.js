@@ -211,8 +211,54 @@
                                 });
 
                                 var col_sort_list_id = create_id('col_sort_', container_id),
-                                    elem_col_sort = $("#" + col_sort_list_id);
-                                elem_col_sort.sortable();
+                                    elem_col_sort = $("#" + col_sort_list_id),
+                                    startPos, newPos, columns, newColumns;
+                                elem_col_sort.sortable({
+                                    cancel: ".ui-state-disabled",
+                                    start: function(event, ui) {
+                                        startPos = ui.item.index();
+                                    },
+                                    stop: function(event, ui) {
+                                        newPos = ui.item.index();
+                                        if(newPos !== startPos) {
+
+                                            columns = elem.jui_datagrid("getOption", "columns");
+                                            newColumns = [];
+                                            if(newPos > startPos) {
+                                                for(i in columns) {
+                                                    if(i < startPos || i > newPos) {
+                                                        newColumns[i] = columns[i];
+                                                    }
+                                                    if(i >= startPos && i < newPos) {
+                                                        newColumns[i] = columns[parseInt(i) + 1];
+                                                    }
+                                                    if(i == newPos) {
+                                                        newColumns[i] = columns[startPos];
+                                                    }
+                                                }
+                                            }
+
+                                            if(newPos < startPos) {
+                                                for(i in columns) {
+                                                    if(i > startPos || i < newPos) {
+                                                        newColumns[i] = columns[i];
+                                                    }
+                                                    if(i <= startPos && i > newPos) {
+                                                        newColumns[i] = columns[parseInt(i) - 1];
+                                                    }
+                                                    if(i == newPos) {
+                                                        newColumns[i] = columns[startPos];
+                                                    }
+                                                }
+                                            }
+
+                                            elem.jui_datagrid({
+                                                columns: newColumns
+                                            });
+
+                                        }
+                                    }
+                                });
                                 elem_col_sort.disableSelection();
 
                             });
@@ -787,15 +833,15 @@
 
         pref_html += '<ul id="' + col_sort_list_id + '" class="sortable">';
         for(i in columns) {
+            var dis = columns[i]["visible"] == 'no' ? ' ui-state-disabled' : '';
             col_visible_id = 'show_column_' + i;
-            pref_html += '<li class="ui-state-default">' +
+            pref_html += '<li class="ui-state-default' + dis + '">' +
                 '<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
                 '<input type="checkbox" id="' + col_visible_id + '">' +
                 '<label for="' + col_visible_id + '">' + columns[i].header + '</label>' +
                 '</li>';
         }
         pref_html += '</ul>';
-
 
         pref_html += '</div>';
 
@@ -997,7 +1043,8 @@
             columns = elem.jui_datagrid('getOption', 'columns'),
             showRowNumbers = elem.jui_datagrid('getOption', 'showRowNumbers'),
 
-            headerClass, dataClass, i, col;
+            headerClass, dataClass, i,
+            col_index = showRowNumbers ? 1 : 0;
 
         // COMMON STYLES
         // header table style --------------------------------------------------
@@ -1022,10 +1069,12 @@
         // COLUMN STYLES
         // apply given styles --------------------------------------------------
         for(i in columns) {
-            col = showRowNumbers ? parseInt(i) + 1 : parseInt(i);
-            headerClass = columns[i]['headerClass'];
-            dataClass = columns[i]['dataClass'];
-            elem.jui_datagrid("setPageColClass", col, headerClass, dataClass, false);
+            if(columns[i].visible == 'yes') {
+                headerClass = columns[i]['headerClass'];
+                dataClass = columns[i]['dataClass'];
+                elem.jui_datagrid("setPageColClass", col_index, headerClass, dataClass, false);
+                col_index ++;
+            }
         }
 
         sync_thead_tbody_column_width(container_id);
