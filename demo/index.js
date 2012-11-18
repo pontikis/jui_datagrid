@@ -40,8 +40,6 @@ $(function() {
         containerClass: 'grid1_container ui-state-default ui-corner-all',
         datagridClass: 'grid1_data ui-widget-content',
 
-        autoSetColumnsWidth: false,
-
         caption: 'Customers',
 
         onDelete: function() {

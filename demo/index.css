@@ -24,7 +24,8 @@
     margin: 0 0 5px 0;
     border: none !important;
     height: 210px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden !important;
 }
 
 
@@ -33,33 +34,34 @@
 }
 
 .th_lastname {
-    width: 20%;
+    width: 17%;
 }
 .th_firstname {
-    width: 15%;
+    width: 12%;
 }
 .th_email {
     width: 55%;
 }
 
-/* DO NOT USE WIDTH PROPERTIES IN LAST COL */
 .th_gender {
+    width: 10%;
 }
 
 
 .td_lastname {
-    width: 20%;
+    width: 17%;
 }
 .td_firstname {
-    width: 15%;
+    width: 12%;
 }
 .td_email {
     width: 55%;
     color: blue;
     font-family: "courier new";
 }
-/* DO NOT USE WIDTH PROPERTIES IN LAST COL */
+
 .td_gender {
+    width: 10%;
     font-size: 11px;
 }
 
