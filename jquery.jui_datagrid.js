@@ -1555,10 +1555,10 @@
                 $(header_table_selector + ' th').eq(i).width(cw);
             }
 
-            // re-apply first tr td widths to data table
-            for(i = 0; i < cols; i++) {
+            // TODO re-apply first tr td widths to data table?
+/*            for(i = 0; i < cols; i++) {
                 $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
-            }
+            }*/
 
         }
     };
