@@ -13,6 +13,7 @@ var rsc_jui_dg = {
     pref_tab_nav: 'Navigation',
 
     pref_show_row_numbers: 'Row numbers',
+    pref_col_order_visibility: 'Columns order and visibility',
     pref_show_select: 'Select buttons',
     pref_show_refresh: 'Refresh button',
     pref_show_delete: 'Delete button',

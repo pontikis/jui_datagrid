@@ -106,11 +106,12 @@
     <ul>
         <li>Diplay tabular data
         <li>CSS based themes compatible with jQuery-UI Theming
+        <li>Fully configurable
         <li>Get data in JSON format using AJAX (any server-side technology)
-        <li>Sort columns data
         <li>Change columns order
         <li>Show/hide columns
         <li>Style columns
+        <li>Flexible data sorting
         <li>Single or multi-select rows
         <li>Powerful pagination
         <li>Preferences dialog available to user
@@ -245,7 +246,7 @@
     <pre class="brush: js">
     $("#element_id").jui_datagrid({
         ajaxFetchDataURL: 'some_server_url', // REQUIRED
-        title: 'Your title here'  // OPTIONAL
+        caption: 'Your title here'  // OPTIONAL
 
         // DEFAULTS
         columns: [
@@ -323,6 +324,8 @@
         trHoverTdClass: 'ui-state-hover',
         thClass: 'grid_th_common ui-state-default',
         tdClass: 'grid_td_common ui-widget-content',
+        thRowNumberClass: 'grid_th_common grid_th_row_number ui-state-default',
+        tdRowNumberClass: 'grid_td_common grid_td_row_number ui-widget-content',
 
         rowIndexHeaderClass: '',
         rowIndexClass: '',
@@ -340,6 +343,19 @@
         tbSortingIconClass: 'ui-icon ui-icon-carat-2-n-s',
         tbFiltersIconClass: 'ui-icon-search',
 
+        //sortable list classes
+        sortableListClass: 'grid_sortable_list',
+        sortableListLiClass: 'ui-state-default grid_sortable_list_li',
+        sortableListLiDisabledClass: 'ui-state-disabled',
+        sortableListLiIconClass: 'ui-icon ui-icon-arrowthick-2-n-s grid_sortable_list_li_icon',
+
+        // common list
+        commonListClass: 'grid_common_list',
+
+        // dialog Preferences
+        dlgPrefClass: 'dlg_pref',
+        dlgPrefButtonClass: 'dlg_pref_button',
+
         // elements id prefix
         caption_id_prefix: 'caption_',
         datagrid_header_id_prefix: 'dgh_',
@@ -348,6 +364,10 @@
         header_table_id_prefix: 'tblh_',
         tools_id_prefix: 'tools_',
         pagination_id_prefix: 'pag_',
+
+        //sortable list prefix
+        col_order_list_id_prefix: 'col_order_',
+        col_visible_chk_id_prefix: 'col_visible_',
 
         pref_dialog_id_prefix: 'pref_dlg_',
         pref_tabs_id_prefix: 'pref_tabs_',

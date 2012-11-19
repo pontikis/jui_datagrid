@@ -14,7 +14,7 @@ $(function() {
     $("#demo_grid1").jui_datagrid({
 
         columns: [
-            {field: "customer_id", visible: "no", "header": 'Code', "headerClass": "", "dataClass": ""},
+            {field: "customer_id", visible: "no", "header": 'Code', "headerClass": "th_code", "dataClass": "td_code"},
             {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
             {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
             {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},

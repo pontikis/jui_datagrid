@@ -49,6 +49,12 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     padding: 2px 4px;
 }
 
+.grid_th_row_number {
+    text-align: left;
+    width: 1%;
+}
+
+
 /* UTILITY CLASS - DO NOT EDIT */
 .shrink {
     width: 1px;
@@ -70,6 +76,11 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
 
 .grid_td_common {
     padding: 2px 4px;
+}
+
+.grid_td_row_number {
+    text-align: left;
+    width: 1%;
 }
 
 /* grid toolbar ------------------------------------------------------------- */
@@ -111,22 +122,37 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
 }
 
 /* sortable ----------------------------------------------------------------- */
-.sortable {
+.grid_sortable_list {
     list-style-type: none;
     margin: 0;
     padding: 0;
-/*    width: 80%;*/
 }
 
-.sortable li {
+.grid_sortable_list_li {
     margin: 0 3px 3px 3px;
     padding: 0.4em 0.4em 0.4em 1.5em;
     height: 16px;
 }
 
-.sortable li span {
+.grid_sortable_list_li_icon {
     position: absolute;
     margin-left: -1.3em;
+}
+
+/* preferences dialog ------------------------------------------------------- */
+.dlg_pref {
+    font-size: .9em !important;
+}
+
+.dlg_pref_button {
+    font-size: .9em !important;
+}
+
+/* common list -------------------------------------------------------------- */
+.grid_common_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* -------------------------------------------------------------------------- */

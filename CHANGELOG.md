@@ -14,7 +14,13 @@ UPCOMING Release 1.00 (?? Nov 2012)
 ---------------------------
 * Diplay tabular data
 * CSS based themes compatible with jQuery-UI Theming
-* Get data in JSON format using ajax
-* Powerful pagination (based on jui_pagination plugin)
+* Fully configurable
+* Get data in JSON format using AJAX (any server-side technology)
+* Change columns order
+* Show/hide columns
+* Style columns
+* Flexible data sorting
+* Single or multi-select rows
+* Powerful pagination
 * Preferences dialog available to user
 * Localization

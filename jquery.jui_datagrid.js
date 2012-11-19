@@ -108,6 +108,8 @@
                 elem_tools.removeClass().addClass(settings.toolsClass);
                 elem_pag.removeClass().addClass(settings.paginationClass);
 
+                elem_pref_dialog.removeClass().addClass(settings.dlgPrefClass);
+
                 // fetch data and display datagrid
                 $.ajax({
                     type: 'POST',
@@ -210,10 +212,11 @@
                                     }
                                 });
 
-                                var col_sort_list_id = create_id('col_sort_', container_id),
-                                    elem_col_sort = $("#" + col_sort_list_id),
-                                    startPos, newPos, columns, newColumns;
-                                elem_col_sort.sortable({
+                                var col_order_list_id = create_id(elem.jui_datagrid('getOption', 'col_order_list_id_prefix'), container_id),
+                                    elem_col_order = $("#" + col_order_list_id),
+                                    startPos, newPos, columns, newColumns, col_visible_index;
+
+                                elem_col_order.sortable({
                                     cancel: ".ui-state-disabled",
                                     start: function(event, ui) {
                                         startPos = ui.item.index();
@@ -224,6 +227,7 @@
 
                                             columns = elem.jui_datagrid("getOption", "columns");
                                             newColumns = [];
+
                                             if(newPos > startPos) {
                                                 for(i in columns) {
                                                     if(i < startPos || i > newPos) {
@@ -258,8 +262,21 @@
 
                                         }
                                     }
+                                }).disableSelection();
+
+                                selector = 'input[type=checkbox]';
+                                elem_col_order.off('click', selector).on('click', selector, function() {
+                                    col_visible_index = parseInt($(this).index("#" + col_order_list_id + ' ' + selector));
+
+                                    $("#" + col_order_list_id + ' li').eq(col_visible_index).toggleClass("ui-state-disabled");
+
+                                    newColumns = elem.jui_datagrid("getOption", "columns");
+                                    newColumns[col_visible_index]["visible"] = $(this).is(":checked") ? 'yes' : 'no';
+                                    elem.jui_datagrid({
+                                        columns: newColumns
+                                    });
+
                                 });
-                                elem_col_sort.disableSelection();
 
                             });
 
@@ -493,6 +510,8 @@
                 trHoverTdClass: 'ui-state-hover',
                 thClass: 'grid_th_common ui-state-default',
                 tdClass: 'grid_td_common ui-widget-content',
+                thRowNumberClass: 'grid_th_common grid_th_row_number ui-state-default',
+                tdRowNumberClass: 'grid_td_common grid_td_row_number ui-widget-content',
 
                 rowIndexHeaderClass: '',
                 rowIndexClass: '',
@@ -510,6 +529,19 @@
                 tbSortingIconClass: 'ui-icon ui-icon-carat-2-n-s',
                 tbFiltersIconClass: 'ui-icon-search',
 
+                //sortable list classes
+                sortableListClass: 'grid_sortable_list',
+                sortableListLiClass: 'ui-state-default grid_sortable_list_li',
+                sortableListLiDisabledClass: 'ui-state-disabled',
+                sortableListLiIconClass: 'ui-icon ui-icon-arrowthick-2-n-s grid_sortable_list_li_icon',
+
+                // common list
+                commonListClass: 'grid_common_list',
+
+                // dialog Preferences
+                dlgPrefClass: 'dlg_pref',
+                dlgPrefButtonClass: 'dlg_pref_button',
+
                 // elements id prefix
                 caption_id_prefix: 'caption_',
                 datagrid_header_id_prefix: 'dgh_',
@@ -518,6 +550,10 @@
                 header_table_id_prefix: 'tblh_',
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
+
+                //sortable list prefix
+                col_order_list_id_prefix: 'col_order_',
+                col_visible_chk_id_prefix: 'col_visible_',
 
                 pref_dialog_id_prefix: 'pref_dlg_',
                 pref_tabs_id_prefix: 'pref_tabs_',
@@ -807,10 +843,21 @@
             dialog_id = create_id(pref_dialog_id_prefix, plugin_container_id),
             pref_tabs_id_prefix = elem.jui_datagrid('getOption', 'pref_tabs_id_prefix'),
             tabs_id = create_id(pref_tabs_id_prefix, plugin_container_id),
+
+            commonListClass = elem.jui_datagrid('getOption', 'commonListClass'),
+
             columns = elem.jui_datagrid('getOption', 'columns'),
-            col_sort_list_id = create_id('col_sort_', plugin_container_id),
-            col_visible_id,
-            i, pref_html = '',
+
+            sortableListClass = elem.jui_datagrid('getOption', 'sortableListClass'),
+            sortableListLiClass = elem.jui_datagrid('getOption', 'sortableListLiClass'),
+            sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
+            sortableListLiIconClass = elem.jui_datagrid('getOption', 'sortableListLiIconClass'),
+            col_order_list_id = create_id(elem.jui_datagrid('getOption', 'col_order_list_id_prefix'), plugin_container_id),
+            col_visible_chk_id_prefix = create_id(elem.jui_datagrid('getOption', 'col_visible_chk_id_prefix'), plugin_container_id) + '_',
+            col_visible_id, col_checked, col_disabled,
+
+            i,
+            pref_html = '',
 
             a_id_ext, a_opt;
 
@@ -826,18 +873,19 @@
         /* TAB GRID --------------------------------------------------------- */
         pref_html += '<div id="' + tabs_id + '_grid">';
 
-        pref_html += '<ul style="list-style-type: none;">';
+        pref_html += '<ul class="' + commonListClass + '" style="margin-bottom: 20px;">';
         pref_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
         pref_html += '</ul>';
 
-
-        pref_html += '<ul id="' + col_sort_list_id + '" class="sortable">';
+        pref_html += '<p>' + rsc_jui_dg.pref_col_order_visibility + '</p>';
+        pref_html += '<ul id="' + col_order_list_id + '" class="' + sortableListClass + '">';
         for(i in columns) {
-            var dis = columns[i]["visible"] == 'no' ? ' ui-state-disabled' : '';
-            col_visible_id = 'show_column_' + i;
-            pref_html += '<li class="ui-state-default' + dis + '">' +
-                '<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
-                '<input type="checkbox" id="' + col_visible_id + '">' +
+            col_disabled = columns[i]["visible"] == 'no' ? ' ' + sortableListLiDisabledClass : '';
+            col_checked = columns[i]["visible"] == 'no' ? '' : ' checked="checked"';
+            col_visible_id = col_visible_chk_id_prefix + i;
+            pref_html += '<li class="' + sortableListLiClass + col_disabled + '">' +
+                '<span class="' + sortableListLiIconClass + '"></span>' +
+                '<input type="checkbox" id="' + col_visible_id + '"' + col_checked + '>' +
                 '<label for="' + col_visible_id + '">' + columns[i].header + '</label>' +
                 '</li>';
         }
@@ -877,7 +925,6 @@
 
         $("#" + dialog_id).html(pref_html);
 
-
         /* TAB GRID set values --------------------------------------------- */
         a_id_ext = ['_row_numbers'];
         a_opt = ['showRowNumbers'];
@@ -912,7 +959,9 @@
      */
     var create_dialog_pref = function(plugin_container_id, dialog_id) {
 
-        var elem_pref_dialog = $("#" + dialog_id);
+        var elem = $("#" + plugin_container_id),
+            elem_pref_dialog = $("#" + dialog_id),
+            dlgPrefButtonClass = elem.jui_datagrid("getOption", "dlgPrefButtonClass");
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
             elem_pref_dialog.dialog('destroy');
@@ -937,7 +986,12 @@
                     }
                 }
             ],
-            open: create_preferences(plugin_container_id)
+            open: create_preferences(plugin_container_id),
+            create: function() {
+                $(this).closest(".ui-dialog")
+                    .find(".ui-button")
+                    .addClass(dlgPrefButtonClass);
+            }
         });
 
     };
@@ -1039,6 +1093,8 @@
             trHoverTdClass = elem.jui_datagrid('getOption', 'trHoverTdClass'),
             thClass = elem.jui_datagrid('getOption', 'thClass'),
             tdClass = elem.jui_datagrid('getOption', 'tdClass'),
+            thRowNumberClass = elem.jui_datagrid('getOption', 'thRowNumberClass'),
+            tdRowNumberClass = elem.jui_datagrid('getOption', 'tdRowNumberClass'),
 
             columns = elem.jui_datagrid('getOption', 'columns'),
             showRowNumbers = elem.jui_datagrid('getOption', 'showRowNumbers'),
@@ -1054,6 +1110,12 @@
         // data table style ----------------------------------------------------
         elem_data_table.removeClass(dataTableClass).addClass(dataTableClass);
         elem_data_table.find("td").removeClass(tdClass).addClass(tdClass);
+
+        if(showRowNumbers) {
+            elem_header_table.find("th:first").removeClass(thRowNumberClass).addClass(thRowNumberClass);
+            elem_data_table.find("tr").find("td:first").removeClass(tdRowNumberClass).addClass(tdRowNumberClass);
+        }
+
 
         if(trHoverTrClass != '') {
             elem_data_table.on('mouseover mouseout', 'tbody tr', function(event) {
@@ -1073,7 +1135,7 @@
                 headerClass = columns[i]['headerClass'];
                 dataClass = columns[i]['dataClass'];
                 elem.jui_datagrid("setPageColClass", col_index, headerClass, dataClass, false);
-                col_index ++;
+                col_index++;
             }
         }
 
@@ -1545,7 +1607,7 @@
             $(header_table_selector).removeClass("shrink");
 
             // set equal width to header and data table
-            $(header_table_selector).width($(data_table_selector).width() + fix_width);
+            $(header_table_selector).width($(data_table_selector).width());
 
             // apply first tr td widths to header
             for(i = 0; i < cols; i++) {
@@ -1556,9 +1618,9 @@
             }
 
             // TODO re-apply first tr td widths to data table?
-/*            for(i = 0; i < cols; i++) {
-                $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
-            }*/
+            /*            for(i = 0; i < cols; i++) {
+             $(data_table_selector + ' tr').eq(0).find("td").eq(i).width(a_col_cw[i]);
+             }*/
 
         }
     };
