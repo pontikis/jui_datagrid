@@ -148,6 +148,16 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     font-size: .9em !important;
 }
 
+/* sorting dialog ----------------------------------------------------------- */
+.dlg_sort {
+    font-size: .9em !important;
+}
+
+.dlg_sort_button {
+    font-size: .9em !important;
+}
+
+
 /* common list -------------------------------------------------------------- */
 .grid_common_list {
     list-style-type: none;

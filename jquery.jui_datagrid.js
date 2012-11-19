@@ -73,6 +73,7 @@
                     tools_id = create_id(settings.tools_id_prefix, container_id),
                     pagination_id = create_id(settings.pagination_id_prefix, container_id),
                     pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id),
+                    sort_dialog_id = create_id(settings.sort_dialog_id_prefix, container_id),
                     elem_html;
 
                 if(!elem.data(pluginStatus)['initialize']) {
@@ -83,6 +84,7 @@
                     elem_html += '<div id="' + tools_id + '"></div>';
                     elem_html += '<div id="' + pagination_id + '"></div>';
                     elem_html += '<div id="' + pref_dialog_id + '"></div>';
+                    elem_html += '<div id="' + sort_dialog_id + '"></div>';
                     elem.html(elem_html);
 
                     elem.data(pluginStatus)['initialize'] = true;
@@ -93,7 +95,8 @@
                     elem_grid = $("#" + datagrid_id),
                     elem_tools = $("#" + tools_id),
                     elem_pag = $("#" + pagination_id),
-                    elem_pref_dialog = $("#" + pref_dialog_id);
+                    elem_pref_dialog = $("#" + pref_dialog_id),
+                    elem_sort_dialog = $("#" + sort_dialog_id);
 
                 // apply style
                 elem.removeClass().addClass(settings.containerClass);
@@ -109,6 +112,7 @@
                 elem_pag.removeClass().addClass(settings.paginationClass);
 
                 elem_pref_dialog.removeClass().addClass(settings.dlgPrefClass);
+                elem_sort_dialog.removeClass().addClass(settings.dlgSortClass);
 
                 // fetch data and display datagrid
                 $.ajax({
@@ -374,6 +378,87 @@
                             });
                         }
 
+                        /* click on sorting button*/
+                        if(settings.showSortingButton) {
+
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'sorting';
+                            elem.off('click', selector).on('click', selector, function() {
+
+                                create_dialog_sort(container_id, sort_dialog_id);
+
+                                var sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), container_id),
+                                    elem_sorting = $("#" + sorting_list_id),
+                                    startPos, newPos, sorting, newSorting, col_visible_index;
+
+                                elem_sorting.sortable({
+                                    cancel: ".ui-state-disabled",
+                                    start: function(event, ui) {
+                                        startPos = ui.item.index();
+                                    },
+                                    stop: function(event, ui) {
+                                        newPos = ui.item.index();
+                                        if(newPos !== startPos) {
+
+                                            sorting = elem.jui_datagrid("getOption", "sorting");
+                                            newSorting = [];
+
+                                            if(newPos > startPos) {
+                                                for(i in sorting) {
+                                                    if(i < startPos || i > newPos) {
+                                                        newSorting[i] = sorting[i];
+                                                    }
+                                                    if(i >= startPos && i < newPos) {
+                                                        newSorting[i] = sorting[parseInt(i) + 1];
+                                                    }
+                                                    if(i == newPos) {
+                                                        newSorting[i] = sorting[startPos];
+                                                    }
+                                                }
+                                            }
+
+                                            if(newPos < startPos) {
+                                                for(i in sorting) {
+                                                    if(i > startPos || i < newPos) {
+                                                        newSorting[i] = sorting[i];
+                                                    }
+                                                    if(i <= startPos && i > newPos) {
+                                                        newSorting[i] = sorting[parseInt(i) - 1];
+                                                    }
+                                                    if(i == newPos) {
+                                                        newSorting[i] = sorting[startPos];
+                                                    }
+                                                }
+                                            }
+
+                                            elem.jui_datagrid({
+                                                sorting: newSorting
+                                            });
+
+                                        }
+                                    }
+                                }).disableSelection();
+
+                                selector = 'input[type=radio]';
+                                elem_sorting.off('click', selector).on('click', selector, function() {
+                                    var radio_index = parseInt($(this).index("#" + sorting_list_id + ' ' + selector));
+                                    console.log(radio_index);
+                                    //console.log($(this).parent("li").index());
+
+/*                                    radio_index = parseInt($(this).index("#" + sorting_list_id + ' ' + selector));
+
+                                    $("#" + col_order_list_id + ' li').eq(col_visible_index).toggleClass("ui-state-disabled");
+
+                                    newSorting = elem.jui_datagrid("getOption", "sorting");
+                                    newSorting[col_visible_index]["visible"] = $(this).is(":checked") ? 'yes' : 'no';
+                                    elem.jui_datagrid({
+                                        sorting: newSorting
+                                    });*/
+
+                                });
+
+                            });
+                        }
+
                         // PAGINATION events -----------------------------------
                         if(total_rows > 0) {
 
@@ -459,6 +544,7 @@
 
                 autoSetColumnsWidth: true,
                 showRowNumbers: false,
+                showSortingIndicator: true,
 
                 // toolbar options
                 showPrefButton: true,
@@ -542,6 +628,10 @@
                 dlgPrefClass: 'dlg_pref',
                 dlgPrefButtonClass: 'dlg_pref_button',
 
+                // dialog Preferences
+                dlgSortClass: 'dlg_sort',
+                dlgSortButtonClass: 'dlg_sort_button',
+
                 // elements id prefix
                 caption_id_prefix: 'caption_',
                 datagrid_header_id_prefix: 'dgh_',
@@ -551,12 +641,21 @@
                 tools_id_prefix: 'tools_',
                 pagination_id_prefix: 'pag_',
 
-                //sortable list prefix
+                pref_dialog_id_prefix: 'pref_dlg_',
+                pref_tabs_id_prefix: 'pref_tabs_',
+
+                //column order list prefix
                 col_order_list_id_prefix: 'col_order_',
                 col_visible_chk_id_prefix: 'col_visible_',
 
-                pref_dialog_id_prefix: 'pref_dlg_',
-                pref_tabs_id_prefix: 'pref_tabs_',
+                sort_dialog_id_prefix: 'sort_dlg_',
+
+                //sorting list prefix
+                sorting_list_id_prefix: 'sort_criteria_',
+                sort_radio_name_prefix: 'sort_order_',
+                sort_asc_radio_id_prefix: 'sort_asc_',
+                sort_desc_radio_id_prefix: 'sort_desc_',
+                sort_none_radio_id_prefix: 'sort_none_',
 
                 fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 
@@ -833,6 +932,28 @@
         return li_html;
     };
 
+
+    /**
+     *
+     * @param sorting
+     * @param field
+     * @return {String}
+     */
+    var get_sorting_indicator = function(sorting, field) {
+        var sorting_indicator = '';
+        for (var i in sorting) {
+            if(sorting[i].field == field) {
+                if(sorting[i].order == 'ascending') {
+                    sorting_indicator = '&nbsp;&uarr;';
+                } else if(sorting[i].order == 'descending') {
+                    sorting_indicator = '&nbsp;&darr;';
+                }
+                break;
+            }
+        }
+        return sorting_indicator;
+    }
+
     /**
      * Create preferences
      * @param plugin_container_id
@@ -996,6 +1117,124 @@
 
     };
 
+
+    /**
+     * Create sorting
+     * @param plugin_container_id
+     */
+    var create_sorting = function(plugin_container_id) {
+        var elem = $("#" + plugin_container_id),
+            sort_dialog_id_prefix = elem.jui_datagrid('getOption', 'sort_dialog_id_prefix'),
+            dialog_id = create_id(sort_dialog_id_prefix, plugin_container_id),
+
+            commonListClass = elem.jui_datagrid('getOption', 'commonListClass'),
+
+            sorting = elem.jui_datagrid('getOption', 'sorting'),
+
+            sortableListClass = elem.jui_datagrid('getOption', 'sortableListClass'),
+            sortableListLiClass = elem.jui_datagrid('getOption', 'sortableListLiClass'),
+            sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
+            sortableListLiIconClass = elem.jui_datagrid('getOption', 'sortableListLiIconClass'),
+
+            sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), plugin_container_id),
+            sort_radio_name_prefix = create_id(elem.jui_datagrid('getOption', 'sort_radio_name_prefix'), plugin_container_id) + '_',
+            sort_radio_name,
+            sort_asc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_asc_radio_id_prefix'), plugin_container_id) + '_',
+            sort_desc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_desc_radio_id_prefix'), plugin_container_id) + '_',
+            sort_none_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_none_radio_id_prefix'), plugin_container_id) + '_',
+            sort_asc_radio_id, sort_desc_radio_id, sort_none_radio_id,
+            sort_asc_radio_checked, sort_desc_radio_checked, sort_none_radio_checked,
+            col_visible_id,
+            col_checked, criterion_disabled,
+
+            i,
+            sort_html = '';
+
+
+        //sort_html += '<ul class="' + commonListClass + '" style="margin-bottom: 20px;">';
+        //sort_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
+        //sort_html += '</ul>';
+
+        //sort_html += '<p>' + rsc_jui_dg.pref_col_order_visibility + '</p>';
+        sort_html += '<ul id="' + sorting_list_id + '" class="' + sortableListClass + '">';
+        for(i in sorting) {
+            criterion_disabled = sorting[i]["order"] == '' ? ' ' + sortableListLiDisabledClass : '';
+
+            sort_radio_name = sort_radio_name_prefix + i;
+            sort_asc_radio_id = sort_asc_radio_id_prefix + i;
+            sort_desc_radio_id = sort_desc_radio_id_prefix + i;
+            sort_none_radio_id = sort_none_radio_id_prefix + i;
+
+            sort_asc_radio_checked = sorting[i]["order"] == 'ascending' ? ' checked="checked"' : '';
+            sort_desc_radio_checked = sorting[i]["order"] == 'descending' ? ' checked="checked"' : '';
+            sort_none_radio_checked = sorting[i]["order"] == '' ? ' checked="checked"' : '';
+
+            sort_html += '<li class="' + sortableListLiClass + criterion_disabled + '">' +
+                '<span class="' + sortableListLiIconClass + '"></span>' +
+                sorting[i].sortingName +
+
+                '<span style="float: right;">' +
+                '<input type="radio" name="' + sort_radio_name + '" id="' + sort_asc_radio_id + '"' + sort_asc_radio_checked + '>' +
+                '<label for="' + sort_asc_radio_id + '">' + rsc_jui_dg.sort_ascending + '</label>' +
+                '<input type="radio" name="' + sort_radio_name + '" id="' + sort_desc_radio_id + '"' + sort_desc_radio_checked + '>' +
+                '<label for="' + sort_desc_radio_id + '">' + rsc_jui_dg.sort_descending + '</label>' +
+                '<input type="radio" name="' + sort_radio_name + '" id="' + sort_none_radio_id + '"' + sort_none_radio_checked + '>' +
+                '<label for="' + sort_none_radio_id + '">' + rsc_jui_dg.sort_none + '</label>' +
+                '</span>' +
+
+                '</li>';
+        }
+        sort_html += '</ul>';
+
+        $("#" + dialog_id).html(sort_html);
+    };
+
+
+    /**
+     *
+     * @param plugin_container_id
+     * @param dialog_id
+     */
+    var create_dialog_sort = function(plugin_container_id, dialog_id) {
+
+        var elem = $("#" + plugin_container_id),
+            elem_sort_dialog = $("#" + dialog_id),
+            dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass");
+
+        if(jui_widget_exists(dialog_id, 'dialog')) {
+            elem_sort_dialog.dialog('destroy');
+        }
+
+        elem_sort_dialog.dialog({
+            autoOpen: true,
+            width: 500,
+            height: 'auto',
+            position: {
+                my: "top",
+                at: "top",
+                of: '#' + plugin_container_id
+            },
+            title: rsc_jui_dg.sorting,
+            buttons: [
+                {
+                    text: rsc_jui_dg.sorting_close,
+                    click: function() {
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    }
+                }
+            ],
+            open: create_sorting(plugin_container_id),
+            create: function() {
+                $(this).closest(".ui-dialog")
+                    .find(".ui-button")
+                    .addClass(dlgSortButtonClass);
+            }
+        });
+
+    };
+
+
     /**
      * Display datagrid
      * @param container_id
@@ -1006,6 +1245,7 @@
 
         var elem = $("#" + container_id),
             columns = elem.jui_datagrid('getOption', 'columns'),
+            sorting = elem.jui_datagrid('getOption', 'sorting'),
             pageNum = parseInt(elem.jui_datagrid('getOption', 'pageNum')),
             rowsPerPage = parseInt(elem.jui_datagrid('getOption', 'rowsPerPage')),
             showRowNumbers = elem.jui_datagrid('getOption', 'showRowNumbers'),
@@ -1016,6 +1256,8 @@
             elem_datagrid = $("#" + datagrid_id),
             header_table_id = create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
             table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id),
+            showSortingIndicator = elem.jui_datagrid('getOption', 'showSortingIndicator'),
+            sortingIndicator,
             row_id_html, i, row, col, tblh_html, tbl_html, idx, row_index, offset;
 
         offset = ((pageNum - 1) * rowsPerPage);
@@ -1033,7 +1275,11 @@
 
         for(i in columns) {
             if(columns[i].visible == "yes") {
-                tblh_html += '<th>' + columns[i].header + '</th>';
+                sortingIndicator = '';
+                if(showSortingIndicator) {
+                    sortingIndicator = get_sorting_indicator(sorting, columns[i].field);
+                }
+                tblh_html += '<th>' + columns[i].header + sortingIndicator + '</th>';
             }
         }
         tblh_html += '</tr>';

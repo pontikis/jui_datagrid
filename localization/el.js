@@ -34,6 +34,12 @@ var rsc_jui_dg = {
     tb_sorting: 'Ταξινόμηση',
     tb_filters: 'Κριτήρια',
 
+    sorting: 'Ταξινόμηση',
+    sorting_close: 'Εντάξει',
+    sort_ascending: 'ανιούσα',
+    sort_descending: 'κατιούσα',
+    sort_none: 'καμμία',
+
     row_index_header: '#',
 
     rows_info_of: 'από',

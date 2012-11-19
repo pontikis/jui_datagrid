@@ -34,6 +34,12 @@ var rsc_jui_dg = {
     tb_sorting: 'Sorting',
     tb_filters: 'Filters',
 
+    sorting: 'Sorting',
+    sorting_close: 'Close',
+    sort_ascending: 'ascending',
+    sort_descending: 'descending',
+    sort_none: 'none',
+
     row_index_header: '#',
 
     rows_info_of: 'of',
