@@ -541,9 +541,11 @@
 
                 filters: [
                     {"filterName": "", "filterType": "", field: "", operator: "",
-                        value: "", value_range: {lower: "", upper: ""}, value_array: [],
-                        foreignKey: {ref_table: "", ref_pk: "", ref_col: "", condition: ""},
-                        ajax_autocomplete_url: ""
+                        value: "",  // simple value
+                        value_range: {lower: "", upper: ""}, // value range
+                        value_array: [],  // value in array
+                        ajax_foreignKey_url: "", // value from list
+                        ajax_autocomplete_url: "" // value from autocomplete list
                     }
                 ],
 
