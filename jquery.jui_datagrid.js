@@ -208,10 +208,10 @@
                                 var pref_tabs_id = create_id(settings.pref_tabs_id_prefix, container_id);
                                 $("#" + pref_tabs_id).tabs({
                                     // just to prevent 'outline' in active tab (mainly in Chrome)
-                                    create: function(event, ui) {
+                                    create: function() {
                                         $("#" + pref_tabs_id + ' li a').blur();
                                     },
-                                    activate: function(event, ui) {
+                                    activate: function() {
                                         $("#" + pref_tabs_id + ' li a').blur();
                                     }
                                 });
@@ -1216,8 +1216,7 @@
 
         var elem = $("#" + plugin_container_id),
             elem_sort_dialog = $("#" + dialog_id),
-            dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass"),
-            sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), plugin_container_id);
+            dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass");
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
             elem_sort_dialog.dialog('destroy');
@@ -1278,7 +1277,7 @@
             table_id = create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id),
             showSortingIndicator = elem.jui_datagrid('getOption', 'showSortingIndicator'),
             sortingIndicator,
-            row_id_html, i, row, col, tblh_html, tbl_html, idx, row_index, offset;
+            row_id_html, i, row, tblh_html, tbl_html, row_index, offset;
 
         offset = ((pageNum - 1) * rowsPerPage);
 
