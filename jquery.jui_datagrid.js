@@ -111,9 +111,6 @@
                 elem_tools.removeClass().addClass(settings.toolsClass);
                 elem_pag.removeClass().addClass(settings.paginationClass);
 
-                elem_pref_dialog.removeClass().addClass(settings.dlgPrefClass);
-                elem_sort_dialog.removeClass().addClass(settings.dlgSortClass);
-
                 // fetch data and display datagrid
                 $.ajax({
                     type: 'POST',
@@ -1100,6 +1097,7 @@
 
         var elem = $("#" + plugin_container_id),
             elem_pref_dialog = $("#" + dialog_id),
+            dlgPrefClass = elem.jui_datagrid("getOption", "dlgPrefClass"),
             dlgPrefButtonClass = elem.jui_datagrid("getOption", "dlgPrefButtonClass");
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
@@ -1127,6 +1125,7 @@
             ],
             open: create_preferences(plugin_container_id),
             create: function() {
+                $(this).addClass(dlgPrefClass);
                 $(this).closest(".ui-dialog")
                     .find(".ui-button")
                     .addClass(dlgPrefButtonClass);
@@ -1216,6 +1215,7 @@
 
         var elem = $("#" + plugin_container_id),
             elem_sort_dialog = $("#" + dialog_id),
+            dlgSortClass = elem.jui_datagrid("getOption", "dlgSortClass"),
             dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass");
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
@@ -1245,6 +1245,7 @@
                 create_sorting(plugin_container_id);
             },
             create: function() {
+                $(this).addClass(dlgSortClass);
                 $(this).closest(".ui-dialog")
                     .find(".ui-button")
                     .addClass(dlgSortButtonClass).focus();
