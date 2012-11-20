@@ -42,6 +42,10 @@ var rsc_jui_dg = {
     sort_descending: 'κατιούσα',
     sort_none: 'καμμία',
 
+    filters: 'Φίλτρα',
+    filters_apply: 'Εφαρμογή',
+    filters_reset: 'Απαλοιφή',
+
     row_index_header: '#',
 
     rows_info_of: 'από',

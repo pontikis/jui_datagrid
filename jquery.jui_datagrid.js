@@ -74,6 +74,7 @@
                     pagination_id = create_id(settings.pagination_id_prefix, container_id),
                     pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id),
                     sort_dialog_id = create_id(settings.sort_dialog_id_prefix, container_id),
+                    filters_dialog_id = create_id(settings.filters_dialog_id_prefix, container_id),
                     elem_html;
 
                 if(!elem.data(pluginStatus)['initialize']) {
@@ -85,6 +86,7 @@
                     elem_html += '<div id="' + pagination_id + '"></div>';
                     elem_html += '<div id="' + pref_dialog_id + '"></div>';
                     elem_html += '<div id="' + sort_dialog_id + '"></div>';
+                    elem_html += '<div id="' + filters_dialog_id + '"></div>';
                     elem.html(elem_html);
 
                     elem.data(pluginStatus)['initialize'] = true;
@@ -95,8 +97,7 @@
                     elem_grid = $("#" + datagrid_id),
                     elem_tools = $("#" + tools_id),
                     elem_pag = $("#" + pagination_id),
-                    elem_pref_dialog = $("#" + pref_dialog_id),
-                    elem_sort_dialog = $("#" + sort_dialog_id);
+                    elem_pref_dialog = $("#" + pref_dialog_id);
 
                 // apply style
                 elem.removeClass().addClass(settings.containerClass);
@@ -470,6 +471,18 @@
                             });
                         }
 
+                        /* click on filters button*/
+                        if(settings.showFiltersButton) {
+
+                            selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'filters';
+                            elem.off('click', selector).on('click', selector, function() {
+
+                                create_dialog_filters(container_id, filters_dialog_id);
+
+                            });
+
+                        }
+
                         // PAGINATION events -----------------------------------
                         if(total_rows > 0) {
 
@@ -641,9 +654,13 @@
                 dlgPrefClass: 'dlg_pref',
                 dlgPrefButtonClass: 'dlg_pref_button',
 
-                // dialog Preferences
+                // dialog Sorting
                 dlgSortClass: 'dlg_sort',
                 dlgSortButtonClass: 'dlg_sort_button',
+
+                // dialog Filters
+                dlgFiltersClass: 'dlg_filters',
+                dlgFiltersButtonClass: 'dlg_filters_button',
 
                 // elements id prefix
                 caption_id_prefix: 'caption_',
@@ -662,6 +679,8 @@
                 col_visible_chk_id_prefix: 'col_visible_',
 
                 sort_dialog_id_prefix: 'sort_dlg_',
+
+                filters_dialog_id_prefix: 'filter_dlg_',
 
                 //sorting list prefix
                 sorting_list_id_prefix: 'sort_criteria_',
@@ -1255,6 +1274,99 @@
         });
 
     };
+
+    /**
+     *
+     * @param plugin_container_id
+     */
+    var create_filters = function(plugin_container_id) {
+        var elem = $("#" + plugin_container_id),
+            filters_dialog_id_prefix = elem.jui_datagrid('getOption', 'filters_dialog_id_prefix'),
+            dialog_id = create_id(filters_dialog_id_prefix, plugin_container_id),
+
+            commonListClass = elem.jui_datagrid('getOption', 'commonListClass'),
+
+            filters = elem.jui_datagrid('getOption', 'filters'),
+
+            sortableListClass = elem.jui_datagrid('getOption', 'sortableListClass'),
+            sortableListLiClass = elem.jui_datagrid('getOption', 'sortableListLiClass'),
+            sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
+            sortableListLiIconClass = elem.jui_datagrid('getOption', 'sortableListLiIconClass'),
+
+            sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), plugin_container_id),
+            sort_radio_name_prefix = create_id(elem.jui_datagrid('getOption', 'sort_radio_name_prefix'), plugin_container_id) + '_',
+            sort_radio_name,
+            sort_asc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_asc_radio_id_prefix'), plugin_container_id) + '_',
+            sort_desc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_desc_radio_id_prefix'), plugin_container_id) + '_',
+            sort_none_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_none_radio_id_prefix'), plugin_container_id) + '_',
+            sort_asc_radio_id, sort_desc_radio_id, sort_none_radio_id,
+            sort_asc_radio_checked, sort_desc_radio_checked, sort_none_radio_checked,
+            col_visible_id,
+            col_checked, criterion_disabled,
+
+            i,
+            filter_html = '';
+
+        filter_html += 'Hello world!';
+
+
+        $("#" + dialog_id).html(filter_html);
+    };
+
+    /**
+     *
+     * @param plugin_container_id
+     * @param dialog_id
+     */
+    var create_dialog_filters = function(plugin_container_id, dialog_id) {
+
+        var elem = $("#" + plugin_container_id),
+            elem_filters_dialog = $("#" + dialog_id),
+            dlgFiltersClass = elem.jui_datagrid("getOption", "dlgFiltersClass"),
+            dlgFiltersButtonClass = elem.jui_datagrid("getOption", "dlgFiltersButtonClass");
+
+        if(jui_widget_exists(dialog_id, 'dialog')) {
+            elem_filters_dialog.dialog('destroy');
+        }
+
+        elem_filters_dialog.dialog({
+            autoOpen: true,
+            width: 600,
+            height: 'auto',
+            position: {
+                my: "top",
+                at: "top",
+                of: '#' + plugin_container_id
+            },
+            title: rsc_jui_dg.filters,
+            buttons: [
+                {
+                    text: rsc_jui_dg.filters_apply,
+                    click: function() {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: rsc_jui_dg.filters_reset,
+                    click: function() {
+                        $(this).dialog("close");
+                    }
+                }
+
+            ],
+            open: function() {
+                create_filters(plugin_container_id);
+            },
+            create: function() {
+                $(this).addClass(dlgFiltersClass);
+                $(this).closest(".ui-dialog")
+                    .find(".ui-button")
+                    .addClass(dlgFiltersButtonClass);
+            }
+        });
+
+    };
+
 
 
     /**
