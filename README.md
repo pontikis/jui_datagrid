@@ -24,15 +24,20 @@ License [MIT][mit]
 Documentation
 -------------
 
-http://pontikis.net/jui_datagrid/v1.00/docs/ (not yet available)
+http://pontikis.net/jui_datagrid/v1.00/docs/
 
 Demo
 ----
 
-http://pontikis.net/jui_datagrid/v1.00/demo/ (not yet available)
+http://pontikis.net/jui_datagrid/v1.00/demo/
 
 Preview:
 -------
 
 ![jui_datagrid sample][sample]
+![jui_datagrid preferences][pref]
+![jui_datagrid sorting][sorting]
+
 [sample]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample.png "jui_datagrid"
+[pref]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample_pref.png "jui_datagrid preferences"
+[sorting]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample_sort.png "jui_datagrid sorting"
