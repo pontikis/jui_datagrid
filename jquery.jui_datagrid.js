@@ -218,10 +218,11 @@
 
                                 var col_order_list_id = create_id(elem.jui_datagrid('getOption', 'col_order_list_id_prefix'), container_id),
                                     elem_col_order = $("#" + col_order_list_id),
+                                    sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
                                     startPos, newPos, columns, newColumns, col_visible_index;
 
                                 elem_col_order.sortable({
-                                    cancel: ".ui-state-disabled",
+                                    cancel: sortableListLiDisabledClass,
                                     start: function(event, ui) {
                                         startPos = ui.item.index();
                                     },
@@ -272,7 +273,7 @@
                                 elem_col_order.off('click', selector).on('click', selector, function() {
                                     col_visible_index = parseInt($(this).index("#" + col_order_list_id + ' ' + selector));
 
-                                    $("#" + col_order_list_id + ' li').eq(col_visible_index).toggleClass("ui-state-disabled");
+                                    $("#" + col_order_list_id + ' li').eq(col_visible_index).toggleClass(sortableListLiDisabledClass);
 
                                     newColumns = elem.jui_datagrid("getOption", "columns");
                                     newColumns[col_visible_index]["visible"] = $(this).is(":checked") ? 'yes' : 'no';
@@ -388,10 +389,11 @@
 
                                 var sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), container_id),
                                     elem_sorting = $("#" + sorting_list_id),
-                                    startPos, newPos, sorting, newSorting, col_visible_index;
+                                    sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
+                                    startPos, newPos, sorting, newSorting;
 
                                 elem_sorting.sortable({
-                                    cancel: ".ui-state-disabled",
+                                    cancel: sortableListLiDisabledClass,
                                     start: function(event, ui) {
                                         startPos = ui.item.index();
                                     },
@@ -439,20 +441,32 @@
                                 }).disableSelection();
 
                                 selector = 'input[type=radio]';
+                                var radio_index, criterion_index, order_type, order,
+                                    elem_li;
                                 elem_sorting.off('click', selector).on('click', selector, function() {
-                                    var radio_index = parseInt($(this).index("#" + sorting_list_id + ' ' + selector));
-                                    console.log(radio_index);
-                                    //console.log($(this).parent("li").index());
-
-/*                                    radio_index = parseInt($(this).index("#" + sorting_list_id + ' ' + selector));
-
-                                    $("#" + col_order_list_id + ' li').eq(col_visible_index).toggleClass("ui-state-disabled");
-
+                                    radio_index = parseInt($(this).index("#" + sorting_list_id + ' ' + selector));
+                                    criterion_index = Math.floor(radio_index / 3);
+                                    order_type = radio_index % 3;
+                                    elem_li = $("#" + sorting_list_id + ' li');
+                                    switch(order_type) {
+                                        case 0:
+                                            order = 'ascending';
+                                            elem_li.eq(criterion_index).removeClass(sortableListLiDisabledClass);
+                                            break;
+                                        case 1:
+                                            order = 'descending';
+                                            elem_li.eq(criterion_index).removeClass(sortableListLiDisabledClass);
+                                            break;
+                                        case 2:
+                                            order = 'none';
+                                            elem_li.eq(criterion_index).addClass(sortableListLiDisabledClass);
+                                            break;
+                                    }
                                     newSorting = elem.jui_datagrid("getOption", "sorting");
-                                    newSorting[col_visible_index]["visible"] = $(this).is(":checked") ? 'yes' : 'no';
+                                    newSorting[criterion_index]["order"] = order;
                                     elem.jui_datagrid({
                                         sorting: newSorting
-                                    });*/
+                                    });
 
                                 });
 
@@ -941,7 +955,7 @@
      */
     var get_sorting_indicator = function(sorting, field) {
         var sorting_indicator = '';
-        for (var i in sorting) {
+        for(var i in sorting) {
             if(sorting[i].field == field) {
                 if(sorting[i].order == 'ascending') {
                     sorting_indicator = '&nbsp;&uarr;';
@@ -1155,10 +1169,12 @@
         //sort_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
         //sort_html += '</ul>';
 
-        //sort_html += '<p>' + rsc_jui_dg.pref_col_order_visibility + '</p>';
+        sort_html += '<div style="margin: 5px; padding: 5px;">';
+
+        sort_html += '<p>' + rsc_jui_dg.sorting_criteria + '</p>';
         sort_html += '<ul id="' + sorting_list_id + '" class="' + sortableListClass + '">';
         for(i in sorting) {
-            criterion_disabled = sorting[i]["order"] == '' ? ' ' + sortableListLiDisabledClass : '';
+            criterion_disabled = sorting[i]["order"] == 'none' ? ' ' + sortableListLiDisabledClass : '';
 
             sort_radio_name = sort_radio_name_prefix + i;
             sort_asc_radio_id = sort_asc_radio_id_prefix + i;
@@ -1167,7 +1183,7 @@
 
             sort_asc_radio_checked = sorting[i]["order"] == 'ascending' ? ' checked="checked"' : '';
             sort_desc_radio_checked = sorting[i]["order"] == 'descending' ? ' checked="checked"' : '';
-            sort_none_radio_checked = sorting[i]["order"] == '' ? ' checked="checked"' : '';
+            sort_none_radio_checked = sorting[i]["order"] == 'none' ? ' checked="checked"' : '';
 
             sort_html += '<li class="' + sortableListLiClass + criterion_disabled + '">' +
                 '<span class="' + sortableListLiIconClass + '"></span>' +
@@ -1186,6 +1202,8 @@
         }
         sort_html += '</ul>';
 
+        sort_html += '</div>';
+
         $("#" + dialog_id).html(sort_html);
     };
 
@@ -1199,7 +1217,8 @@
 
         var elem = $("#" + plugin_container_id),
             elem_sort_dialog = $("#" + dialog_id),
-            dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass");
+            dlgSortButtonClass = elem.jui_datagrid("getOption", "dlgSortButtonClass"),
+            sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), plugin_container_id);
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
             elem_sort_dialog.dialog('destroy');
@@ -1224,11 +1243,13 @@
                     }
                 }
             ],
-            open: create_sorting(plugin_container_id),
+            open: function() {
+                create_sorting(plugin_container_id);
+            },
             create: function() {
                 $(this).closest(".ui-dialog")
                     .find(".ui-button")
-                    .addClass(dlgSortButtonClass);
+                    .addClass(dlgSortButtonClass).focus();
             }
         });
 

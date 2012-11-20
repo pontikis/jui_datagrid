@@ -22,7 +22,7 @@ $(function() {
         ],
 
         sorting: [
-            {"sortingName": "Code", field: "customer_id", order: ""},
+            {"sortingName": "Code", field: "customer_id", order: "none"},
             {"sortingName": "Lastname", field: "lastname", order: "ascending"},
             {"sortingName": "Firstname", field: "firstname", order: "ascending"}
         ],

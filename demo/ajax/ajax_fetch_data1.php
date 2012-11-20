@@ -22,7 +22,7 @@ if(isset($sorting)) {
 	foreach($sorting as $sort) {
 		if($sort['order'] == 'ascending') {
 			$sortingSQL .= $sort['field'] . ' ASC, ';
-		} else if($sorting[$i] == 'descending') {
+		} else if($sort['order'] == 'descending') {
 			$sortingSQL .= ' ' . $sort['field'] . ' DESC, ';
 		}
 	}
