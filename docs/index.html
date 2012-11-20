@@ -159,6 +159,7 @@
         caption: 'Customers',
 
         columns: [
+            {field: "customer_id", visible: "no", "header": 'Code', "headerClass": "th_code", "dataClass": "td_code"},
             {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
             {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
             {field: "email", visible: "yes", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
@@ -166,7 +167,7 @@
         ],
 
         sorting: [
-            {"sortingName": "Code", field: "customer_id", order: ""},
+            {"sortingName": "Code", field: "customer_id", order: "none"},
             {"sortingName": "Lastname", field: "lastname", order: "ascending"},
             {"sortingName": "Firstname", field: "firstname", order: "ascending"}
         ],
@@ -254,7 +255,7 @@
         ],
 
         sorting: [
-            {"sortingName": "", field: "", order: ""}
+            {"sortingName": "", field: "", order: "none"}
         ],
 
         filters: [
@@ -273,6 +274,7 @@
 
         autoSetColumnsWidth: true,
         showRowNumbers: false,
+        showSortingIndicator: true,
 
         // toolbar options
         showPrefButton: true,
@@ -356,6 +358,10 @@
         dlgPrefClass: 'dlg_pref',
         dlgPrefButtonClass: 'dlg_pref_button',
 
+        // dialog Preferences
+        dlgSortClass: 'dlg_sort',
+        dlgSortButtonClass: 'dlg_sort_button',
+
         // elements id prefix
         caption_id_prefix: 'caption_',
         datagrid_header_id_prefix: 'dgh_',
@@ -365,12 +371,21 @@
         tools_id_prefix: 'tools_',
         pagination_id_prefix: 'pag_',
 
-        //sortable list prefix
+        pref_dialog_id_prefix: 'pref_dlg_',
+        pref_tabs_id_prefix: 'pref_tabs_',
+
+        //column order list prefix
         col_order_list_id_prefix: 'col_order_',
         col_visible_chk_id_prefix: 'col_visible_',
 
-        pref_dialog_id_prefix: 'pref_dlg_',
-        pref_tabs_id_prefix: 'pref_tabs_',
+        sort_dialog_id_prefix: 'sort_dlg_',
+
+        //sorting list prefix
+        sorting_list_id_prefix: 'sort_criteria_',
+        sort_radio_name_prefix: 'sort_order_',
+        sort_asc_radio_id_prefix: 'sort_asc_',
+        sort_desc_radio_id_prefix: 'sort_desc_',
+        sort_none_radio_id_prefix: 'sort_none_',
 
         fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 

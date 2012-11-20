@@ -539,7 +539,7 @@
                 ],
 
                 sorting: [
-                    {"sortingName": "", field: "", order: ""}
+                    {"sortingName": "", field: "", order: "none"}
                 ],
 
                 filters: [
