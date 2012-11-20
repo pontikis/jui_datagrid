@@ -12,7 +12,7 @@ License MIT
 
 UPCOMING Release 1.00 (?? Nov 2012)
 ---------------------------
-* Diplay tabular data
+* Display tabular data
 * CSS based themes compatible with jQuery-UI Theming
 * Fully configurable
 * Get data in JSON format using AJAX (any server-side technology)
