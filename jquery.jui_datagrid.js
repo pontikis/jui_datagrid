@@ -289,8 +289,8 @@
                             var a_id_ext, a_opt, i;
 
                             // tools grid
-                            a_id_ext = ['_row_numbers'];
-                            a_opt = ['showRowNumbers'];
+                            a_id_ext = ['_row_numbers', '_sort_indicator'];
+                            a_opt = ['showRowNumbers', 'showSortingIndicator'];
                             for(i in a_id_ext) {
                                 util_pref(elem, elem_pref_dialog, "#" + pref_dialog_id + a_id_ext[i], a_opt[i]);
                             }
@@ -1010,6 +1010,7 @@
 
         pref_html += '<ul class="' + commonListClass + '" style="margin-bottom: 20px;">';
         pref_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
+        pref_html += util_pref_li(dialog_id + '_sort_indicator', rsc_jui_dg.pref_show_sorting_indicator);
         pref_html += '</ul>';
 
         pref_html += '<p>' + rsc_jui_dg.pref_col_order_visibility + '</p>';
@@ -1061,8 +1062,8 @@
         $("#" + dialog_id).html(pref_html);
 
         /* TAB GRID set values --------------------------------------------- */
-        a_id_ext = ['_row_numbers'];
-        a_opt = ['showRowNumbers'];
+        a_id_ext = ['_row_numbers', '_sort_indicator'];
+        a_opt = ['showRowNumbers', 'showSortingIndicator'];
 
         for(i in a_id_ext) {
             $("#" + dialog_id + a_id_ext[i]).attr("checked", elem.jui_datagrid('getOption', a_opt[i]));
