@@ -117,7 +117,7 @@ $(function() {
         autoOpen: false,
         title: "Customers dialog",
         width: 750,
-        height: 380,
+        height: 390,
         hide: "fade",
         zIndex: 500,
         open: function() {
@@ -137,8 +137,8 @@ $(function() {
 
         sorting: [
             {"sortingName": "Code", field: "id", order: "ascending"},
-            {"sortingName": "Lastname", field: "lastname", order: ""},
-            {"sortingName": "Firstname", field: "firstname", order: ""}
+            {"sortingName": "Lastname", field: "lastname", order: "none"},
+            {"sortingName": "Firstname", field: "firstname", order: "none"}
         ],
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',

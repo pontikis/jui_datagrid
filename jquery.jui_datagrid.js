@@ -789,11 +789,14 @@
                 header_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'header_table_id_prefix'), container_id),
                 data_table_selector = '#' + create_id(elem.jui_datagrid('getOption', 'table_id_prefix'), container_id);
 
-            $(header_table_selector + ' th').eq(col_index).addClass(headerClass);
-            $(data_table_selector + ' tr').each(function() {
-                $(this).find("td").eq(col_index).addClass(dataClass);
-            });
-
+            if(headerClass !== '') {
+                $(header_table_selector + ' th').eq(col_index).addClass(headerClass);
+            }
+            if(dataClass !== '') {
+                $(data_table_selector + ' tr').each(function() {
+                    $(this).find("td").eq(col_index).addClass(dataClass);
+                });
+            }
             if(sync_col_width) {
                 sync_thead_tbody_column_width(container_id);
             }
@@ -1165,11 +1168,6 @@
             i,
             sort_html = '';
 
-
-        //sort_html += '<ul class="' + commonListClass + '" style="margin-bottom: 20px;">';
-        //sort_html += util_pref_li(dialog_id + '_row_numbers', rsc_jui_dg.pref_show_row_numbers);
-        //sort_html += '</ul>';
-
         sort_html += '<div style="margin: 5px; padding: 5px;">';
 
         sort_html += '<p>' + rsc_jui_dg.sorting_criteria + '</p>';
@@ -1190,7 +1188,7 @@
                 '<span class="' + sortableListLiIconClass + '"></span>' +
                 sorting[i].sortingName +
 
-                '<span style="float: right;">' +
+                '<span style="float: right; vertical-align: middle;">' +
                 '<input type="radio" name="' + sort_radio_name + '" id="' + sort_asc_radio_id + '"' + sort_asc_radio_checked + '>' +
                 '<label for="' + sort_asc_radio_id + '">' + rsc_jui_dg.sort_ascending + '</label>' +
                 '<input type="radio" name="' + sort_radio_name + '" id="' + sort_desc_radio_id + '"' + sort_desc_radio_checked + '>' +
