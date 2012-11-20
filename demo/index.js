@@ -88,7 +88,7 @@ $(function() {
 
     elem_dlg_log1.dialog({
         autoOpen: true,
-        width: 400,
+        width: 250,
         height: 200,
         position: {
             my: "left",
