@@ -558,7 +558,8 @@
                         value_range: {lower: "", upper: ""}, // value range
                         value_array: [],  // value in array
                         ajax_foreignKey_url: "", // value from list
-                        ajax_autocomplete_url: "" // value from autocomplete list
+                        ajax_autocomplete_url: "", // value from autocomplete list
+                        user_defined: ""
                     }
                 ],
 

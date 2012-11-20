@@ -22,17 +22,14 @@ $(function() {
         ],
 
         sorting: [
-            {"sortingName": "Code", field: "customer_id", order: "none"},
-            {"sortingName": "Lastname", field: "lastname", order: "ascending"},
-            {"sortingName": "Firstname", field: "firstname", order: "ascending"}
+            {sortingName: "Code", field: "customer_id", order: "none"},
+            {sortingName: "Lastname", field: "lastname", order: "ascending"},
+            {sortingName: "Firstname", field: "firstname", order: "ascending"}
         ],
 
         filters: [
-            {"filterName": "", "filterType": "", field: "", operator: "",
-                value: "", value_range: {lower: "", upper: ""}, value_array: [],
-                foreignKey: {ref_table: "", ref_pk: "", ref_col: "", condition: ""},
-                ajax_autocomplete_url: ""
-            }
+            {filterName: "Lastname", "filterType": "filter_text", field: "lastname", operator: "", value: "", user_defined: "no"},
+            {filterName: "Firstname", "filterType": "filter_text", field: "firstname", operator: "", value: "", user_defined: "no"}
         ],
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
