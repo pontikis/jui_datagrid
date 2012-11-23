@@ -28,9 +28,39 @@ $(function() {
         ],
 
         filters: [
-            {filterName: "Lastname", "filterType": "filter_text", field: "lastname", operator: "", value: "", user_defined: "no"},
-            {filterName: "Firstname", "filterType": "filter_text", field: "firstname", operator: "", value: "", user_defined: "no"}
+            {
+                filterName: "Lastname", "filterType": "text", field: "lastname",
+                inputs: [
+                    {
+                        type: "text",
+                        label: "aaa"
+                    }
+                ],
+                widgets: [
+                    {
+                        type: "aaa",
+                        prop: "aaaa"
+                    }
+                ],
+                values_predefined: [
+                    {
+                        option: "aaaa",
+                        value: ""
+                    }
+                ],
+                values_ajax_url: ""
+            }
         ],
+
+
+        filter_rules: [
+            {filterName: "Lastname", negation: "", operator: "", value: []},
+            {filterName: "Lastname", negation: "", operator: "", value: []},
+            {filterName: "Firstname", negation: "", operator: "", value: []}
+        ],
+
+
+
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
