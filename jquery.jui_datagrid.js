@@ -1,12 +1,37 @@
 /**
- * jquery plugin which displays data in tabular format (datagrid)
- * Requires jquery, jquery-ui, jquery-ui themes
- * It uses jui_dropdown and jui_pagination plugin
- * Copyright 2012 Christos Pontikis http://pontikis.net
- * Project page https://github.com/pontikis/jui_datagrid
- * UPCOMING Release: 1.00 (?? Nov 2012)
- * License MIT
+ * @fileOverview jquery plugin which displays data in tabular format (datagrid)
+ *               <p>License MIT
+ *               <br />Copyright 2012 Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>
+ *               <br />Project page <a href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
+ * @version 1.00 (UPCOMING Release: 1.00 (?? Nov 2012))
+ * @author Christos Pontikis http://pontikis.net
+ * @requires jquery, jquery-ui, jquery-ui themes, jui_dropdown and jui_pagination plugin
  */
+
+/**
+ * See <a href="http://jquery.com">http://jquery.com</a>.
+ * @name $
+ * @class
+ * See the jQuery Library  (<a href="http://jquery.com">http://jquery.com</a>) for full details.  This just
+ * documents the function and classes that are added to jQuery by this plug-in.
+ */
+
+/**
+ * See <a href="http://jquery.com">http://jquery.com</a>
+ * @name fn
+ * @class
+ * See the jQuery Library  (<a href="http://jquery.com">http://jquery.com</a>) for full details.  This just
+ * documents the function and classes that are added to jQuery by this plug-in.
+ * @memberOf $
+ */
+
+/**
+ * Pseudo-Namespace containing jui_datagrid private methods (for documentation purposes)
+ * @name _private_methods
+ * @namespace
+ */
+
+
 "use strict";
 (function($) {
 
@@ -17,9 +42,7 @@
     var methods = {
 
         /**
-         * @constructor
-         * @param options
-         * @return {*}
+         * @lends $.fn.jui_datagrid
          */
         init: function(options) {
 
@@ -538,12 +561,11 @@
 
         /**
          * Get default values
-         * Usage: $(element).jui_datagrid('getDefaults');
+         * @example $(element).jui_datagrid('getDefaults');
          * @return {Object}
          */
         getDefaults: function() {
             return {
-
                 columns: [
                     {field: "", visible: "no", "header": '', "headerClass": "", "dataClass": ""}
                 ],
@@ -554,9 +576,9 @@
 
                 filters: [
                     {"filterName": "", "filterType": "", field: "", operator: "",
-                        value: "",  // simple value
+                        value: "", // simple value
                         value_range: {lower: "", upper: ""}, // value range
-                        value_array: [],  // value in array
+                        value_array: [], // value in array
                         ajax_foreignKey_url: "", // value from list
                         ajax_autocomplete_url: "", // value from autocomplete list
                         user_defined: ""
@@ -705,7 +727,7 @@
 
         /**
          * Get any option set to plugin using its name (as string)
-         * Usage: $(element).jui_datagrid('getOption', some_option);
+         * @example $(element).jui_datagrid('getOption', some_option);
          * @param opt
          * @return {*}
          */
@@ -716,7 +738,7 @@
 
         /**
          * Get all options
-         * Usage: $(element).jui_datagrid('getAllOptions');
+         * @example $(element).jui_datagrid('getAllOptions');
          * @return {*}
          */
         getAllOptions: function() {
@@ -726,7 +748,7 @@
 
         /**
          * Set option
-         * Usage: $(element).jui_datagrid('setOption', 'option_name',  'option_value',  reinit);
+         * @example $(element).jui_datagrid('setOption', 'option_name',  'option_value',  reinit);
          * @param opt
          * @param val
          * @param reinit
@@ -741,7 +763,7 @@
 
         /**
          * Refresh plugin
-         * Usage: $(element).jui_datagrid('refresh');
+         * @example $(element).jui_datagrid('refresh');
          * @return {*|jQuery}
          */
         refresh: function() {
@@ -751,7 +773,7 @@
 
         /**
          * Destroy plugin
-         * Usage: $(element).jui_datagrid('destroy');
+         * @example $(element).jui_datagrid('destroy');
          * @return {*|jQuery}
          */
         destroy: function() {
@@ -767,7 +789,8 @@
 
 
         /**
-         *
+         * Get selected rows ids
+         * @example $(element).jui_datagrid('getSelectedIDs');
          * @return {*}
          */
         getSelectedIDs: function() {
@@ -776,7 +799,8 @@
         },
 
         /**
-         *
+         * Get table element id
+         * @example $(element).jui_datagrid('getGridElemTableID');
          * @return {*}
          */
         getGridElemTableID: function() {
@@ -786,7 +810,8 @@
 
 
         /**
-         *
+         * Get header table element id
+         * @example $(element).jui_datagrid('getGridElemHeaderTableID');
          * @return {*}
          */
         getGridElemHeaderTableID: function() {
@@ -796,7 +821,8 @@
 
 
         /**
-         *
+         * Set a class to page column
+         * @example $(element).jui_datagrid('setPageColClass', 1, 'headerClass', 'dataClass', true);
          * @param col_index
          * @param headerClass
          * @param dataClass
@@ -823,7 +849,8 @@
         },
 
         /**
-         *
+         * Set a class to page column
+         * @example $(element).jui_datagrid('removePageColClass', 1, 'headerClass', 'dataClass', true);
          * @param col_index
          * @param headerClass
          * @param dataClass
@@ -847,8 +874,8 @@
         },
 
         /**
-         * Get all pagination options
-         * Usage: $(element).jui_datagrid('getAllPaginationOptions');
+         * Get pagination option
+         * @example $(element).jui_datagrid('getPaginationOption', 'option_name');
          * @return {*}
          */
         getPaginationOption: function(opt) {
@@ -859,7 +886,7 @@
 
         /**
          * Get all pagination options
-         * Usage: $(element).jui_datagrid('getAllPaginationOptions');
+         * @example $(element).jui_datagrid('getAllPaginationOptions');
          * @return {*}
          */
         getAllPaginationOptions: function() {
@@ -873,14 +900,19 @@
     /* private methods ------------------------------------------------------ */
 
     /**
+     * @lends _private_methods
+     */
+
+    /**
      * Create element id
+     * @function
      * @param prefix
      * @param plugin_container_id
      * @return {*}
      */
     var create_id = function(prefix, plugin_container_id) {
-        return prefix + plugin_container_id;
-    };
+            return prefix + plugin_container_id;
+        };
 
     /**
      * DOM element with specified ID exists
@@ -1367,7 +1399,6 @@
         });
 
     };
-
 
 
     /**
@@ -2006,7 +2037,12 @@
         }
     };
 
-
+    /**
+     * jui_datagrid - datagrid jQuery plugin.
+     *
+     * @class jui_datagrid
+     * @memberOf $.fn
+     */
     $.fn.jui_datagrid = function(method) {
 
         if(this.size() != 1) {
