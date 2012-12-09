@@ -46,6 +46,8 @@ if($rs === false) {
 	$total_rows = $rs['totalrows'];
 }
 
+// AVOID SelectLimit to use PREPARED STATEMENTS with pdo_mysql
+
 // get data
 $offset = ($page_num - 1) * $rows_per_page;
 $sql = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
