@@ -22,5 +22,6 @@ UPCOMING Release 1.00 (?? Nov 2012)
 * Flexible data sorting
 * Single or multi-select rows
 * Powerful pagination
+* Powerful filters
 * Preferences dialog available to user
 * Localization

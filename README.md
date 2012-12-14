@@ -10,9 +10,11 @@ Copyright Christos Pontikis http://pontikis.net
 * Requires jquery, jquery-ui slider, jquery-ui CSS (tested with jquery 1.8.2 and jquery-ui 1.9.0)
 * For touch event support jquery.ui.touch-punch.min.js could be used (see folder /lib/jui_pagination/lib)
 * It is using jui_pagination plugin (usage and documentation [here][jui_pagination])
+* It is using jui_filter_rules plugin (usage and documentation [here][jui_filter_rules])
 * It is using jui_dropdown plugin (usage and documentation [here][jui_dropdown])
 
 [jui_pagination]: https://github.com/pontikis/jui_pagination
+[jui_filter_rules]: https://github.com/pontikis/jui_filter_rules
 [jui_dropdown]: https://github.com/pontikis/jui_dropdown
 
 UPCOMING Release: 1.00
