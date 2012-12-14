@@ -68,6 +68,7 @@
                     elem.data(pluginStatus, {});
                     elem.data(pluginStatus)['a_selected_ids'] = [];
                     elem.data(pluginStatus)['count_selected_ids'] = 0;
+                    elem.data(pluginStatus)['filter_rules'] = [];
 
                     if($.browser.mozilla || ($.browser.msie && parseInt($.browser.version) >= 10)) {
                         elem.data(pluginStatus)['fix_border_collapse_td_width'] = 0;
@@ -142,7 +143,8 @@
                     data: {
                         page_num: settings.pageNum,
                         rows_per_page: settings.rowsPerPage,
-                        sorting: settings.sorting
+                        sorting: settings.sorting,
+                        filter_rules: elem.data(pluginStatus)['filter_rules']
                     },
                     success: function(data) {
                         var a_data = $.parseJSON(data);
@@ -574,16 +576,9 @@
                     {"sortingName": "", field: "", order: "none"}
                 ],
 
-                filters: [
-                    {"filterName": "", "filterType": "", field: "", operator: "",
-                        value: "", // simple value
-                        value_range: {lower: "", upper: ""}, // value range
-                        value_array: [], // value in array
-                        ajax_foreignKey_url: "", // value from list
-                        ajax_autocomplete_url: "", // value from autocomplete list
-                        user_defined: ""
-                    }
-                ],
+                filterOptions: {
+                    filters: []
+                },
 
                 pageNum: 1,
                 rowsPerPage: 10,
@@ -1317,33 +1312,12 @@
             filters_dialog_id_prefix = elem.jui_datagrid('getOption', 'filters_dialog_id_prefix'),
             dialog_id = create_id(filters_dialog_id_prefix, plugin_container_id),
 
-            commonListClass = elem.jui_datagrid('getOption', 'commonListClass'),
-
-            filters = elem.jui_datagrid('getOption', 'filters'),
-
-            sortableListClass = elem.jui_datagrid('getOption', 'sortableListClass'),
-            sortableListLiClass = elem.jui_datagrid('getOption', 'sortableListLiClass'),
-            sortableListLiDisabledClass = elem.jui_datagrid('getOption', 'sortableListLiDisabledClass'),
-            sortableListLiIconClass = elem.jui_datagrid('getOption', 'sortableListLiIconClass'),
-
-            sorting_list_id = create_id(elem.jui_datagrid('getOption', 'sorting_list_id_prefix'), plugin_container_id),
-            sort_radio_name_prefix = create_id(elem.jui_datagrid('getOption', 'sort_radio_name_prefix'), plugin_container_id) + '_',
-            sort_radio_name,
-            sort_asc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_asc_radio_id_prefix'), plugin_container_id) + '_',
-            sort_desc_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_desc_radio_id_prefix'), plugin_container_id) + '_',
-            sort_none_radio_id_prefix = create_id(elem.jui_datagrid('getOption', 'sort_none_radio_id_prefix'), plugin_container_id) + '_',
-            sort_asc_radio_id, sort_desc_radio_id, sort_none_radio_id,
-            sort_asc_radio_checked, sort_desc_radio_checked, sort_none_radio_checked,
-            col_visible_id,
-            col_checked, criterion_disabled,
-
-            i,
-            filter_html = '';
-
-        filter_html += 'Hello world!';
+            filterOptions = elem.jui_datagrid('getOption', 'filterOptions');
 
 
-        $("#" + dialog_id).html(filter_html);
+        $("#" + dialog_id).jui_filter_rules({
+            filters: filterOptions.filters
+        });
     };
 
     /**
@@ -1356,7 +1330,8 @@
         var elem = $("#" + plugin_container_id),
             elem_filters_dialog = $("#" + dialog_id),
             dlgFiltersClass = elem.jui_datagrid("getOption", "dlgFiltersClass"),
-            dlgFiltersButtonClass = elem.jui_datagrid("getOption", "dlgFiltersButtonClass");
+            dlgFiltersButtonClass = elem.jui_datagrid("getOption", "dlgFiltersButtonClass"),
+            a_rules;
 
         if(jui_widget_exists(dialog_id, 'dialog')) {
             elem_filters_dialog.dialog('destroy');
@@ -1376,13 +1351,20 @@
                 {
                     text: rsc_jui_dg.filters_apply,
                     click: function() {
-                        $(this).dialog("close");
+                        a_rules = $(this).jui_filter_rules("getRules", 0, []);
+                        if(a_rules !== false) {
+                            $(this).jui_filter_rules("markRulesAsApplied");
+                            elem.data(pluginStatus)['filter_rules'] = a_rules;
+                            elem.jui_datagrid("refresh");
+                        }
                     }
                 },
                 {
                     text: rsc_jui_dg.filters_reset,
                     click: function() {
-                        $(this).dialog("close");
+                        $(this).jui_filter_rules("clearRules");
+                        elem.data(pluginStatus)['filter_rules'] = [];
+                        elem.jui_datagrid("refresh");
                     }
                 }
 

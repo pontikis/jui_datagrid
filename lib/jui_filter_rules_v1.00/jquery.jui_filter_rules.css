@@ -53,6 +53,10 @@
     background-color: #f3f3f3;
 }
 
+.rules_list_applied_li {
+    background-color: #CCFF99 !important;
+}
+
 .rules_list_error_li {
     background-color: #df0202 !important;
 }
@@ -145,6 +149,14 @@
 .rule_tools_list {
     padding: 0;
     margin: 0;
+}
+
+/* no filters div ----------------------------------------------------------- */
+.no_filters_found{
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* utility ------------------------------------------------------------------ */

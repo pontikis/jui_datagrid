@@ -27,40 +27,30 @@ $(function() {
             {sortingName: "Firstname", field: "firstname", order: "ascending"}
         ],
 
-        filters: [
-            {
-                filterName: "Lastname", "filterType": "text", field: "lastname",
-                inputs: [
-                    {
-                        type: "text",
-                        label: "aaa"
-                    }
-                ],
-                widgets: [
-                    {
-                        type: "aaa",
-                        prop: "aaaa"
-                    }
-                ],
-                values_predefined: [
-                    {
-                        option: "aaaa",
-                        value: ""
-                    }
-                ],
-                values_ajax_url: ""
-            }
-        ],
-
-
-        filter_rules: [
-            {filterName: "Lastname", negation: "", operator: "", value: []},
-            {filterName: "Lastname", negation: "", operator: "", value: []},
-            {filterName: "Firstname", negation: "", operator: "", value: []}
-        ],
-
-
-
+        filterOptions: {
+            filters: [
+                {
+                    filterName: "Lastname", "filterType": "text", field: "lastname", filterLabel: "Last name",
+                    excluded_operators: ["in", "not_in"],
+                    filter_interface: [
+                        {
+                            filter_element: "input",
+                            filter_element_attributes: {"type": "text"}
+                        }
+                    ]
+                },
+                {
+                    filterName: "Firstname", "filterType": "text", field: "firstname", filterLabel: "First name",
+                    excluded_operators: ["in", "not_in"],
+                    filter_interface: [
+                        {
+                            filter_element: "input",
+                            filter_element_attributes: {"type": "text"}
+                        }
+                    ]
+                }
+            ]
+        },
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
