@@ -1,0 +1,37 @@
+{
+    "name": "jui_datagrid",
+    "version": "1.0.0",
+    "title": "jui_datagrid",
+    "author": {
+        "name": "Christos Pontikis",
+        "url": "http://pontikis.net"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://raw.github.com/pontikis/jui_datagrid/master/MIT_LICENSE"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.6",
+        "jquery-ui": ">=1.8",
+        "moment.js": "1.7.2"
+    },
+    "description": "jquery plugin which displays database data in tabular format (datagrid)",
+    "homepage": "https://github.com/pontikis/jui_datagrid",
+    "docs": "http://pontikis.net/jui_datagrid/v1.00/docs",
+    "demo": "http://pontikis.net/jui_datagrid/v1.00/demo",
+    "download": "https://github.com/pontikis/jui_datagrid/zipball/v1.0.0",
+    "keywords": [
+        "datagrid",
+        "SQL",
+        "i18n"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pontikis/jui_datagrid"
+    },
+    "bugs": {
+        "url": "https://github.com/pontikis/jui_datagrid/issues"
+    }
+}
