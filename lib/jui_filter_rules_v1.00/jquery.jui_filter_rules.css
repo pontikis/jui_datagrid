@@ -1,0 +1,155 @@
+/* container ---------------------------------------------------------------- */
+.filter_rules_container {
+    padding: 5px 10px 10px 10px;
+}
+
+/* rules group -------------------------------------------------------------- */
+.rules_group_container {
+    padding: 0;
+    margin: 0;
+}
+
+.rules_group_header {
+    padding: 5px 0;
+}
+
+.rules_group_body {
+    padding: 0;
+    margin: 0;
+}
+
+.rules_group_condition_container {
+    display: inline-block;
+    padding: 0;
+}
+
+.rules_group_condition_list {
+    border: 1px solid;
+    padding: 2px 0;
+    margin: 0;
+}
+
+.rules_group_tools_container {
+    display: inline-block;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.rules_group_tools_list {
+    border: 1px solid;
+    padding: 2px;
+}
+
+/* rules list --------------------------------------------------------------- */
+.rules_list {
+    list-style-type: none;
+    padding: 0 0 0 25px;
+    border-left: dotted 1px;
+}
+
+.rules_list_li {
+    margin: 0 0 2px 0;
+    padding: 0;
+    background-color: #f3f3f3;
+}
+
+.rules_list_error_li {
+    background-color: #df0202 !important;
+}
+
+/* filter name -------------------------------------------------------------- */
+.filter_container {
+    display: inline-block;
+    padding: 5px 5px 5px 0;
+    vertical-align: top;
+}
+
+.filter_list {
+    padding: 0;
+    margin: 0;
+}
+
+/* operator ----------------------------------------------------------------- */
+.operators_list_container {
+    display: inline-block;
+    padding: 5px;
+    width: 180px;
+    vertical-align: top;
+}
+
+.operators_list {
+    padding: 0;
+    margin: 0;
+}
+
+/* filter value ------------------------------------------------------------- */
+.filter_value_container {
+    display: inline-block;
+    padding: 5px;
+}
+
+.filter_input_text {
+    width: 180px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.filter_input_number {
+    width: 75px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.filter_input_date {
+    width: 150px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.filter_input_checkbox {
+    margin: 0 5px 0 0;
+}
+
+.filter_input_radio {
+    margin: 0 5px 0 0;
+}
+
+.filter_select {
+    margin: 0 5px;
+}
+
+.filter_group_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.filter_group_list_item_horizontal {
+    display: inline;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.filter_group_list_item_vertical {
+    margin: 0 0 5px 5px;
+    padding: 0;
+}
+
+/* filter tools ------------------------------------------------------------- */
+.rule_tools_container {
+    display: inline-block;
+    padding: 5px;
+    float: right;
+    vertical-align: top;
+}
+
+.rule_tools_list {
+    padding: 0;
+    margin: 0;
+}
+
+/* utility ------------------------------------------------------------------ */
+.tools_list_shrink {
+    width: 35px;
+}
+
+/* -------------------------------------------------------------------------- */
