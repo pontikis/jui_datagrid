@@ -1,11 +1,11 @@
 /**
- * @fileOverview jquery plugin which displays data in tabular format (datagrid)
+ * @fileOverview jquery plugin which displays database data in tabular format (datagrid)
  *               <p>License MIT
  *               <br />Copyright 2012 Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>
  *               <br />Project page <a href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
- * @version 1.00 (UPCOMING Release: 1.00 (?? Nov 2012))
+ * @version 1.00 (UPCOMING Release: 1.00 (?? Dec 2012))
  * @author Christos Pontikis http://pontikis.net
- * @requires jquery, jquery-ui, jquery-ui themes, jui_dropdown and jui_pagination plugin
+ * @requires jquery, jquery-ui, jquery-ui themes, jui_pagination plugin, jui_filter_rules, jui_dropdown plugins
  */
 
 /**
@@ -339,7 +339,7 @@
                         }
 
                         /* Selection dropdown */
-                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple' && row_primary_key) {
+                        if(settings.showSelectButtons && settings.rowSelectionMode == 'multiple' && row_primary_key && total_rows > 0) {
                             row_prefix_len = (table_id + '_tr_').length;
                             var elem_row = $("#" + table_id + ' tbody tr');
                             tools_id = create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id);
