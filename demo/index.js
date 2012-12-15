@@ -78,6 +78,11 @@ $(function() {
             log = 'Row with ID ' + data.row_id + ' ' + data.row_status + '.';
             create_log(elem_dlg_log1, log);
         },
+        onFilterValidationError: function(event, data) {
+            log = 'FILTER VALIDARION ERROR: ' + data.err_description + ' (error: ' + data.err_num + ').';
+            create_log(elem_dlg_log1, log, true);
+            data.elem_filter.focus();
+        },
         onDisplay: function() {
             log = 'Datagrid created.';
             create_log(elem_dlg_log1, log);
@@ -183,7 +188,12 @@ $(function() {
 
 });
 
-function create_log(elem_log, log_line) {
+function create_log(elem_log, log_line, is_error) {
     var line_number = parseInt(elem_log.find("p").length) + 1;
-    elem_log.prepend('<p>' + line_number + ') ' + log_line);
+    if(is_error) {
+        elem_log.prepend('<p style="color: red;">' + line_number + ') ' + log_line);
+    } else {
+        elem_log.prepend('<p>' + line_number + ') ' + log_line);
+    }
+
 }

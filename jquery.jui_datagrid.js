@@ -89,6 +89,7 @@
                 elem.unbind("onRowClick").bind("onRowClick", settings.onRowClick);
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
+                elem.unbind("onFilterValidationError").bind("onFilterValidationError", settings.onFilterValidationError);
 
                 // initialize plugin html
                 var caption_id = create_id(settings.caption_id_prefix, container_id),
@@ -125,7 +126,8 @@
                     elem_grid = $("#" + datagrid_id),
                     elem_tools = $("#" + tools_id),
                     elem_pag = $("#" + pagination_id),
-                    elem_pref_dialog = $("#" + pref_dialog_id);
+                    elem_pref_dialog = $("#" + pref_dialog_id),
+                    elem_filter_rules = $("#" + filter_rules_id);
 
                 // apply style
                 elem.removeClass().addClass(settings.containerClass);
@@ -510,6 +512,16 @@
 
                             });
 
+
+
+
+                            elem_filter_rules.jui_filter_rules({
+                                onValidationError: function(event, data) {
+                                    elem.triggerHandler("onFilterValidationError", data);
+                                }
+                            })
+
+
                         }
 
                         // PAGINATION events -----------------------------------
@@ -719,6 +731,8 @@
                 onRowClick: function() {
                 },
                 onDelete: function() {
+                },
+                onFilterValidationError: function() {
                 },
                 onDisplay: function() {
                 }
@@ -1388,6 +1402,9 @@
                         if(a_rules !== false) {
                             elem_filter_rules.jui_filter_rules("markRulesAsApplied");
                             elem.data(pluginStatus)['filter_rules'] = a_rules;
+                            // Reset selected rows
+                            elem.data(pluginStatus)['a_selected_ids'] = [];
+                            elem.data(pluginStatus)['count_selected_ids'] = 0;
                             elem.jui_datagrid({
                                 pageNum: 1
                             });
