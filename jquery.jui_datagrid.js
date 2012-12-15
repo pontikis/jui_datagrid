@@ -99,6 +99,8 @@
                     pref_dialog_id = create_id(settings.pref_dialog_id_prefix, container_id),
                     sort_dialog_id = create_id(settings.sort_dialog_id_prefix, container_id),
                     filters_dialog_id = create_id(settings.filters_dialog_id_prefix, container_id),
+                    filter_rules_id = create_id(settings.filter_rules_id_prefix, container_id),
+
                     elem_html;
 
                 if(!elem.data(pluginStatus)['initialize']) {
@@ -110,7 +112,9 @@
                     elem_html += '<div id="' + pagination_id + '"></div>';
                     elem_html += '<div id="' + pref_dialog_id + '"></div>';
                     elem_html += '<div id="' + sort_dialog_id + '"></div>';
-                    elem_html += '<div id="' + filters_dialog_id + '"></div>';
+                    elem_html += '<div id="' + filters_dialog_id + '">';
+                    elem_html += '<div id="' + filter_rules_id + '"></div>';
+                    elem_html += '</div>';
                     elem.html(elem_html);
 
                     elem.data(pluginStatus)['initialize'] = true;
@@ -502,7 +506,7 @@
                             selector = "#" + create_id(settings.tools_id_prefix, container_id) + '_' + 'filters';
                             elem.off('click', selector).on('click', selector, function() {
 
-                                create_dialog_filters(container_id, filters_dialog_id);
+                                create_dialog_filters(container_id);
 
                             });
 
@@ -578,7 +582,7 @@
 
                 filterOptions: {
                     filters: []
-                },
+                }, // 'onValidationError' will be ignored
 
                 pageNum: 1,
                 rowsPerPage: 10,
@@ -699,6 +703,7 @@
                 sort_dialog_id_prefix: 'sort_dlg_',
 
                 filters_dialog_id_prefix: 'filter_dlg_',
+                filter_rules_id_prefix: 'flt_rules_',
 
                 //sorting list prefix
                 sorting_list_id_prefix: 'sort_criteria_',
@@ -906,8 +911,8 @@
      * @return {*}
      */
     var create_id = function(prefix, plugin_container_id) {
-            return prefix + plugin_container_id;
-        };
+        return prefix + plugin_container_id;
+    };
 
     /**
      * DOM element with specified ID exists
@@ -1304,36 +1309,64 @@
     };
 
     /**
-     *
+     * Create filters
      * @param plugin_container_id
      */
     var create_filters = function(plugin_container_id) {
         var elem = $("#" + plugin_container_id),
-            filters_dialog_id_prefix = elem.jui_datagrid('getOption', 'filters_dialog_id_prefix'),
-            dialog_id = create_id(filters_dialog_id_prefix, plugin_container_id),
+            filter_rules_id = create_id(elem.jui_datagrid('getOption', 'filter_rules_id_prefix'), plugin_container_id),
+            elem_filter_rules = $("#" + filter_rules_id),
+            given_filter_options, internal_defined, internal_defined_len, i,internal_filter_options,
+            filter_options, default_options, default_filter_options;
 
-            filterOptions = elem.jui_datagrid('getOption', 'filterOptions');
+        // fixed FILTER options
+        /* not exist at this time */
 
+        // CREATE FILTER OPTIONS
+        given_filter_options = elem.jui_datagrid('getOption', 'filterOptions');
 
-        $("#" + dialog_id).jui_filter_rules({
-            filters: filterOptions.filters
-        });
+        // remove unacceptable settings
+        internal_defined = ['onValidationError'];
+        for(i = 0; i < internal_defined_len; i++) {
+            if(typeof(given_filter_options[internal_defined[i]]) != 'undefined') {
+                delete given_filter_options[internal_defined[i]];
+            }
+        }
+
+        filter_options = elem_filter_rules.data('jui_filter_rules');
+        if(typeof(filter_options) === 'undefined') {
+            default_options = elem.jui_datagrid('getDefaults');
+            default_filter_options = default_options.filterOptions;
+            filter_options = $.extend({}, default_filter_options, given_filter_options);
+
+        } else {
+            filter_options = $.extend({}, filter_options, given_filter_options);
+        }
+
+        internal_filter_options = {};  /* not exist at this time */
+
+        filter_options = $.extend({}, filter_options, internal_filter_options);
+
+        elem_filter_rules.jui_filter_rules(filter_options);
+
     };
 
     /**
-     *
+     * Create filters dialog
      * @param plugin_container_id
-     * @param dialog_id
      */
-    var create_dialog_filters = function(plugin_container_id, dialog_id) {
+    var create_dialog_filters = function(plugin_container_id) {
 
         var elem = $("#" + plugin_container_id),
-            elem_filters_dialog = $("#" + dialog_id),
+            filters_dialog_id = create_id(elem.jui_datagrid("getOption", "filters_dialog_id_prefix"), plugin_container_id),
+            filter_rules_id = create_id(elem.jui_datagrid("getOption", "filter_rules_id_prefix"), plugin_container_id),
+            elem_filters_dialog = $("#" + filters_dialog_id),
+            elem_filter_rules = $("#" + filter_rules_id),
             dlgFiltersClass = elem.jui_datagrid("getOption", "dlgFiltersClass"),
             dlgFiltersButtonClass = elem.jui_datagrid("getOption", "dlgFiltersButtonClass"),
             a_rules;
 
-        if(jui_widget_exists(dialog_id, 'dialog')) {
+        if(jui_widget_exists(filters_dialog_id, 'dialog')) {
             elem_filters_dialog.dialog('destroy');
         }
 
@@ -1351,20 +1384,24 @@
                 {
                     text: rsc_jui_dg.filters_apply,
                     click: function() {
-                        a_rules = $(this).jui_filter_rules("getRules", 0, []);
+                        a_rules = elem_filter_rules.jui_filter_rules("getRules", 0, []);
                         if(a_rules !== false) {
-                            $(this).jui_filter_rules("markRulesAsApplied");
+                            elem_filter_rules.jui_filter_rules("markRulesAsApplied");
                             elem.data(pluginStatus)['filter_rules'] = a_rules;
-                            elem.jui_datagrid("refresh");
+                            elem.jui_datagrid({
+                                pageNum: 1
+                            });
                         }
                     }
                 },
                 {
                     text: rsc_jui_dg.filters_reset,
                     click: function() {
-                        $(this).jui_filter_rules("clearRules");
+                        elem_filter_rules.jui_filter_rules("clearRules");
                         elem.data(pluginStatus)['filter_rules'] = [];
-                        elem.jui_datagrid("refresh");
+                        elem.jui_datagrid({
+                            pageNum: 1
+                        });
                     }
                 }
 
