@@ -637,6 +637,7 @@
                 captionClass: 'grid_caption ui-widget-header ui-corner-top',
                 datagridHeaderClass: 'grid_header ui-state-default',
                 datagridClass: 'grid_data ui-widget-content',
+                noResultsClass: "no_records_found",
                 toolsClass: 'grid_tools ui-state-default ui-corner-all',
                 paginationClass: 'grid_pagination',
 
@@ -1906,9 +1907,9 @@
 
         var elem = $("#" + container_id),
             datagrid_id = elem.jui_datagrid('getOption', 'datagrid_id_prefix') + container_id,
-            pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
+            noResultsClass = elem.jui_datagrid('getOption', 'noResultsClass');
 
-        $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
+        $("#" + datagrid_id).html('<div class="' + noResultsClass + '">' + rsc_jui_dg.no_records_found + '</div>');
 
     };
 

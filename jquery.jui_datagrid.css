@@ -167,6 +167,11 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     font-size: .9em !important;
 }
 
+/* no records found div ----------------------------------------------------- */
+.no_records_found {
+    text-align: center;
+    padding: 20px;
+}
 
 /* common list -------------------------------------------------------------- */
 .grid_common_list {
