@@ -512,16 +512,6 @@
 
                             });
 
-
-
-
-                            elem_filter_rules.jui_filter_rules({
-                                onValidationError: function(event, data) {
-                                    elem.triggerHandler("onFilterValidationError", data);
-                                }
-                            })
-
-
                         }
 
                         // PAGINATION events -----------------------------------
@@ -1357,7 +1347,11 @@
             filter_options = $.extend({}, filter_options, given_filter_options);
         }
 
-        internal_filter_options = {};  /* not exist at this time */
+        internal_filter_options = {
+            onValidationError: function(event, data) {
+                elem.triggerHandler("onFilterValidationError", data);
+            }
+        };
 
         filter_options = $.extend({}, filter_options, internal_filter_options);
 
