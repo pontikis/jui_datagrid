@@ -125,7 +125,7 @@
                     elem_grid_header = $("#" + datagrid_header_id),
                     elem_grid = $("#" + datagrid_id),
                     elem_tools = $("#" + tools_id),
-                    elem_pag = $("#" + pagination_id),
+                    elem_pagination = $("#" + pagination_id),
                     elem_pref_dialog = $("#" + pref_dialog_id),
                     elem_filter_rules = $("#" + filter_rules_id);
 
@@ -140,7 +140,7 @@
                 elem_grid_header.removeClass().addClass(settings.datagridHeaderClass);
                 elem_grid.removeClass().addClass(settings.datagridClass);
                 elem_tools.removeClass().addClass(settings.toolsClass);
-                elem_pag.removeClass().addClass(settings.paginationClass);
+                elem_pagination.removeClass().addClass(settings.paginationClass);
 
                 // fetch data and display datagrid
                 $.ajax({
@@ -159,9 +159,11 @@
                         var page_data = a_data['page_data'];
 
                         if(total_rows == 0) {
+                            elem_pagination.hide();
                             display_no_data(container_id);
                             display_tools(container_id, total_rows);
                         } else {
+                            elem_pagination.show();
                             display_grid(container_id, total_rows, page_data, row_primary_key);
                             apply_grid_style(container_id);
                             apply_selections(container_id, row_primary_key);
@@ -520,7 +522,6 @@
                             var currentPage = settings.pageNum,
                                 rowsPerPage = settings.rowsPerPage,
                                 maxRowsPerPage = settings.maxRowsPerPage,
-                                elem_pagination = $("#" + pagination_id),
                                 showRowsInfo = elem.jui_datagrid('getPaginationOption', 'showRowsInfo');
 
                             elem_pagination.jui_pagination({
@@ -1380,7 +1381,7 @@
 
         elem_filters_dialog.dialog({
             autoOpen: true,
-            width: 600,
+            width: 'auto',
             height: 'auto',
             position: {
                 my: "top",
@@ -1866,6 +1867,8 @@
             given_pagination_options = elem.jui_datagrid('getOption', 'paginationOptions'),
         // remove unacceptable settings
             internal_defined = ['currentPage', 'rowsPerPage', 'totalPages', 'containerClass', 'onSetRowsPerPage', 'onChangePage', 'onDisplay'];
+
+
         for(var i in internal_defined) {
             if(typeof(given_pagination_options[internal_defined[i]]) != 'undefined') {
                 delete given_pagination_options[internal_defined[i]];
@@ -1906,7 +1909,6 @@
             pagination_id = elem.jui_datagrid('getOption', 'pagination_id_prefix') + container_id;
 
         $("#" + datagrid_id).html(rsc_jui_dg.no_records_found);
-        $("#" + pagination_id).hide();
 
     };
 

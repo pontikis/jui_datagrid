@@ -27,7 +27,10 @@
     overflow-y: auto;
     overflow-x: hidden !important;
 }
-
+.grid1_filters {
+    font-size: .9em !important;
+    width: 700px !important;
+}
 
 .th_code, .th_lastname, .th_firstname, .th_email, .th_gender {
     text-align: left;

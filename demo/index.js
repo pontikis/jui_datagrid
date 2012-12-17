@@ -52,6 +52,8 @@ $(function() {
             ]
         },
 
+        dlgFiltersClass: 'grid1_filters',
+
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
 
         containerClass: 'grid1_container ui-state-default ui-corner-all',
