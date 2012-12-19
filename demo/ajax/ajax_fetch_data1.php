@@ -15,11 +15,13 @@ if(!$isAjax) {
 // initialize ------------------------------------------------------------------
 require_once '../mysql/settings.php';
 require_once '../lib/adodb_5.18a/adodb.inc.php';
-require_once 'filter_functions.php';
+require_once '../../lib/jui_filter_rules_v1.00/server_side/php/jui_filter_rules.php';
 
 $result = array();
-// set true of false
+
+// configuration
 define('USE_PREPARED_STATEMETS', true);
+define('RDBMS', "ADODB");
 
 // connect to database (php ADODB abstraction layer) ---------------------------
 $dsn = $mysql_driver . '://' . $mysql_user . ':' . rawurlencode($mysql_passwd) . '@' . $mysql_server . '/' . $mysql_db . '?fetchmode=' . ADODB_FETCH_ASSOC;
@@ -45,9 +47,10 @@ if(count($filter_rules) == 0) {
 	$whereSQL = '';
 	$a_bind_params = array();
 } else {
-	$a_rules = parse_rules($filter_rules, USE_PREPARED_STATEMETS, false);
-	$whereSQL = $a_rules['sql'];
-	$a_bind_params = $a_rules['bind_params'];
+	$jfr = new jui_filter_rules($conn, USE_PREPARED_STATEMETS, RDBMS);
+	$result = $jfr->parse_rules($filter_rules);
+	$whereSQL = $result['sql'];
+	$a_bind_params = $result['bind_params'];
 }
 
 /*print '<pre>';
@@ -112,10 +115,9 @@ if(USE_PREPARED_STATEMETS) { // SelectLimit cannot be used with PREPARED STATEME
 }
 
 // disconnect Database ---------------------------------------------------------
-/*if($rs)
-	$rs->Close(); // free memory
-if($conn)
-	$conn->Close(); //database disconnect*/
+if(isset($conn)) {
+	$conn->Close(); //database disconnect
+}
 
 // return JSON -----------------------------------------------------------------
 $result['row_primary_key'] = 'customer_id';

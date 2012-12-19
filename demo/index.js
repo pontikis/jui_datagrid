@@ -48,8 +48,34 @@ $(function() {
                             filter_element_attributes: {"type": "text"}
                         }
                     ]
+                },
+                {
+                    filterName: "Gender", "filterType": "number", field: "lk_genders_id", filterLabel: "Gender",
+                    excluded_operators: ["equal", "not_equal", "less", "less_or_equal", "greater", "greater_or_equal"],
+                    filter_interface: [
+                        {
+                            filter_element: "input",
+                            filter_element_attributes: {type: "checkbox"}
+                        }
+                    ],
+                    lookup_values: [
+                        {lk_option: "Male", lk_value: "1"},
+                        {lk_option: "Female", lk_value: "2", lk_selected: "yes"}
+                    ]
+                },
+                {
+                    filterName: "Gender direct", "filterType": "number", field: "lk_genders_id", filterLabel: "Gender direct",
+                    excluded_operators: ["in", "not_in"],
+                    filter_interface: [
+                        {
+                            filter_element: "input",
+                            filter_element_attributes: {type: "text"}
+                        }
+                    ]
                 }
-            ]
+            ],
+
+            decimal_separator: ","
         },
 
         dlgFiltersClass: 'grid1_filters',
