@@ -16,6 +16,7 @@ if(!$isAjax) {
 require_once '../mysql/settings.php';
 require_once '../lib/adodb_5.18a/adodb.inc.php';
 require_once '../../lib/jui_filter_rules_v1.00/server_side/php/jui_filter_rules.php';
+require_once '../../server_side/php/jui_datagrid.php';
 
 $result = array();
 
@@ -52,11 +53,6 @@ if(count($filter_rules) == 0) {
 	$whereSQL = $result['sql'];
 	$a_bind_params = $result['bind_params'];
 }
-
-/*print '<pre>';
-print_r($whereSQL);
-echo $a_bind_params;
-exit;*/
 
 // ORDER BY SQL ----------------------------------------------------------------
 $sortingSQL = '';
@@ -116,7 +112,7 @@ if(USE_PREPARED_STATEMETS) { // SelectLimit cannot be used with PREPARED STATEME
 
 // disconnect Database ---------------------------------------------------------
 if(isset($conn)) {
-	$conn->Close(); //database disconnect
+	$conn->Close();
 }
 
 // return JSON -----------------------------------------------------------------

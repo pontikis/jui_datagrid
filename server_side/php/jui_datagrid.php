@@ -10,7 +10,7 @@
  * \subsection step1 Fetch page data from server
  * \code{.php}
  * $jdg = new jui_datagrid($conn, $usePreparedStatements, $rdbms);
- * $result = $jdg->fetch_data($rules);
+ * $result = $jdg->fetch_page_data_ADODB();
  * \endcode
  */
 
@@ -67,7 +67,38 @@ class jui_datagrid {
 		return $this->rdbms;
 	}
 
-	public function fetch_data() {
+
+
+
+	public function get_total_rows_ADODB() {
+
+	}
+
+
+
+
+	public function fetch_page_data_ADODB() {
+
+	}
+
+	/**
+	 * \todo fetch page data using PostgreSQL
+	 */
+	public function fetch_page_data_POSTGRES() {
+
+	}
+
+	/**
+	 * \todo fetch page data using MySQL
+	 */
+	public function fetch_page_data_MYSQL() {
+
+	}
+
+	/**
+	 * \todo fetch page data using MySQLi
+	 */
+	public function fetch_page_data_MYSQLi() {
 
 	}
 
