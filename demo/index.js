@@ -107,7 +107,7 @@ $(function() {
             create_log(elem_dlg_log1, log);
         },
         onFilterValidationError: function(event, data) {
-            log = 'FILTER VALIDARION ERROR: ' + data.err_description + ' (error: ' + data.err_num + ').';
+            log = 'FILTER VALIDARION ERROR: ' + data.err_description + ' (' + data.err_code + ').';
             create_log(elem_dlg_log1, log, true);
             data.elem_filter.focus();
         },
