@@ -90,67 +90,72 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a8746cc74c6b46eecef86c6a527e49b66">   14</a></span>&#160;    var <a class="code" href="../../de/d43/classjui__datagrid.html#a8746cc74c6b46eecef86c6a527e49b66">$usePreparedStatements</a>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a133c2d33680dd620e976e80bc7a90909">   18</a></span>&#160;    var <a class="code" href="../../de/d43/classjui__datagrid.html#a133c2d33680dd620e976e80bc7a90909">$rdbms</a>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a88f88aa4f3754f86624943f0079b7136">   25</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a88f88aa4f3754f86624943f0079b7136">__construct</a>($dbcon, $use_ps, $db_type) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a221907d2867942cf5007c4f2eef83a57">   25</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a221907d2867942cf5007c4f2eef83a57">__construct</a>($dbcon, $use_ps, $db_type, $page_num, $rows_per_page, $sorting, $filter_rules) {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        $this-&gt;conn = $dbcon;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        $this-&gt;usePreparedStatements = $use_ps;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        $this-&gt;rdbms = $db_type;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a77f94d8bde9ab397e44e143d46eb508e">   31</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a77f94d8bde9ab397e44e143d46eb508e">set_conn</a>($dbcon) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        $this-&gt;conn = $dbcon;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        $this-&gt;page_num = $page_num;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        $this-&gt;rows_per_page = $rows_per_page;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        $this-&gt;sorting = $sorting;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        $this-&gt;filter_rules = $filter_rules;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a44068bd49063ef1bc0ad423a944657b2">   35</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a44068bd49063ef1bc0ad423a944657b2">get_conn</a>() {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aa8a5a87b9c1a6a0819b88447cbe41877">$this-&gt;conn</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a77f94d8bde9ab397e44e143d46eb508e">   35</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a77f94d8bde9ab397e44e143d46eb508e">set_conn</a>($dbcon) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        $this-&gt;conn = $dbcon;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a0a043e7f6bb0a570a8ab9488a5fae7f6">   39</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a0a043e7f6bb0a570a8ab9488a5fae7f6">set_usePreparedStatements</a>($use_ps) {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        $this-&gt;usePreparedStatements = $use_ps;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a44068bd49063ef1bc0ad423a944657b2">   39</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a44068bd49063ef1bc0ad423a944657b2">get_conn</a>() {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aa8a5a87b9c1a6a0819b88447cbe41877">$this-&gt;conn</a>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a6dc1f1e954ee2af5e37e45eb420aea3f">   43</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a6dc1f1e954ee2af5e37e45eb420aea3f">get_usePreparedStatements</a>() {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a8746cc74c6b46eecef86c6a527e49b66">$this-&gt;usePreparedStatements</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a0a043e7f6bb0a570a8ab9488a5fae7f6">   43</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a0a043e7f6bb0a570a8ab9488a5fae7f6">set_usePreparedStatements</a>($use_ps) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        $this-&gt;usePreparedStatements = $use_ps;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#afad137703e91160d410f922563b772e6">   47</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#afad137703e91160d410f922563b772e6">set_rdbms</a>($db) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        $this-&gt;rdbms = $db;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a6dc1f1e954ee2af5e37e45eb420aea3f">   47</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a6dc1f1e954ee2af5e37e45eb420aea3f">get_usePreparedStatements</a>() {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a8746cc74c6b46eecef86c6a527e49b66">$this-&gt;usePreparedStatements</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#aacf38a5d68b5daf336a87aaf5651e544">   51</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aacf38a5d68b5daf336a87aaf5651e544">get_rdbms</a>() {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a133c2d33680dd620e976e80bc7a90909">$this-&gt;rdbms</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#afad137703e91160d410f922563b772e6">   51</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#afad137703e91160d410f922563b772e6">set_rdbms</a>($db) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        $this-&gt;rdbms = $db;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a2417b9c02822f1c435f66fd81ea871d4">   58</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a2417b9c02822f1c435f66fd81ea871d4">get_total_rows_ADODB</a>() {</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#aacf38a5d68b5daf336a87aaf5651e544">   55</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aacf38a5d68b5daf336a87aaf5651e544">get_rdbms</a>() {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a133c2d33680dd620e976e80bc7a90909">$this-&gt;rdbms</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a70b6065c050431944a5641a88b3fe457">   62</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a70b6065c050431944a5641a88b3fe457">get_total_rows</a>() {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#aaaa40376d942e76782a3a1220a3783f2">   65</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aaaa40376d942e76782a3a1220a3783f2">fetch_page_data_ADODB</a>() {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#af885e2145838bae01a5ec355ae9f57d9">   72</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#af885e2145838bae01a5ec355ae9f57d9">fetch_page_data_POSTGRES</a>() {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">switch</span>($this-&gt;rdbms) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">case</span> <span class="stringliteral">&quot;ADODB&quot;</span>:</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">default</span>:    </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a02ed6afc12839403c18ce39dd3f4ca10">   74</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a02ed6afc12839403c18ce39dd3f4ca10">fetch_page_data</a>() {</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#a54de7ccea4859f310c001a501c43aa6d">   79</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#a54de7ccea4859f310c001a501c43aa6d">fetch_page_data_MYSQL</a>() {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">switch</span>($this-&gt;rdbms) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">case</span> <span class="stringliteral">&quot;ADODB&quot;</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">default</span>:    </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="../../de/d43/classjui__datagrid.html#aaa8e4e50e69cad8d4de33d35bc04b558">   86</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="../../de/d43/classjui__datagrid.html#aaa8e4e50e69cad8d4de33d35bc04b558">fetch_page_data_MYSQLi</a>() {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 20 2012 10:34:56 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 20 2012 13:17:16 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

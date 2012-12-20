@@ -91,8 +91,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a88f88aa4f3754f86624943f0079b7136"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a88f88aa4f3754f86624943f0079b7136">__construct</a> ($dbcon, $use_ps, $db_type)</td></tr>
-<tr class="separator:a88f88aa4f3754f86624943f0079b7136"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a221907d2867942cf5007c4f2eef83a57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a221907d2867942cf5007c4f2eef83a57">__construct</a> ($dbcon, $use_ps, $db_type, $page_num, $rows_per_page, $sorting, $filter_rules)</td></tr>
+<tr class="separator:a221907d2867942cf5007c4f2eef83a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77f94d8bde9ab397e44e143d46eb508e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a77f94d8bde9ab397e44e143d46eb508e">set_conn</a> ($dbcon)</td></tr>
 <tr class="separator:a77f94d8bde9ab397e44e143d46eb508e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44068bd49063ef1bc0ad423a944657b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a44068bd49063ef1bc0ad423a944657b2">get_conn</a> ()</td></tr>
@@ -105,16 +105,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afad137703e91160d410f922563b772e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacf38a5d68b5daf336a87aaf5651e544"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#aacf38a5d68b5daf336a87aaf5651e544">get_rdbms</a> ()</td></tr>
 <tr class="separator:aacf38a5d68b5daf336a87aaf5651e544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2417b9c02822f1c435f66fd81ea871d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a2417b9c02822f1c435f66fd81ea871d4">get_total_rows_ADODB</a> ()</td></tr>
-<tr class="separator:a2417b9c02822f1c435f66fd81ea871d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaa40376d942e76782a3a1220a3783f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#aaaa40376d942e76782a3a1220a3783f2">fetch_page_data_ADODB</a> ()</td></tr>
-<tr class="separator:aaaa40376d942e76782a3a1220a3783f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af885e2145838bae01a5ec355ae9f57d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#af885e2145838bae01a5ec355ae9f57d9">fetch_page_data_POSTGRES</a> ()</td></tr>
-<tr class="separator:af885e2145838bae01a5ec355ae9f57d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54de7ccea4859f310c001a501c43aa6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a54de7ccea4859f310c001a501c43aa6d">fetch_page_data_MYSQL</a> ()</td></tr>
-<tr class="separator:a54de7ccea4859f310c001a501c43aa6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa8e4e50e69cad8d4de33d35bc04b558"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#aaa8e4e50e69cad8d4de33d35bc04b558">fetch_page_data_MYSQLi</a> ()</td></tr>
-<tr class="separator:aaa8e4e50e69cad8d4de33d35bc04b558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b6065c050431944a5641a88b3fe457"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a70b6065c050431944a5641a88b3fe457">get_total_rows</a> ()</td></tr>
+<tr class="separator:a70b6065c050431944a5641a88b3fe457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ed6afc12839403c18ce39dd3f4ca10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a02ed6afc12839403c18ce39dd3f4ca10">fetch_page_data</a> ()</td></tr>
+<tr class="separator:a02ed6afc12839403c18ce39dd3f4ca10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -130,7 +124,7 @@ Data Fields</h2></td></tr>
 
 <p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00005">5</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a88f88aa4f3754f86624943f0079b7136"></a>
+<a class="anchor" id="a221907d2867942cf5007c4f2eef83a57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -150,7 +144,31 @@ Data Fields</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$db_type</em>&#160;</td>
+          <td class="paramname"><em>$db_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$page_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$rows_per_page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$sorting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$filter_rules</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -173,74 +191,21 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aaaa40376d942e76782a3a1220a3783f2"></a>
+<a class="anchor" id="a02ed6afc12839403c18ce39dd3f4ca10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">fetch_page_data_ADODB </td>
+          <td class="memname">fetch_page_data </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000002">Todo:</a></b></dt><dd>fetch page data using other rdbms </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00065">65</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a54de7ccea4859f310c001a501c43aa6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">fetch_page_data_MYSQL </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000002">Todo:</a></b></dt><dd>fetch page data using MySQL </dd></dl>
-
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00079">79</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aaa8e4e50e69cad8d4de33d35bc04b558"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">fetch_page_data_MYSQLi </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000003">Todo:</a></b></dt><dd>fetch page data using MySQLi </dd></dl>
-
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00086">86</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af885e2145838bae01a5ec355ae9f57d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">fetch_page_data_POSTGRES </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Todo:</a></b></dt><dd>fetch page data using PostgreSQL </dd></dl>
-
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00072">72</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00074">74</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -257,7 +222,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00035">35</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00039">39</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -274,24 +239,25 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00051">51</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00055">55</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2417b9c02822f1c435f66fd81ea871d4"></a>
+<a class="anchor" id="a70b6065c050431944a5641a88b3fe457"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">get_total_rows_ADODB </td>
+          <td class="memname">get_total_rows </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Todo:</a></b></dt><dd>get total rows using other rdbms </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00058">58</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00062">62</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -308,7 +274,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00043">43</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00047">47</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -326,7 +292,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00031">31</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00035">35</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -344,7 +310,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00047">47</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00051">51</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -362,7 +328,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00039">39</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00043">43</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -415,7 +381,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 20 2012 10:34:56 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 20 2012 13:17:16 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
