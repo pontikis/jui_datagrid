@@ -1,20 +1,4 @@
 <?php
-/*! \mainpage Welcome
- *
- * \section intro_sec Introduction
- *
- * jui_filter_rules, helper class for <a href="../../../../docs/">jquery.jui_filter_rules plugin</a>, handles AJAX requests.
- *
- * \section install_sec Usage
- *
- * \subsection step1 Parse rules to SQL
- * To create WHERE SQL from <var>$rules</var> returned from <code>jquery.jui_filter_rules</code>, using an AJAX call
- * \code{.php}
- * $jfr = new jui_filter_rules($conn, $usePreparedStatements, $rdbms);
- * $result = $jfr->parse_rules($rules);
- * \endcode
- */
-
 /**
  * jui_filter_rules, helper class for jquery.jui_filter_rules plugin, handles AJAX requests.
  **/
