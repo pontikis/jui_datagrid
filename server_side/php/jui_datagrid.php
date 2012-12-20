@@ -1,19 +1,4 @@
 <?php
-/*! \mainpage Welcome
- *
- * \section intro_sec Introduction
- *
- * jui_datagrid, helper class for <a href="../../../../docs/">jquery.jui_datagrid plugin</a>, handles AJAX requests.
- *
- * \section install_sec Usage
- *
- * \subsection step1 Fetch page data from server
- * \code{.php}
- * $jdg = new jui_datagrid($conn, $usePreparedStatements, $rdbms);
- * $result = $jdg->fetch_page_data_ADODB();
- * \endcode
- */
-
 /**
  * jui_datagrid, helper class for jquery.jui_datagrid plugin, handles AJAX requests.
  **/
