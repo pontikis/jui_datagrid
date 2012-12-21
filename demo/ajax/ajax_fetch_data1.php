@@ -4,7 +4,7 @@
  *
  */
 
-// prevent direct access -------------------------------------------------------
+// prevent direct access (optional) --------------------------------------------
 $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
 	strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 if(!$isAjax) {
@@ -12,22 +12,19 @@ if(!$isAjax) {
 	exit;
 }
 
-// initialize ------------------------------------------------------------------
+// required --------------------------------------------------------------------
 require_once '../mysql/settings.php';
 require_once '../lib/adodb_5.18a/adodb.inc.php';
 require_once '../../lib/jui_filter_rules_v1.00/server_side/php/jui_filter_rules.php';
 require_once '../../server_side/php/jui_datagrid.php';
 
-$result = array();
-
-// configuration
-define('USE_PREPARED_STATEMETS', true);
-define('RDBMS', "ADODB");
-
-// connect to database (php ADODB abstraction layer) ---------------------------
-$dsn = $mysql_driver . '://' . $mysql_user . ':' . rawurlencode($mysql_passwd) . '@' . $mysql_server . '/' . $mysql_db . '?fetchmode=' . ADODB_FETCH_ASSOC;
-$conn = NewADOConnection($dsn);
-$conn->execute('SET NAMES UTF8');
+// initialize ------------------------------------------------------------------
+$result = array(
+	'row_primary_key' => null,
+	'total_rows' => null,
+	'page_data' => null,
+	'error' => null,
+);
 
 // get params ------------------------------------------------------------------
 $page_num = $_POST['page_num'];
@@ -43,82 +40,36 @@ if(isset($_POST['sorting'])) {
 	$sorting = $_POST['sorting'];
 }
 
-// WHERE SQL -------------------------------------------------------------------
-if(count($filter_rules) == 0) {
-	$whereSQL = '';
-	$a_bind_params = array();
+// -----------------------------------------------------------------------------
+$jdg = new jui_datagrid();
+$conn = $jdg->db_connect($dbcon_settings);
+if($conn === false) {
+	$error = 'Cannot connect to database';
 } else {
-	$jfr = new jui_filter_rules($conn, USE_PREPARED_STATEMETS, RDBMS);
-	$result = $jfr->parse_rules($filter_rules);
-	$whereSQL = $result['sql'];
-	$a_bind_params = $result['bind_params'];
-}
+	$where = $jdg->get_whereSQL($conn, $filter_rules);
+	$whereSQL = $where['sql'];
+	$bind_params = $where['bind_params'];
 
-// ORDER BY SQL ----------------------------------------------------------------
-$sortingSQL = '';
-foreach($sorting as $sort) {
-	if($sort['order'] == 'ascending') {
-		$sortingSQL .= $sort['field'] . ' ASC, ';
-	} else if($sort['order'] == 'descending') {
-		$sortingSQL .= ' ' . $sort['field'] . ' DESC, ';
-	}
-}
-$len = mb_strlen($sortingSQL);
-if($len > 0) {
-	$sortingSQL = ' ORDER BY ' . substr($sortingSQL, 0, $len - 2) . ' ';
-}
+	$selectCountSQL = 'SELECT count(id) as totalrows FROM customers';
+	$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
 
-// get total_rows --------------------------------------------------------------
-$sql = 'SELECT count(id) as totalrows FROM customers' . ' ' . $whereSQL;
-if(USE_PREPARED_STATEMETS) {
-	$stmt = $conn->Execute($sql, $a_bind_params);
-	if($stmt === false) {
-		trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg(), E_USER_ERROR);
+	if($total_rows === false) {
+		$error = $jdg->get_jui_datagrid_error();
 	} else {
-		$rs = $stmt->GetRows();
-		$total_rows = $rs[0]['totalrows'];
+		$selectSQL = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
+			'FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)';
+		$a_data = $jdg->fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);
+		if($a_data === false) {
+			$error = $jdg->get_jui_datagrid_error();
+		}
 	}
-} else {
-	$rs = $conn->GetRow($sql);
-	if($rs === false) {
-		die('Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg());
-	} else {
-		$total_rows = $rs['totalrows'];
-	}
-}
-
-// get page data ---------------------------------------------------------------
-$offset = ($page_num - 1) * $rows_per_page;
-$sql = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
-	'FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)' . ' ' .
-	$whereSQL . ' ' .
-	$sortingSQL;
-if(USE_PREPARED_STATEMETS) { // SelectLimit cannot be used with PREPARED STATEMENTS in ADODB
-	$sql .= ' LIMIT ' . $offset . ',' . $rows_per_page;
-	$smtp = $conn->Execute($sql, $a_bind_params);
-	if($smtp === false) {
-		die('Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg());
-	} else {
-		$a_data = $smtp->GetRows();
-	}
-} else {
-	$rs = $conn->SelectLimit($sql, $rows_per_page, $offset);
-	if($rs === false) {
-		die('Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg());
-	} else {
-		$a_data = $rs->GetRows();
-	}
-}
-
-// disconnect Database ---------------------------------------------------------
-if(isset($conn)) {
-	$conn->Close();
 }
 
 // return JSON -----------------------------------------------------------------
 $result['row_primary_key'] = 'customer_id';
 $result['total_rows'] = $total_rows;
 $result['page_data'] = $a_data;
+$result['error'] = $error;
 $json = json_encode($result);
 print $json;
 ?>

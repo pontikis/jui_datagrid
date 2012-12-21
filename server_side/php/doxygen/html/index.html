@@ -37,7 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -80,17 +79,77 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
 Introduction</h1>
-<p><a class="el" href="de/d43/classjui__datagrid.html">jui_datagrid</a>, helper class for <a href="../../../../docs/">jquery.jui_datagrid plugin</a>, handles AJAX requests.</p>
-<h1><a class="anchor" id="install_sec"></a>
+<p><a class="el" href="de/d43/classjui__datagrid.html">jui_datagrid</a>, helper class for <a href="../../../../docs/">jquery.jui_datagrid plugin</a>, handles server operations (mainly through AJAX requests).</p>
+<p>RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES"<br/>
+ Currently only "ADODB" and "POSTGRES" are implemented.<br/>
+ ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres</p>
+<h1><a class="anchor" id="conf_sec"></a>
+Database settings</h1>
+<div class="fragment"><div class="line">&lt;?php</div>
+<div class="line">$dbcon_settings = array(</div>
+<div class="line">    <span class="stringliteral">&#39;rdbms&#39;</span> =&gt; <span class="stringliteral">&#39;ADODB&#39;</span>, <span class="comment">// one of &quot;ADODB&quot;, &quot;MYSQL&quot;, &quot;MYSQLi&quot;, &quot;MYSQL_PDO&quot;, &quot;POSTGRES&quot; (at this time only &quot;ADODB&quot; and &quot;POSTGRES&quot; are implemented)</span></div>
+<div class="line">    <span class="stringliteral">&#39;use_prepared_statements&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;php_adodb_driver&#39;</span> =&gt; <span class="stringliteral">&#39;pdo_mysql&#39;</span>, <span class="comment">// ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres</span></div>
+<div class="line">    <span class="stringliteral">&#39;php_adodb_dsn_options_persist&#39;</span> =&gt; <span class="charliteral">&#39;0&#39;</span>, <span class="comment">// do not change if you are not sure</span></div>
+<div class="line">    <span class="stringliteral">&#39;php_adodb_dsn_options_misc&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>, <span class="comment">// do not set fetchmode here, it is set to ADODB_FETCH_ASSOC</span></div>
+<div class="line">    <span class="stringliteral">&#39;php_adodb_dsn_custom&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;db_server&#39;</span> =&gt; <span class="stringliteral">&#39;MYSQL_SERVERNAME_OR_IP&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;db_name&#39;</span> =&gt; <span class="stringliteral">&#39;DBNAME&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;db_user&#39;</span> =&gt; <span class="stringliteral">&#39;MYSQL_USER&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;db_passwd&#39;</span> =&gt; <span class="stringliteral">&#39;MYSQL_PASSWORD&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;db_port&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;query_after_connection&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span> <span class="comment">// e.g. &#39;SET NAMES UTF8&#39;</span></div>
+<div class="line">);</div>
+<div class="line">?&gt;</div>
+</div><!-- fragment --><h1><a class="anchor" id="usage_sec"></a>
 Usage</h1>
-<h2><a class="anchor" id="step1"></a>
+<h2><a class="anchor" id="usage1"></a>
 Fetch page data from server</h2>
-<div class="fragment"><div class="line">$jdg = <span class="keyword">new</span> <a class="code" href="de/d43/classjui__datagrid.html">jui_datagrid</a>($conn, $usePreparedStatements, $rdbms);</div>
-<div class="line">$result = $jdg-&gt;fetch_page_data();</div>
+<div class="fragment"><div class="line">$jdg = <span class="keyword">new</span> <a class="code" href="de/d43/classjui__datagrid.html">jui_datagrid</a>();</div>
+<div class="line">$conn = $jdg-&gt;db_connect($dbcon_settings);</div>
+<div class="line"><span class="keywordflow">if</span>($conn === <span class="keyword">false</span>) {</div>
+<div class="line">    $error = <span class="stringliteral">&#39;Cannot connect to database&#39;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    $where = $jdg-&gt;get_whereSQL($conn, $filter_rules);</div>
+<div class="line">    $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
+<div class="line">    $bind_params = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
+<div class="line"></div>
+<div class="line">    $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
+<div class="line">    $total_rows = $jdg-&gt;get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span>($total_rows === <span class="keyword">false</span>) {</div>
+<div class="line">        $error = $jdg-&gt;get_jui_datagrid_error();</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">        $selectSQL = <span class="stringliteral">&#39;SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender &#39;</span> .</div>
+<div class="line">            <span class="stringliteral">&#39;FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)&#39;</span>;</div>
+<div class="line">        $a_data = $jdg-&gt;fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);</div>
+<div class="line">        <span class="keywordflow">if</span>($a_data === <span class="keyword">false</span>) {</div>
+<div class="line">            $error = $jdg-&gt;get_jui_datagrid_error();</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="usage2"></a>
+Count total rows</h2>
+<div class="fragment"><div class="line">$jdg = <span class="keyword">new</span> <a class="code" href="de/d43/classjui__datagrid.html">jui_datagrid</a>();</div>
+<div class="line">$conn = $jdg-&gt;db_connect($dbcon_settings);</div>
+<div class="line"><span class="keywordflow">if</span>($conn === <span class="keyword">false</span>) {</div>
+<div class="line">    $error = <span class="stringliteral">&#39;Cannot connect to database&#39;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    $where = $jdg-&gt;get_whereSQL($conn, $filter_rules);</div>
+<div class="line">    $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
+<div class="line">    $bind_params = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
+<div class="line"></div>
+<div class="line">    $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
+<div class="line">    $total_rows = $jdg-&gt;get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span>($total_rows === <span class="keyword">false</span>) {</div>
+<div class="line">        $error = $jdg-&gt;get_jui_datagrid_error();</div>
+<div class="line">    }</div>
+<div class="line">}</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 20 2012 13:17:16 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Dec 21 2012 22:13:42 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
