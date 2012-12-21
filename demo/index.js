@@ -176,7 +176,7 @@ $(function() {
         }
     });
 
-/*    $("#demo_grid2").jui_datagrid({
+    $("#demo_grid2").jui_datagrid({
 
         columns: [
             {field: "id", visible: "no", "header": 'Code', "headerClass": "", "dataClass": ""},
@@ -199,7 +199,7 @@ $(function() {
         paginationOptions: {
             sliderAnimation: false
         }
-    });*/
+    });
 
 
     elem_dlg_demo_grid2_opener.button({
