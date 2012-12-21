@@ -154,6 +154,11 @@
                     },
                     success: function(data) {
                         var a_data = $.parseJSON(data);
+                        var error = a_data['error'];
+                        if(error != null) {
+                            elem.html(error);
+                            return;
+                        }
                         var row_primary_key = a_data['row_primary_key'];
                         var total_rows = a_data['total_rows'];
                         var page_data = a_data['page_data'];
