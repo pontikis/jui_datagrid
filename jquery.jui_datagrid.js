@@ -102,7 +102,7 @@
                     filters_dialog_id = create_id(settings.filters_dialog_id_prefix, container_id),
                     filter_rules_id = create_id(settings.filter_rules_id_prefix, container_id),
 
-                    elem_html;
+                    elem_html,err_msg;
 
                 if(!elem.data(pluginStatus)['initialize']) {
 
@@ -156,8 +156,11 @@
                         var a_data = $.parseJSON(data);
                         var error = a_data['error'];
                         if(error != null) {
-                            elem.html(error);
-                            return;
+
+                            err_msg = 'ERROR: ' + error;
+                            elem.html('<span style="color: red;">' + err_msg + '</span>');
+                            $.error(err_msg);
+
                         }
                         var row_primary_key = a_data['row_primary_key'];
                         var total_rows = a_data['total_rows'];
