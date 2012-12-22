@@ -4,6 +4,8 @@
 
 jui_datagrid, helper class for <a href="../../../../docs/">jquery.jui_datagrid plugin</a>, handles server operations (mainly through AJAX requests).
 
+Required: php 5+
+
 RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES"\n
 Currently only "ADODB" and "POSTGRES" are implemented.\n
 ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres

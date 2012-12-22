@@ -81,6 +81,7 @@ $(function() {
         dlgFiltersClass: 'grid1_filters',
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data1.php',
+        row_primary_key: 'customer_id',
 
         containerClass: 'grid1_container ui-state-default ui-corner-all',
         datagridClass: 'grid1_data ui-widget-content',
@@ -106,10 +107,12 @@ $(function() {
             log = 'Row with ID ' + data.row_id + ' ' + data.row_status + '.';
             create_log(elem_dlg_log1, log);
         },
-        onFilterValidationError: function(event, data) {
-            log = 'FILTER VALIDARION ERROR: ' + data.err_description + ' (' + data.err_code + ').';
+        onDatagridError: function(event, data) {
+            log = 'ERROR: ' + data.err_description + ' (' + data.err_code + ').';
             create_log(elem_dlg_log1, log, true);
-            data.elem_filter.focus();
+            if(data.hasOwnProperty("elem_filter")) {
+                data.elem_filter.focus();
+            }
         },
         onDisplay: function() {
             log = 'Datagrid created.';
@@ -192,6 +195,7 @@ $(function() {
         ],
 
         ajaxFetchDataURL: 'ajax/ajax_fetch_data2.php',
+        row_primary_key: 'id',
 
         containerClass: 'grid2_container ui-state-default ui-corner-all',
         datagridClass: 'grid2_data ui-widget-content',

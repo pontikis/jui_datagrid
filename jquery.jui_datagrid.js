@@ -89,7 +89,7 @@
                 elem.unbind("onRowClick").bind("onRowClick", settings.onRowClick);
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
-                elem.unbind("onFilterValidationError").bind("onFilterValidationError", settings.onFilterValidationError);
+                elem.unbind("onDatagridError").bind("onDatagridError", settings.onDatagridError);
 
                 // initialize plugin html
                 var caption_id = create_id(settings.caption_id_prefix, container_id),
@@ -102,7 +102,7 @@
                     filters_dialog_id = create_id(settings.filters_dialog_id_prefix, container_id),
                     filter_rules_id = create_id(settings.filter_rules_id_prefix, container_id),
 
-                    elem_html,err_msg;
+                    elem_html, err_msg;
 
                 if(!elem.data(pluginStatus)['initialize']) {
 
@@ -153,18 +153,19 @@
                         filter_rules: elem.data(pluginStatus)['filter_rules']
                     },
                     success: function(data) {
-                        var a_data = $.parseJSON(data);
-                        var error = a_data['error'];
-                        if(error != null) {
-
-                            err_msg = 'ERROR: ' + error;
+                        var a_data, server_error, row_primary_key, total_rows, page_data;
+                        a_data = $.parseJSON(data);
+                        server_error = a_data['error'];
+                        if(server_error != null) {
+                            err_msg = 'ERROR: ' + server_error;
                             elem.html('<span style="color: red;">' + err_msg + '</span>');
+                            elem.triggerHandler("onDatagridError", {err_code: "server_error", err_description: server_error});
                             $.error(err_msg);
 
                         }
-                        var row_primary_key = a_data['row_primary_key'];
-                        var total_rows = a_data['total_rows'];
-                        var page_data = a_data['page_data'];
+                        total_rows = a_data['total_rows'];
+                        page_data = a_data['page_data'];
+                        row_primary_key = settings.row_primary_key;
 
                         if(total_rows == 0) {
                             elem_pagination.hide();
@@ -599,6 +600,7 @@
                 rowsPerPage: 10,
                 maxRowsPerPage: 100,
 
+                row_primary_key: '',
                 rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
                 autoSetColumnsWidth: true,
@@ -732,7 +734,7 @@
                 },
                 onDelete: function() {
                 },
-                onFilterValidationError: function() {
+                onDatagridError: function() {
                 },
                 onDisplay: function() {
                 }
@@ -1330,7 +1332,7 @@
         var elem = $("#" + plugin_container_id),
             filter_rules_id = create_id(elem.jui_datagrid('getOption', 'filter_rules_id_prefix'), plugin_container_id),
             elem_filter_rules = $("#" + filter_rules_id),
-            given_filter_options, internal_defined, internal_defined_len, i,internal_filter_options,
+            given_filter_options, internal_defined, internal_defined_len, i, internal_filter_options,
             filter_options, default_options, default_filter_options;
 
         // fixed FILTER options
@@ -1359,7 +1361,7 @@
 
         internal_filter_options = {
             onValidationError: function(event, data) {
-                elem.triggerHandler("onFilterValidationError", data);
+                elem.triggerHandler("onDatagridError", data);
             }
         };
 

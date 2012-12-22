@@ -20,7 +20,6 @@ require_once '../../server_side/php/jui_datagrid.php';
 
 // initialize ------------------------------------------------------------------
 $result = array(
-	'row_primary_key' => null,
 	'total_rows' => null,
 	'page_data' => null,
 	'error' => null,
@@ -44,7 +43,7 @@ if(isset($_POST['sorting'])) {
 $jdg = new jui_datagrid();
 $conn = $jdg->db_connect($dbcon_settings);
 if($conn === false) {
-	$error = 'Cannot connect to database';
+	$last_error = 'Cannot connect to database';
 } else {
 	$where = $jdg->get_whereSQL($conn, $filter_rules);
 	$whereSQL = $where['sql'];
@@ -53,13 +52,19 @@ if($conn === false) {
 	$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
 
 	if($total_rows === false) {
-		$error = $jdg->get_jui_datagrid_error();
+		$last_error = $jdg->get_last_error();
 	} else {
 		$a_data = $jdg->fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);
 		if($a_data === false) {
-			$error = $jdg->get_jui_datagrid_error();
+			$last_error = $jdg->get_last_error();
 		}
 	}
 }
-?>
 
+// return JSON -----------------------------------------------------------------
+$result['total_rows'] = $total_rows;
+$result['page_data'] = $a_data;
+$result['error'] = $last_error;
+$json = json_encode($result);
+print $json;
+?>
