@@ -4,16 +4,10 @@
  **/
 class jui_datagrid {
 
-	/** @var array database connection settings */
+	/** @var array Database connection settings */
 	private $db_settings;
-	/** @var bool use prepared statements or not */
-
-	private $jui_datagrid_error;
-
-	var $page_num;
-	var $rows_per_page;
-	var $sorting;
-	var $filter_rules;
+	/** @var string Last error occured */
+	private $last_error;
 
 	/**
 	 * Constructor
@@ -21,13 +15,12 @@ class jui_datagrid {
 	public function __construct() {
 		// initialize
 		$this->db_settings = null;
-		$this->jui_datagrid_error = null;
+		$this->last_error = null;
 	}
 
-	public function get_jui_datagrid_error() {
-		return $this->jui_datagrid_error;
+	public function get_last_error() {
+		return $this->last_error;
 	}
-
 
 	/**
 	 * Create database connection (at this time only "ADODB" and "POSTGRES" are implemented)
@@ -122,7 +115,7 @@ class jui_datagrid {
 			if($use_prepared_statements) {
 				$stmt = $conn->Execute($sql, $a_bind_params);
 				if($stmt === false) {
-					$this->jui_datagrid_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
 					$total_rows = false;
 				} else {
 					$rs = $stmt->GetRows();
@@ -131,7 +124,7 @@ class jui_datagrid {
 			} else {
 				$rs = $conn->GetRow($sql);
 				if($rs === false) {
-					$this->jui_datagrid_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
 					$total_rows = false;
 				} else {
 					$total_rows = $rs['totalrows'];
@@ -185,7 +178,7 @@ class jui_datagrid {
 				$sql .= ' LIMIT ' . $offset . ',' . $rows_per_page;
 				$smtp = $conn->Execute($sql, $a_bind_params);
 				if($smtp === false) {
-					$this->jui_datagrid_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
 					$a_data = false;
 				} else {
 					$a_data = $smtp->GetRows();
@@ -193,7 +186,7 @@ class jui_datagrid {
 			} else {
 				$rs = $conn->SelectLimit($sql, $rows_per_page, $offset);
 				if($rs === false) {
-					$this->jui_datagrid_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
 					$a_data = false;
 				} else {
 					$a_data = $rs->GetRows();
@@ -217,8 +210,6 @@ class jui_datagrid {
 			pg_close($conn);
 		}
 	}
-
-
 
 
 }
