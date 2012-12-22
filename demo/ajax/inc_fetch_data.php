@@ -59,6 +59,8 @@ if($conn === false) {
 			$last_error = $jdg->get_last_error();
 		}
 	}
+
+	$jdg->db_disconnect($conn);
 }
 
 // return JSON -----------------------------------------------------------------

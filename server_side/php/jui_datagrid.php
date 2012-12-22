@@ -83,6 +83,11 @@ class jui_datagrid {
 
 	}
 
+	/**
+	 * @param $conn
+	 * @param $filter_rules
+	 * @return array
+	 */
 	public function get_whereSQL($conn, $filter_rules) {
 
 		$rdbms = $this->db_settings['rdbms'];
@@ -203,13 +208,15 @@ class jui_datagrid {
 
 	}
 
-	public function db_disconnect($conn, $db_type) {
-		if($db_type == "ADODB") {
+	/**
+	 * @param $conn
+	 */
+	public function db_disconnect($conn) {
+		$rdbms = $this->db_settings['rdbms'];
+		if($rdbms == "ADODB") {
 			$conn->Close();
-		} elseif (($db_type == "POSTGRES")) {
+		} elseif(($rdbms == "POSTGRES")) {
 			pg_close($conn);
 		}
 	}
-
-
 }
