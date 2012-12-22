@@ -4,20 +4,6 @@
  *
  */
 
-// prevent direct access (optional) --------------------------------------------
-$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
-	strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-if(!$isAjax) {
-	print 'Access denied - not an AJAX request...' . ' (' . __FILE__ . ')';
-	exit;
-}
-
-// required --------------------------------------------------------------------
-require_once '../mysql/settings.php';
-require_once '../lib/adodb_5.18a/adodb.inc.php';
-require_once '../../lib/jui_filter_rules_v1.00/server_side/php/jui_filter_rules.php';
-require_once '../../server_side/php/jui_datagrid.php';
-
 // initialize ------------------------------------------------------------------
 $total_rows = null;
 $a_data = null;
@@ -44,7 +30,7 @@ if(isset($_POST['sorting'])) {
 
 // -----------------------------------------------------------------------------
 $jdg = new jui_datagrid();
-$conn = $jdg->db_connect($dbcon_settings);
+$conn = $jdg->db_connect($db_settings);
 if($conn === false) {
 	$last_error = $jdg->get_last_error();
 } else {
