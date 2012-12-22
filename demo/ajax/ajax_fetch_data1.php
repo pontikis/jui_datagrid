@@ -5,4 +5,3 @@ $selectSQL = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.ge
 
 include('inc_fetch_data.php');
 ?>
-
