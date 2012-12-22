@@ -84,6 +84,8 @@ class jui_datagrid {
 	}
 
 	/**
+	 * Gets whereSQL and bind_params array using jui_filter_rules class
+	 *
 	 * @param $conn
 	 * @param $filter_rules
 	 * @return array
@@ -104,13 +106,16 @@ class jui_datagrid {
 
 
 	/**
+	 * Gets total rows count
+	 *
 	 * @param object $conn
 	 * @param string $selectCountSQL
 	 * @param string $whereSQL
 	 * @param array $a_bind_params
-	 * @return int|bool
+	 * @return int|bool Total roes or false
 	 */
 	public function get_total_rows($conn, $selectCountSQL, $whereSQL, $a_bind_params) {
+		$total_rows = 0;
 
 		$rdbms = $this->db_settings['rdbms'];
 		$use_prepared_statements = $this->db_settings['use_prepared_statements'];
@@ -146,30 +151,23 @@ class jui_datagrid {
 
 
 	/**
-	 * @param $conn
-	 * @param $page_num
-	 * @param $rows_per_page
-	 * @param $selectSQL
-	 * @param $sorting
-	 * @param $whereSQL
-	 * @param $a_bind_params
-	 * @return bool
+	 * Fetch page data
+	 *
+	 * @param object $conn
+	 * @param int $page_num
+	 * @param int $rows_per_page
+	 * @param string $selectSQL
+	 * @param array $sorting
+	 * @param string $whereSQL
+	 * @param array $a_bind_params
+	 * @return array|bool Page data or false
 	 */
 	public function fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $a_bind_params) {
 
+		$a_data = array();
+
 		// calculate sortingSQL
-		$sortingSQL = '';
-		foreach($sorting as $sort) {
-			if($sort['order'] == 'ascending') {
-				$sortingSQL .= $sort['field'] . ' ASC, ';
-			} else if($sort['order'] == 'descending') {
-				$sortingSQL .= ' ' . $sort['field'] . ' DESC, ';
-			}
-		}
-		$len = mb_strlen($sortingSQL);
-		if($len > 0) {
-			$sortingSQL = ' ORDER BY ' . substr($sortingSQL, 0, $len - 2) . ' ';
-		}
+		$sortingSQL = $this->get_sortingSQL($sorting);
 
 		$sql = $selectSQL . ' ' . $whereSQL . ' ' . $sortingSQL;
 
@@ -209,6 +207,32 @@ class jui_datagrid {
 	}
 
 	/**
+	 * Get sorting SQL (ORDER BY clause)
+	 *
+	 * @param array $sorting
+	 * @return string
+	 */
+	private function get_sortingSQL($sorting) {
+		$sortingSQL = '';
+		foreach($sorting as $sort) {
+			if($sort['order'] == 'ascending') {
+				$sortingSQL .= $sort['field'] . ' ASC, ';
+			} else if($sort['order'] == 'descending') {
+				$sortingSQL .= ' ' . $sort['field'] . ' DESC, ';
+			}
+		}
+		$len = mb_strlen($sortingSQL);
+		if($len > 0) {
+			$sortingSQL = ' ORDER BY ' . substr($sortingSQL, 0, $len - 2) . ' ';
+		}
+
+		return $sortingSQL;
+	}
+
+
+	/**
+	 * Disconnect database
+	 *
 	 * @param $conn
 	 */
 	public function db_disconnect($conn) {
