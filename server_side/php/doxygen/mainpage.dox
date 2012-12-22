@@ -2,13 +2,18 @@
 
 \section intro_sec Introduction
 
-jui_datagrid, helper class for <a href="../../../../docs/">jquery.jui_datagrid plugin</a>, handles server operations (mainly through AJAX requests).
+jui_datagrid is a helper class for <a href="../../../../docs/">jquery.jui_datagrid</a> plugin, handles server operations (mainly through AJAX requests).
+
+<strong>NOTE</strong>: It is just a helper class. Anyone could write custom php code to return JSON results to jquery.jui_datagrid plugin.
 
 Required: php 5+
 
-RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES"\n
-Currently only "ADODB" and "POSTGRES" are implemented.\n
-ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres
+<strong>Limitations</strong>:
+
+GROUP BY and HAVING are not supported (at this time), neither from jui_datagrid class nor from jquery.jui_datagrid plugin.
+
+Supported RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES".\n
+Currently only "ADODB" and "POSTGRES" are implemented. ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
 
 \section conf_sec Database settings
 \code{.php}
@@ -37,7 +42,7 @@ $dbcon_settings = array(
 $jdg = new jui_datagrid();
 $conn = $jdg->db_connect($dbcon_settings);
 if($conn === false) {
-	$error = 'Cannot connect to database';
+	$last_error = 'Cannot connect to database';
 } else {
 	$where = $jdg->get_whereSQL($conn, $filter_rules);
 	$whereSQL = $where['sql'];
@@ -47,13 +52,13 @@ if($conn === false) {
 	$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
 
 	if($total_rows === false) {
-		$error = $jdg->get_last_error();
+		$last_error = $jdg->get_last_error();
 	} else {
 		$selectSQL = 'SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender ' .
 			'FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)';
 		$a_data = $jdg->fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);
 		if($a_data === false) {
-			$error = $jdg->get_last_error();
+			$last_error = $jdg->get_last_error();
 		}
 	}
 }
@@ -65,7 +70,7 @@ if($conn === false) {
 $jdg = new jui_datagrid();
 $conn = $jdg->db_connect($dbcon_settings);
 if($conn === false) {
-	$error = 'Cannot connect to database';
+	$last_error = 'Cannot connect to database';
 } else {
 	$where = $jdg->get_whereSQL($conn, $filter_rules);
 	$whereSQL = $where['sql'];
@@ -75,7 +80,7 @@ if($conn === false) {
 	$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
 
 	if($total_rows === false) {
-		$error = $jdg->get_last_error();
+		$last_error = $jdg->get_last_error();
 	}
 }
 \endcode
