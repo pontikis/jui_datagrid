@@ -19,10 +19,13 @@ require_once '../../lib/jui_filter_rules_v1.00/server_side/php/jui_filter_rules.
 require_once '../../server_side/php/jui_datagrid.php';
 
 // initialize ------------------------------------------------------------------
+$total_rows = null;
+$a_data = null;
+$last_error = null;
 $result = array(
-	'total_rows' => null,
-	'page_data' => null,
-	'error' => null,
+	'total_rows' => $total_rows,
+	'page_data' => $a_data,
+	'error' => $last_error
 );
 
 // get params ------------------------------------------------------------------
