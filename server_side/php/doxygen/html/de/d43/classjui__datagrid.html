@@ -82,6 +82,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">jui_datagrid Class Reference</div>  </div>
@@ -104,6 +105,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1c117bb5502772d5de6742725d96122e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f14403579640370781b5f375a30196f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a9f14403579640370781b5f375a30196f">db_disconnect</a> ($conn)</td></tr>
 <tr class="separator:a9f14403579640370781b5f375a30196f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7468e02abd40d7da4f891e7429eeb22e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a7468e02abd40d7da4f891e7429eeb22e">get_sortingSQL</a> ($sorting)</td></tr>
+<tr class="separator:a7468e02abd40d7da4f891e7429eeb22e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -175,6 +181,7 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Disconnect database</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$conn</td><td></td></tr>
@@ -182,7 +189,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00214">214</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00238">238</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -239,21 +246,22 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Fetch page data</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">$conn</td><td></td></tr>
-    <tr><td class="paramname">$page_num</td><td></td></tr>
-    <tr><td class="paramname">$rows_per_page</td><td></td></tr>
-    <tr><td class="paramname">$selectSQL</td><td></td></tr>
-    <tr><td class="paramname">$sorting</td><td></td></tr>
-    <tr><td class="paramname">$whereSQL</td><td></td></tr>
-    <tr><td class="paramname">$a_bind_params</td><td></td></tr>
+    <tr><td class="paramtype">object</td><td class="paramname">$conn</td><td></td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$page_num</td><td></td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$rows_per_page</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$selectSQL</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$sorting</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$whereSQL</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$a_bind_params</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>array|bool Page data or false </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00158">158</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00165">165</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -271,6 +279,40 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00021">21</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7468e02abd40d7da4f891e7429eeb22e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">get_sortingSQL </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$sorting</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get sorting SQL (ORDER BY clause)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$sorting</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00215">215</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -309,6 +351,7 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Gets total rows count</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">object</td><td class="paramname">$conn</td><td></td></tr>
@@ -318,9 +361,9 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int|bool </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int|bool Total roes or false </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00113">113</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00117">117</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -347,6 +390,7 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Gets whereSQL and bind_params array using jui_filter_rules class</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$conn</td><td></td></tr>
@@ -356,7 +400,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00091">91</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00093">93</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -411,7 +455,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 22 2012 15:00:39 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Dec 22 2012 16:40:19 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
