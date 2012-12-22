@@ -88,7 +88,7 @@ class jui_datagrid {
 
 		} else if($db_type == "POSTGRES") {
 			$dsn = 'host=' . $db_settings['db_server'] . 'port=' . $db_settings['db_port'] . 'dbname=' . $db_settings['db_name'] .
-				'user=' . $db_settings['db_user'] . 'password=' . $db_settings['db_passwd'];
+				'user=' . $db_settings['db_user'] . 'password=' . rawurlencode($db_settings['db_passwd']);
 			$conn = pg_connect($dsn);
 		}
 
