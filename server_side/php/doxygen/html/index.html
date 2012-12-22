@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -111,7 +112,7 @@ Fetch page data from server</h2>
 <div class="fragment"><div class="line">$jdg = <span class="keyword">new</span> <a class="code" href="de/d43/classjui__datagrid.html">jui_datagrid</a>();</div>
 <div class="line">$conn = $jdg-&gt;db_connect($dbcon_settings);</div>
 <div class="line"><span class="keywordflow">if</span>($conn === <span class="keyword">false</span>) {</div>
-<div class="line">    $last_error = <span class="stringliteral">&#39;Cannot connect to database&#39;</span>;</div>
+<div class="line">    $last_error = $jdg-&gt;get_last_error();</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    $where = $jdg-&gt;get_whereSQL($conn, $filter_rules);</div>
 <div class="line">    $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
@@ -138,7 +139,7 @@ Count total rows</h2>
 <div class="fragment"><div class="line">$jdg = <span class="keyword">new</span> <a class="code" href="de/d43/classjui__datagrid.html">jui_datagrid</a>();</div>
 <div class="line">$conn = $jdg-&gt;db_connect($dbcon_settings);</div>
 <div class="line"><span class="keywordflow">if</span>($conn === <span class="keyword">false</span>) {</div>
-<div class="line">    $last_error = <span class="stringliteral">&#39;Cannot connect to database&#39;</span>;</div>
+<div class="line">    $last_error = $jdg-&gt;get_last_error();</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    $where = $jdg-&gt;get_whereSQL($conn, $filter_rules);</div>
 <div class="line">    $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
@@ -156,7 +157,7 @@ Count total rows</h2>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 22 2012 17:12:25 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Dec 22 2012 17:57:12 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

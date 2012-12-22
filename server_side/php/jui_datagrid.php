@@ -23,13 +23,28 @@ class jui_datagrid {
 	}
 
 	/**
-	 * Create database connection (at this time only "ADODB" and "POSTGRES" are implemented)
+	 * Create database connection
+	 *
+	 * Supported RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES"
+	 * Currently only "ADODB" and "POSTGRES" are implemented. ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
+	 * \todo implement misc RDBMS
 	 *
 	 * @param Array $db_settings database settings
 	 * @return object|bool database connection or false
 	 */
 	public function db_connect($db_settings) {
 		$db_type = $db_settings['rdbms'];
+
+		if(!in_array($db_type, array("ADODB", "POSTGRES"))) {
+			$this->last_error = "Database not supported";
+			return false;
+		}
+
+		if($db_type == "ADODB" && !in_array($db_settings['php_adodb_driver'], array("mysql", "mysqlt", "mysqli", "pdo_mysql", "postgres"))) {
+			$this->last_error = "ADODB driver not supported";
+			return false;
+		}
+
 		if($db_type == "ADODB") {
 
 			switch($db_settings['php_adodb_driver']) {
@@ -44,41 +59,44 @@ class jui_datagrid {
 					$conn = NewADOConnection($dsn);
 					break;
 				case 'postgres':
-				case 'firebird': // \todo not tested
+				case 'firebird':
 					$dsn = $db_settings['php_adodb_driver'] . '://' . $db_settings['db_user'] . ':' . rawurlencode($db_settings['db_passwd']) .
 						'@' . $db_settings['db_server'] . '/' . $db_settings['db_name'] .
 						'?persist=' . $db_settings['php_adodb_dsn_options_persist'] . '&fetchmode=' . ADODB_FETCH_ASSOC . $db_settings['php_adodb_dsn_options_misc'];
 					$conn = NewADOConnection($dsn);
 					break;
-				case 'sqlite': // \todo sqlite not tested
-				case 'oci8': // \todo oci8 not tested
+				case 'sqlite':
+				case 'oci8':
 					$conn = NewADOConnection($db_settings['php_adodb_dsn_custom']);
 					break;
-				case 'access': // \todo access not tested
-				case 'db2': // \todo db2 not tested - possible & must be removed for php > 4
+				case 'access':
+				case 'db2':
 					$conn =& ADONewConnection($db_settings['php_adodb_driver']);
 					$conn->Connect($db_settings['php_adodb_dsn_custom']);
 					break;
-				case 'odbc_mssql': // \todo odbc_mssql not tested - (possible '&' must be removed for php > 4)
+				case 'odbc_mssql':
 					$conn =& ADONewConnection($db_settings['php_adodb_driver']);
 					$conn->Connect($db_settings['php_adodb_dsn_custom'], $db_settings['db_user'], $db_settings['db_passwd']);
 					break;
 			}
 
-			if($db_settings['query_after_connection']) {
-				$conn->execute($db_settings['query_after_connection']);
+			if($conn !== false) {
+				if($db_settings['query_after_connection']) {
+					$conn->execute($db_settings['query_after_connection']);
+				}
 			}
 
 		} else if($db_type == "POSTGRES") {
 			$dsn = 'host=' . $db_settings['db_server'] . 'port=' . $db_settings['db_port'] . 'dbname=' . $db_settings['db_name'] .
 				'user=' . $db_settings['db_user'] . 'password=' . $db_settings['db_passwd'];
 			$conn = pg_connect($dsn);
-		} else {
-			// \todo implement misc rdbms connection
+		}
+
+		if($conn === false) {
+			$this->last_error = 'Cannot connect to database';
 		}
 
 		$this->db_settings = $db_settings;
-
 		return $conn;
 
 	}
@@ -237,6 +255,7 @@ class jui_datagrid {
 	 */
 	public function db_disconnect($conn) {
 		$rdbms = $this->db_settings['rdbms'];
+
 		if($rdbms == "ADODB") {
 			$conn->Close();
 		} elseif(($rdbms == "POSTGRES")) {

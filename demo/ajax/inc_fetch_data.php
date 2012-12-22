@@ -46,7 +46,7 @@ if(isset($_POST['sorting'])) {
 $jdg = new jui_datagrid();
 $conn = $jdg->db_connect($dbcon_settings);
 if($conn === false) {
-	$last_error = 'Cannot connect to database';
+	$last_error = $jdg->get_last_error();
 } else {
 	$where = $jdg->get_whereSQL($conn, $filter_rules);
 	$whereSQL = $where['sql'];
