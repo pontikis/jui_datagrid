@@ -4,23 +4,17 @@
  **/
 class jui_filter_rules {
 
-	/**
-	 * @var object database connection
-	 */
+	/** @var object Database connection */
 	var $conn;
-	/**
-	 * @var bool use prepared statements or not
-	 */
+	/** @var bool Use prepared statements or not */
 	var $usePreparedStatements;
-	/**
-	 * @var string rdbms in use (one of "ADODB", "MYSQL", "MYSQLi", "PDO", "POSTGRES")
-	 */
+	/** @var string RDBMS in use (one of "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES") */
 	var $rdbms;
 
 	/**
 	 * @param object $dbcon database connection
 	 * @param bool $use_ps use prepared statements or not
-	 * @param string $db_type rdbms in use (one of "ADODB", "MYSQL", "MYSQLi", "PDO", "POSTGRES")
+	 * @param string $db_type rdbms in use (one of "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES")
 	 */
 	public function __construct($dbcon, $use_ps, $db_type) {
 		$this->conn = $dbcon;
@@ -56,8 +50,8 @@ class jui_filter_rules {
 	/**
 	 * Parse rules array from given JSON object and returns WHERE SQL clause and bind params array (used on prepared statements)
 	 *
-	 * @param array $a_rules the rules array
-	 * @param bool $is_group if current rule belogns to group (except first group)
+	 * @param array $a_rules The rules array
+	 * @param bool $is_group If current rule belogns to group (except first group)
 	 * @return array
 	 */
 	public function parse_rules($a_rules, $is_group = false) {
@@ -190,7 +184,7 @@ class jui_filter_rules {
 	/**
 	 * Create rule operator SQL substring
 	 *
-	 * @param $operator_type
+	 * @param string $operator_type
 	 * @return string
 	 */
 	private function create_operator_sql($operator_type) {
@@ -258,7 +252,7 @@ class jui_filter_rules {
 	/**
 	 * Returns escaped string for safe insertion in the database (in case prepared statements are NOT used)
 	 *
-	 * @param $str_expr
+	 * @param string $str_expr The string expression to be quoted
 	 * @return string
 	 */
 	private function safe_sql($str_expr) {
@@ -269,16 +263,16 @@ class jui_filter_rules {
 			case "ADODB":
 				$res = $conn->qstr($str_expr);
 				break;
-			case "MYSQL": // ATTENTION - not tested!
+			case "MYSQL": // \todo MYSQL not tested!
 				$res = mysql_real_escape_string($str_expr, $conn);
 				break;
-			case "MYSQLi": // ATTENTION - not tested!
+			case "MYSQLi": // \todo MYSQLi not tested!
 				$res = mysqli_real_escape_string($conn, $str_expr);
 				break;
-			case "PDO": // ATTENTION - not tested!
+			case "MYSQL_PDO": // \todo MYSQL_PDO not tested!
 				$res = $conn->quote($str_expr);
 				break;
-			case "POSTGRESQL": // ATTENTION - not tested!
+			case "POSTGRES": // \todo POSTGRES not tested!
 				$res = pg_escape_literal($conn, $str_expr);
 				break;
 		}
