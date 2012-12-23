@@ -1,0 +1,5 @@
+Random data created with http://www.generatedata.com/
+
+PostegreSQL: create a SCHEMA jui_datagrid in your database
+
+psql -U postgres <your_dbname> < jui_datagrid.sql

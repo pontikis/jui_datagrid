@@ -87,8 +87,8 @@ class jui_datagrid {
 			}
 
 		} else if($db_type == "POSTGRES") {
-			$dsn = 'host=' . $db_settings['db_server'] . 'port=' . $db_settings['db_port'] . 'dbname=' . $db_settings['db_name'] .
-				'user=' . $db_settings['db_user'] . 'password=' . rawurlencode($db_settings['db_passwd']);
+			$dsn = 'host=' . $db_settings['db_server'] . ' port=' . $db_settings['db_port'] . ' dbname=' . $db_settings['db_name'] .
+				' user=' . $db_settings['db_user'] . ' password=' . rawurlencode($db_settings['db_passwd']);
 			$conn = pg_connect($dsn);
 		}
 
@@ -138,8 +138,9 @@ class jui_datagrid {
 		$rdbms = $this->db_settings['rdbms'];
 		$use_prepared_statements = $this->db_settings['use_prepared_statements'];
 
+		$sql = $selectCountSQL . ' ' . $whereSQL;
+
 		if($rdbms == "ADODB") {
-			$sql = $selectCountSQL . ' ' . $whereSQL;
 			if($use_prepared_statements) {
 				$stmt = $conn->Execute($sql, $a_bind_params);
 				if($stmt === false) {
@@ -159,7 +160,16 @@ class jui_datagrid {
 				}
 			}
 		} else if($rdbms == "POSTGRES") {
+			if($use_prepared_statements) {
 
+			} else {
+				$rs = pg_query($conn, $sql);
+				if($rs === false) {
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+				} else {
+					$total_rows = pg_fetch_result($rs, 0, 0);
+				}
+			}
 		} else {
 
 		}
@@ -213,11 +223,18 @@ class jui_datagrid {
 					$a_data = $rs->GetRows();
 				}
 			}
-
 		} else if($rdbms == "POSTGRES") {
+			if($use_prepared_statements) {
 
-		} else {
-
+			} else {
+				$sql .= ' LIMIT ' . $rows_per_page .  ' OFFSET ' . $offset;
+				$rs = pg_query($conn, $sql);
+				if($rs === false) {
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+				} else {
+					$a_data = pg_fetch_all($rs);
+				}
+			}
 		}
 
 		return $a_data;
