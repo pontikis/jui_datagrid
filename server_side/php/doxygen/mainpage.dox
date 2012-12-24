@@ -12,8 +12,8 @@ Required: php 5+
 
 GROUP BY and HAVING are not supported (at this time), neither from jui_datagrid class nor from jquery.jui_datagrid plugin.
 
-Supported RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES".\n
-Currently only "ADODB" and "POSTGRES" are implemented. ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
+Supported RDMBS: "ADODB", "POSTGRES".\n
+ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
 
 \section conf_sec Database settings
 \code{.php}
