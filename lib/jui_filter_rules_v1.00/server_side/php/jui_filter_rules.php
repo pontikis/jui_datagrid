@@ -263,16 +263,16 @@ class jui_filter_rules {
 			case "ADODB":
 				$res = $conn->qstr($str_expr);
 				break;
-			case "MYSQL": // \todo MYSQL not tested!
+			case "MYSQL": /** \todo MYSQL not tested! */
 				$res = mysql_real_escape_string($str_expr, $conn);
 				break;
-			case "MYSQLi": // \todo MYSQLi not tested!
+			case "MYSQLi": /** \todo MYSQLi not tested! */
 				$res = mysqli_real_escape_string($conn, $str_expr);
 				break;
-			case "MYSQL_PDO": // \todo MYSQL_PDO not tested!
+			case "MYSQL_PDO": /** \todo MYSQL_PDO not tested! */
 				$res = $conn->quote($str_expr);
 				break;
-			case "POSTGRES": // \todo POSTGRES not tested!
+			case "POSTGRES":
 				$res = pg_escape_literal($conn, $str_expr);
 				break;
 		}
