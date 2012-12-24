@@ -52,13 +52,13 @@ class jui_datagrid {
 				case 'mysqlt':
 				case 'mysqli':
 				case 'pdo_mysql':
+				case 'postgres':
 					$dsn = $db_settings['php_adodb_driver'] . '://' . $db_settings['db_user'] . ':' . rawurlencode($db_settings['db_passwd']) .
 						'@' . $db_settings['db_server'] . '/' .
 						$db_settings['db_name'] .
 						'?persist=' . $db_settings['php_adodb_dsn_options_persist'] . '&fetchmode=' . ADODB_FETCH_ASSOC . $db_settings['php_adodb_dsn_options_misc'];
 					$conn = NewADOConnection($dsn);
 					break;
-				case 'postgres':
 				case 'firebird':
 					$dsn = $db_settings['php_adodb_driver'] . '://' . $db_settings['db_user'] . ':' . rawurlencode($db_settings['db_passwd']) .
 						'@' . $db_settings['db_server'] . '/' . $db_settings['db_name'] .
