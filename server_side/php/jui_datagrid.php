@@ -112,11 +112,12 @@ class jui_datagrid {
 
 		$rdbms = $this->db_settings['rdbms'];
 		$use_prepared_statements = $this->db_settings['use_prepared_statements'];
+		$pst_placeholder = $this->db_settings['pst_placeholder'];
 
 		if(count($filter_rules) == 0) {
 			$result = array('sql' => '', 'bind_params' => array());
 		} else {
-			$jfr = new jui_filter_rules($conn, $use_prepared_statements, $rdbms);
+			$jfr = new jui_filter_rules($conn, $use_prepared_statements, $pst_placeholder, $rdbms);
 			$result = $jfr->parse_rules($filter_rules);
 		}
 		return $result;
