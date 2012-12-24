@@ -161,7 +161,12 @@ class jui_datagrid {
 			}
 		} else if($rdbms == "POSTGRES") {
 			if($use_prepared_statements) {
-
+				$rs = pg_query_params($conn, $sql, $a_bind_params);
+				if($rs === false) {
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+				} else {
+					$total_rows = pg_fetch_result($rs, 0, 0);
+				}
 			} else {
 				$rs = pg_query($conn, $sql);
 				if($rs === false) {
@@ -206,7 +211,16 @@ class jui_datagrid {
 
 		if($rdbms == "ADODB") {
 			if($use_prepared_statements) { // SelectLimit cannot be used with PREPARED STATEMENTS in ADODB
-				$sql .= ' LIMIT ' . $offset . ',' . $rows_per_page;
+				switch($this->db_settings['php_adodb_driver']) { /**  \todo implement misc ADODB drivers */
+					case "mysql":
+					case "mysqlt":
+					case "mysqli":
+					case "pdo_mysql":
+						$sql .= ' LIMIT ' . $offset . ',' . $rows_per_page;
+						break;
+					case "postgres":
+						$sql .= ' LIMIT ' . $rows_per_page . ' OFFSET ' . $offset;
+				}
 				$smtp = $conn->Execute($sql, $a_bind_params);
 				if($smtp === false) {
 					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . $conn->ErrorMsg();
@@ -224,10 +238,15 @@ class jui_datagrid {
 				}
 			}
 		} else if($rdbms == "POSTGRES") {
+			$sql .= ' LIMIT ' . $rows_per_page . ' OFFSET ' . $offset;
 			if($use_prepared_statements) {
-
+				$rs = pg_query_params($conn, $sql, $a_bind_params);
+				if($rs === false) {
+					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+				} else {
+					$a_data = pg_fetch_all($rs);
+				}
 			} else {
-				$sql .= ' LIMIT ' . $rows_per_page .  ' OFFSET ' . $offset;
 				$rs = pg_query($conn, $sql);
 				if($rs === false) {
 					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
