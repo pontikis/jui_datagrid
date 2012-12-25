@@ -12,6 +12,12 @@
     font-family: "courier new";
 }
 
+#dlg_demo_grid1_log li {
+    padding-bottom: 10px;
+    font-size: 11px;
+    font-family: "courier new";
+}
+
 /* demo_grid1 --------------------------------------------------------------- */
 .grid1_container {
     width: 750px;
@@ -53,6 +59,14 @@
     width: 10%;
 }
 
+.th_date_of_birth {
+    width: 20%;
+}
+
+.th_date_updated {
+    width: 20%;
+}
+
 .td_code {
     width: 5%;
     font-family: "courier new";
@@ -74,6 +88,12 @@
     font-size: 11px;
 }
 
+.td_date_of_birth {
+    width: 20%;
+}
+.td_date_updated {
+    width: 20%;
+}
 
 /*.th_lastname {
     width: 140px;
@@ -120,4 +140,14 @@
     border: none !important;
     height: 200px;
     overflow: auto;
+}
+
+
+/* demo_rules1 widgets ------------------------------------------------------ */
+.ui-datepicker{
+    font-size: 12px;
+}
+
+.ui-autocomplete{
+    font-size: 12px;
 }

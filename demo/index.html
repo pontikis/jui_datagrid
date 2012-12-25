@@ -9,8 +9,8 @@
     <link id="ui-theme" rel="stylesheet" type="text/css"
           href="../lib/jquery-ui-1.9.2.custom/css/official/ui-lightness/jquery-ui.css"/>
 
-<!--    <link id="ui-theme" rel="stylesheet" type="text/css"
-          href="../lib/jquery-ui-1.8.23.custom/css/official/ui-lightness/jquery-ui-1.8.23.custom.css"/>-->
+    <!--    <link id="ui-theme" rel="stylesheet" type="text/css"
+              href="../lib/jquery-ui-1.8.23.custom/css/official/ui-lightness/jquery-ui-1.8.23.custom.css"/>-->
 
     <link rel="stylesheet" type="text/css"
           href="../lib/jQuery-Timepicker-Addon-v.1.1.1/jquery-ui-timepicker-addon.css"/>
@@ -38,8 +38,8 @@
     <script src="../lib/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"
             type="text/javascript"></script>
 
-<!--    <script src="../lib/jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js"
-            type="text/javascript"></script>-->
+    <!--    <script src="../lib/jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js"
+                type="text/javascript"></script>-->
 
     <script src="../lib/jui_pagination_1.14/lib/jquery.ui.touch-punch_v0.2.2/jquery.ui.touch-punch.min.js"
             type="text/javascript"></script>
@@ -62,8 +62,10 @@
     <script src="../lib/jui_dropdown_v1.01/jquery.jui_dropdown.min.js"
             type="text/javascript"></script>
 
-    <script src="../lib/jui_filter_rules_v1.00/jquery.jui_filter_rules.min.js" type="text/javascript"></script>
-    <script src="../lib/jui_filter_rules_v1.00/localization/el.js" type="text/javascript"></script>
+    <script src="../lib/jui_filter_rules_v1.00/jquery.jui_filter_rules.min.js"
+            type="text/javascript"></script>
+    <script src="../lib/jui_filter_rules_v1.00/localization/el.js"
+            type="text/javascript"></script>
 
     <script src="../jquery.jui_datagrid.js" type="text/javascript"></script>
     <script src="../localization/el.js" type="text/javascript"></script>
@@ -75,11 +77,14 @@
 
 <div class="wrap">
 
-<p>Project page: <a
-        href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
-</p>
+    <p>Project page: <a
+            href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
+    </p>
 
-<label for="ui-theme-switcher">Select theme:</label> <select id="ui-theme-switcher">
+    <p id="tz_info"></p>
+
+    <label for="ui-theme-switcher">Select theme:</label> <select
+        id="ui-theme-switcher">
     <optgroup label="official jquery-ui themes">
         <option value="../lib/jquery-ui-1.9.2.custom/css/official/ui-lightness/jquery-ui.css">
             ui-lightness
@@ -179,30 +184,37 @@
     </optgroup>
 </select>
 
-<div class="spacer"></div>
+    <div class="spacer"></div>
 
-<div id="demo_grid1"></div>
+    <div id="demo_grid1"></div>
 
-<div id="demo_grid1_test" style="margin-top: 10px;">
-    <span><strong>rowSelectionMode: </strong></span>
-    <label for="selection_multiple">multiple</label><input type="radio" name="rowSelectionMode" id="selection_multiple" checked="checked">
-    <label for="selection_single">single</label><input type="radio" name="rowSelectionMode" id="selection_single">
-    <label for="selection_false">false</label><input type="radio" name="rowSelectionMode" id="selection_false">
-    <button id="log_show">Show log</button>
-    <button id="log_hide">Hide log</button>
-    <button id="log_clear">Clear log</button>
-</div>
+    <div id="demo_grid1_test" style="margin-top: 10px;">
+        <span><strong>rowSelectionMode: </strong></span>
+        <label for="selection_multiple">multiple</label><input type="radio"
+                                                               name="rowSelectionMode"
+                                                               id="selection_multiple"
+                                                               checked="checked">
+        <label for="selection_single">single</label><input type="radio"
+                                                           name="rowSelectionMode"
+                                                           id="selection_single">
+        <label for="selection_false">false</label><input type="radio"
+                                                         name="rowSelectionMode"
+                                                         id="selection_false">
+        <button id="log_show">Show log</button>
+        <button id="log_hide">Hide log</button>
+        <button id="log_clear">Clear log</button>
+    </div>
 
-<div class="spacer"></div>
+    <div class="spacer"></div>
 
-<button id="dlg_demo_grid2_opener">Open in dialog</button>
+    <button id="dlg_demo_grid2_opener">Open in dialog</button>
 
-<div id="dlg_demo_grid2" class="dlg_demo_grid2">
-<div id="demo_grid2"></div>
-</div>
+    <div id="dlg_demo_grid2" class="dlg_demo_grid2">
+        <div id="demo_grid2"></div>
+    </div>
 
-<div id="dlg_demo_grid1_log">
-</div>
+    <div id="dlg_demo_grid1_log">
+    </div>
 
 </div>
 
