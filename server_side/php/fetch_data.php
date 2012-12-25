@@ -8,10 +8,12 @@
 $total_rows = null;
 $a_data = null;
 $last_error = null;
+$debug_message = array();
 $result = array(
 	'total_rows' => $total_rows,
 	'page_data' => $a_data,
-	'error' => $last_error
+	'error' => $last_error,
+	'debug_message' => $debug_message
 );
 
 // get params ------------------------------------------------------------------
@@ -28,8 +30,10 @@ if(isset($_POST['sorting'])) {
 	$sorting = $_POST['sorting'];
 }
 
+$debug_mode = ($_POST['debug_mode'] == "yes" ? true : false);
+
 // -----------------------------------------------------------------------------
-$jdg = new jui_datagrid();
+$jdg = new jui_datagrid($debug_mode);
 $conn = $jdg->db_connect($db_settings);
 if($conn === false) {
 	$last_error = $jdg->get_last_error();
@@ -56,6 +60,7 @@ if($conn === false) {
 $result['total_rows'] = $total_rows;
 $result['page_data'] = $a_data;
 $result['error'] = $last_error;
+$result['debug_message'] = $jdg->get_debug_message();
 $json = json_encode($result);
 print $json;
 ?>

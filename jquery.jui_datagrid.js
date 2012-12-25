@@ -90,6 +90,7 @@
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
                 elem.unbind("onDatagridError").bind("onDatagridError", settings.onDatagridError);
+                elem.unbind("onDebug").bind("onDebug", settings.onDebug);
 
                 // initialize plugin html
                 var caption_id = create_id(settings.caption_id_prefix, container_id),
@@ -101,6 +102,7 @@
                     sort_dialog_id = create_id(settings.sort_dialog_id_prefix, container_id),
                     filters_dialog_id = create_id(settings.filters_dialog_id_prefix, container_id),
                     filter_rules_id = create_id(settings.filter_rules_id_prefix, container_id),
+                    debug_mode = settings.debug_mode,
 
                     elem_html, err_msg;
 
@@ -150,7 +152,8 @@
                         page_num: settings.pageNum,
                         rows_per_page: settings.rowsPerPage,
                         sorting: settings.sorting,
-                        filter_rules: elem.data(pluginStatus)['filter_rules']
+                        filter_rules: elem.data(pluginStatus)['filter_rules'],
+                        debug_mode: debug_mode
                     },
                     success: function(data) {
                         var a_data, server_error, row_primary_key, total_rows, page_data;
@@ -165,7 +168,12 @@
                         }
                         total_rows = a_data['total_rows'];
                         page_data = a_data['page_data'];
+
                         row_primary_key = settings.row_primary_key;
+
+                        if(debug_mode == "yes") {
+                            elem.triggerHandler("onDebug", {debug_message: a_data['debug_message']});
+                        }
 
                         if(total_rows == 0) {
                             elem_pagination.hide();
@@ -728,6 +736,8 @@
 
                 fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 
+                debug_mode: "no",
+
                 onCellClick: function() {
                 },
                 onRowClick: function() {
@@ -735,6 +745,8 @@
                 onDelete: function() {
                 },
                 onDatagridError: function() {
+                },
+                onDebug: function() {
                 },
                 onDisplay: function() {
                 }

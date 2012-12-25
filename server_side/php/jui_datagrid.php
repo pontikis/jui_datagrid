@@ -8,18 +8,29 @@ class jui_datagrid {
 	private $db_settings;
 	/** @var string Last error occured */
 	private $last_error;
+	/** @var string Debug message */
+	private $debug_message;
 
 	/**
 	 * Constructor
+	 *
+	 * @param bool $debug_mode
+	 *
 	 */
-	public function __construct() {
+	public function __construct($debug_mode = false) {
 		// initialize
 		$this->db_settings = null;
 		$this->last_error = null;
+		$this->debug_mode = $debug_mode;
+		$this->debug_message = array();
 	}
 
 	public function get_last_error() {
 		return $this->last_error;
+	}
+
+	public function get_debug_message() {
+		return $this->debug_message;
 	}
 
 	/**
@@ -36,12 +47,12 @@ class jui_datagrid {
 		$db_type = $db_settings['rdbms'];
 
 		if(!in_array($db_type, array("ADODB", "POSTGRES"))) {
-			$this->last_error = "Database not supported";
+			$this->last_error = 'Database (' . $db_type . ') not supported';
 			return false;
 		}
 
 		if($db_type == "ADODB" && !in_array($db_settings['php_adodb_driver'], array("mysql", "mysqlt", "mysqli", "pdo_mysql", "postgres"))) {
-			$this->last_error = "ADODB driver not supported";
+			$this->last_error = 'ADODB driver ' . $db_settings['php_adodb_driver'] . ') not supported';
 			return false;
 		}
 
@@ -120,6 +131,12 @@ class jui_datagrid {
 			$jfr = new jui_filter_rules($conn, $use_prepared_statements, $pst_placeholder, $rdbms);
 			$result = $jfr->parse_rules($filter_rules);
 		}
+
+		if($this->debug_mode) {
+			array_push($this->debug_message, 'WHERE  SQL: ' . $result['sql']);
+			array_push($this->debug_message, 'BIND PARAMS: ' . print_r($result['bind_params'], true));
+		}
+
 		return $result;
 	}
 
@@ -180,6 +197,11 @@ class jui_datagrid {
 
 		}
 
+		if($this->debug_mode) {
+			array_push($this->debug_message, 'selectCountSQL: ' . $selectCountSQL);
+			array_push($this->debug_message, 'total_rows: ' . $total_rows);
+		}
+
 		return $total_rows;
 	}
 
@@ -212,7 +234,8 @@ class jui_datagrid {
 
 		if($rdbms == "ADODB") {
 			if($use_prepared_statements) { // SelectLimit cannot be used with PREPARED STATEMENTS in ADODB
-				switch($this->db_settings['php_adodb_driver']) { /**  \todo implement misc ADODB drivers */
+				switch($this->db_settings['php_adodb_driver']) {
+					/**  \todo implement misc ADODB drivers */
 					case "mysql":
 					case "mysqlt":
 					case "mysqli":
@@ -257,6 +280,9 @@ class jui_datagrid {
 			}
 		}
 
+		if($this->debug_mode) {
+			array_push($this->debug_message, 'selectSQL: ' . $selectSQL);
+		}
 		return $a_data;
 
 	}
@@ -281,6 +307,9 @@ class jui_datagrid {
 			$sortingSQL = ' ORDER BY ' . substr($sortingSQL, 0, $len - 2) . ' ';
 		}
 
+		if($this->debug_mode) {
+			array_push($this->debug_message, 'sortingSQL: ' . $sortingSQL);
+		}
 		return $sortingSQL;
 	}
 
