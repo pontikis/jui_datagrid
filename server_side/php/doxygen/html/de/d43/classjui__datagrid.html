@@ -92,10 +92,12 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a095c5d389db211932136b53f25f39685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a095c5d389db211932136b53f25f39685">__construct</a> ()</td></tr>
-<tr class="separator:a095c5d389db211932136b53f25f39685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b4df025b7ca84ceb7a0ce8245714005"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a4b4df025b7ca84ceb7a0ce8245714005">__construct</a> ($debug_mode=false)</td></tr>
+<tr class="separator:a4b4df025b7ca84ceb7a0ce8245714005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfc037d7134d1a1f9c1fd5b4970633a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#abfc037d7134d1a1f9c1fd5b4970633a1">get_last_error</a> ()</td></tr>
 <tr class="separator:abfc037d7134d1a1f9c1fd5b4970633a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5329b8eea04dd2759d008ceb7af2693b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a5329b8eea04dd2759d008ceb7af2693b">get_debug_message</a> ()</td></tr>
+<tr class="separator:a5329b8eea04dd2759d008ceb7af2693b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4bc9357393c65f0797d7ca01e094754"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#ac4bc9357393c65f0797d7ca01e094754">db_connect</a> ($db_settings)</td></tr>
 <tr class="separator:ac4bc9357393c65f0797d7ca01e094754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3c790cb987606df5f4dbd946139cf6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#ae3c790cb987606df5f4dbd946139cf6a">get_whereSQL</a> ($conn, $filter_rules)</td></tr>
@@ -118,27 +120,36 @@ Private Attributes</h2></td></tr>
 <tr class="separator:ac406521d0a3c1cdcf1766c5a8b77d904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60375900d6ade93e662c348772867d64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#a60375900d6ade93e662c348772867d64">$last_error</a></td></tr>
 <tr class="separator:a60375900d6ade93e662c348772867d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcfb5481cf39bdaabf0d09dd90429b4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d43/classjui__datagrid.html#abcfb5481cf39bdaabf0d09dd90429b4c">$debug_message</a></td></tr>
+<tr class="separator:abcfb5481cf39bdaabf0d09dd90429b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="../../de/d43/classjui__datagrid.html">jui_datagrid</a>, helper class for jquery.jui_datagrid plugin, handles server operations (mainly through AJAX requests). </p>
 
 <p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00005">5</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a095c5d389db211932136b53f25f39685"></a>
+<a class="anchor" id="a4b4df025b7ca84ceb7a0ce8245714005"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">__construct </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$debug_mode</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructor </p>
+<p>Constructor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">bool</td><td class="paramname">$debug_mode</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00015">15</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00020">20</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -167,7 +178,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object|bool database connection or false </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00035">35</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00046">46</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -192,7 +203,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00292">292</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00322">322</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -265,7 +276,24 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>array|bool Page data or false </dd></dl>
 <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000002">Todo:</a></b></dt><dd>implement misc ADODB drivers </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00198">198</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00221">221</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5329b8eea04dd2759d008ceb7af2693b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">get_debug_message </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00032">32</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -282,7 +310,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00021">21</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00028">28</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -316,7 +344,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00269">269</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00296">296</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -367,7 +395,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int|bool Total roes or false </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00135">135</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00153">153</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -404,7 +432,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00111">111</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00122">122</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -428,6 +456,28 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00008">8</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abcfb5481cf39bdaabf0d09dd90429b4c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$debug_message</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html#l00012">12</a> of file <a class="el" href="../../d7/d2d/jui__datagrid_8php_source.html">jui_datagrid.php</a>.</p>
 
 </div>
 </div>
@@ -459,7 +509,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 24 2012 12:33:17 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 25 2012 17:41:56 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

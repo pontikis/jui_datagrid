@@ -32,21 +32,21 @@
 </head>
 <body>
 
-<p><a href="http://pontikis.github.com">pontikis.github.com</a>
-
-    <a href="https://github.com/pontikis/jui_datagrid"><img
-            style="position: absolute; top: 0; right: 0; border: 0;"
-            src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
-            alt="Fork me on GitHub"></a>
+<a href="https://github.com/pontikis/jui_datagrid"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+        alt="Fork me on GitHub"></a>
 
 <h1>jui_datagrid documentation (v1.00)</h1>
 
 <div class="level1">
-    <p>jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate data
+    <p>jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate database data
         in tabular format.
 
     <p>As a javascript control, it can be integrated with any server-side
-        technology (e.g. PHP, Perl, ASP, JSP and more).
+        technology (e.g. PHP, Perl, ASP, JSP and more) and any Database.
+
+    <p><a href="../server_side/php/doxygen/html">A helper PHP jui_datagrid class</a> is available, supporting: "ADODB", "POSTGRES". ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
 
     <p>Compatible with modern web browsers. Tested with: Google Chrome, Mozilla
         Firefox, Microsoft Internet Explorer, (default) Android browser.
@@ -90,13 +90,13 @@
     <p>Tested with jquery >= 1.8.2 and >= jquery-ui 1.8.23 (recommended
         jquery-ui >= 1.9)
 
-    <p>UPCOMING Release 1.00 (?? Nov 2012) Download <a
+    <p>UPCOMING Release 1.00 (?? Dec 2012) Download <a
             href="https://github.com/pontikis/jui_datagrid/zipball/v1.0.0">here</a>
 
     <p>CHANGELOG <a
             href="https://github.com/pontikis/jui_datagrid/blob/master/CHANGELOG.md">here</a>
 
-    <p>DEMO <a href="http://pontikis.net/jui_datagrid/v1.00/demo/">http://pontikis.net/jui_datagrid/v1.00/demo/</a>
+    <p>DEMO <a href="http://pontikis.net/jui_datagrid/demo/">http://pontikis.net/jui_datagrid/demo/</a>
 
     <p>
         <small>Syntax highlight using <a
@@ -139,6 +139,7 @@
         <li>Powerful pagination
         <li>Powerful filters
         <li>Preferences dialog available to user
+        <li>Debug mode available
         <li>Localization
     </ul>
 </div>
@@ -241,7 +242,6 @@
 <div class="level3">
     <pre class="brush: js">
     {
-        "row_primary_key": "id",
         "total_rows": "200",
         "page_data": [
             {
@@ -290,18 +290,15 @@
             {"sortingName": "", field: "", order: "none"}
         ],
 
-        filters: [
-            {"filterName": "", "filterType": "", field: "", operator: "",
-                value: "", value_range: {lower: "", upper: ""}, value_array: [],
-                foreignKey: {ref_table: "", ref_pk: "", ref_col: "", condition: ""},
-                ajax_autocomplete_url: ""
-            }
-        ],
+        filterOptions: {
+            filters: []
+        }, // 'onValidationError' will be ignored
 
         pageNum: 1,
         rowsPerPage: 10,
         maxRowsPerPage: 100,
 
+        row_primary_key: '',
         rowSelectionMode: 'multiple', // 'multiple', 'single', 'false'
 
         autoSetColumnsWidth: true,
@@ -348,6 +345,7 @@
         captionClass: 'grid_caption ui-widget-header ui-corner-top',
         datagridHeaderClass: 'grid_header ui-state-default',
         datagridClass: 'grid_data ui-widget-content',
+        noResultsClass: "no_records_found",
         toolsClass: 'grid_tools ui-state-default ui-corner-all',
         paginationClass: 'grid_pagination',
 
@@ -390,9 +388,13 @@
         dlgPrefClass: 'dlg_pref',
         dlgPrefButtonClass: 'dlg_pref_button',
 
-        // dialog Preferences
+        // dialog Sorting
         dlgSortClass: 'dlg_sort',
         dlgSortButtonClass: 'dlg_sort_button',
+
+        // dialog Filters
+        dlgFiltersClass: 'dlg_filters',
+        dlgFiltersButtonClass: 'dlg_filters_button',
 
         // elements id prefix
         caption_id_prefix: 'caption_',
@@ -412,6 +414,9 @@
 
         sort_dialog_id_prefix: 'sort_dlg_',
 
+        filters_dialog_id_prefix: 'filter_dlg_',
+        filter_rules_id_prefix: 'flt_rules_',
+
         //sorting list prefix
         sorting_list_id_prefix: 'sort_criteria_',
         sort_radio_name_prefix: 'sort_order_',
@@ -421,11 +426,17 @@
 
         fix_border_collapse_td_width: 1, // FF, MSIE >= 10 seems to return correct computed td width while Chrome <=23, MSIE <=9 and Opera one pixel less
 
+        debug_mode: "no",
+
         onCellClick: function() {
         },
         onRowClick: function() {
         },
         onDelete: function() {
+        },
+        onDatagridError: function() {
+        },
+        onDebug: function() {
         },
         onDisplay: function() {
         }
@@ -636,6 +647,49 @@
         }
     });
     </pre>
+</div>
+
+<h3>onDatagidError</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_filter_rules({
+        onDatagridError: function(event, data) {
+            alert(data["err_description"] + ' (' + data["err_code"] + ')');
+            data.elem_filter.focus();
+        }
+    });
+    </pre>
+
+    <p><code>data</code> is an object:</p>
+    <pre class="brush: js">
+    {
+        err_code: 'err_code',
+        err_description: 'description',
+        elem_filter: 'the filter element as jquery object' // availbale only on Filter validation errors
+    }
+    </pre>
+</div>
+
+
+<h3>onDebug</h3>
+
+<div class="level3">
+    <pre class="brush: js">
+    $("#element_id").jui_datagrid({
+        onDebug: function(event, data) {
+        // your code here
+        }
+    });
+    </pre>
+
+    <p><code>data</code> is an object:</p>
+    <pre class="brush: js">
+    {
+        debug_message: 'err_code'
+    }
+    </pre>
+
 </div>
 
 <h3>onDisplay</h3>

@@ -97,6 +97,8 @@ Variables</h2></td></tr>
 <tr class="separator:ade8f17dc8d74630899faaf17472391cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60375900d6ade93e662c348772867d64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = null</td></tr>
 <tr class="separator:a60375900d6ade93e662c348772867d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcfb5481cf39bdaabf0d09dd90429b4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#abcfb5481cf39bdaabf0d09dd90429b4c">$debug_message</a> = array()</td></tr>
+<tr class="separator:abcfb5481cf39bdaabf0d09dd90429b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a112ef069ddc0454086e3d1e6d8d55d07"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a112ef069ddc0454086e3d1e6d8d55d07">$result</a></td></tr>
 <tr class="separator:a112ef069ddc0454086e3d1e6d8d55d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a129f576e647018fa748a3180db6bd78d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a129f576e647018fa748a3180db6bd78d">$page_num</a> = $_POST['page_num']</td></tr>
@@ -107,8 +109,10 @@ Variables</h2></td></tr>
 <tr class="separator:abaadef9a387318e61f818d346abc5f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdc5d7c5bae165869f15dbb990cd3b7c"><td class="memItemLeft" align="right" valign="top">if(isset($_POST['filter_rules']))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#abdc5d7c5bae165869f15dbb990cd3b7c">$sorting</a> = array()</td></tr>
 <tr class="separator:abdc5d7c5bae165869f15dbb990cd3b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b11ebb3f9af216d2f24df42bf251fa2"><td class="memItemLeft" align="right" valign="top">if(isset($_POST['sorting']))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a3b11ebb3f9af216d2f24df42bf251fa2">$jdg</a> = new <a class="el" href="../../de/d43/classjui__datagrid.html">jui_datagrid</a>()</td></tr>
-<tr class="separator:a3b11ebb3f9af216d2f24df42bf251fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf17c6edaa64fb40a94c5e2fd6d87c44"><td class="memItemLeft" align="right" valign="top">if(isset($_POST['sorting']))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#aaf17c6edaa64fb40a94c5e2fd6d87c44">$debug_mode</a> = ($_POST['debug_mode'] == &quot;yes&quot; ? true : false)</td></tr>
+<tr class="separator:aaf17c6edaa64fb40a94c5e2fd6d87c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b3f929a75835278e4b0bf35cb0c989"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a> = new <a class="el" href="../../de/d43/classjui__datagrid.html">jui_datagrid</a>($debug_mode)</td></tr>
+<tr class="separator:a94b3f929a75835278e4b0bf35cb0c989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8a5a87b9c1a6a0819b88447cbe41877"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a> = $jdg-&gt;db_connect($db_settings)</td></tr>
 <tr class="separator:aa8a5a87b9c1a6a0819b88447cbe41877"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d5424b2ab096efcf95687347e12a749"><td class="memItemLeft" align="right" valign="top">if($conn===false)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#a2d5424b2ab096efcf95687347e12a749">else</a></td></tr>
@@ -123,6 +127,8 @@ Variables</h2></td></tr>
 <tr class="separator:aec22d50073fe1293044cf30af45877e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad06a3bf1cf2a541f96a2cf96f452efc4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#ad06a3bf1cf2a541f96a2cf96f452efc4">$result</a> ['error'] = $last_error</td></tr>
 <tr class="separator:ad06a3bf1cf2a541f96a2cf96f452efc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea851cb5cd7f2d3857f4b01dc366a864"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#aea851cb5cd7f2d3857f4b01dc366a864">$result</a> ['debug_message'] = $jdg-&gt;get_debug_message()</td></tr>
+<tr class="separator:aea851cb5cd7f2d3857f4b01dc366a864"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad91ed2c465f0491fa2bf60f0bd9a4987"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dd6/fetch__data_8php.html#ad91ed2c465f0491fa2bf60f0bd9a4987">$json</a> = json_encode($result)</td></tr>
 <tr class="separator:ad91ed2c465f0491fa2bf60f0bd9a4987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -151,7 +157,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00039">39</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00043">43</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -161,6 +167,34 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">$conn = $jdg-&gt;db_connect($db_settings)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00037">37</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abcfb5481cf39bdaabf0d09dd90429b4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$debug_message = array()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00011">11</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaf17c6edaa64fb40a94c5e2fd6d87c44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if (isset($_POST['sorting'])) $debug_mode = ($_POST['debug_mode'] == &quot;yes&quot; ? true : false)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -179,21 +213,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00021">21</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00023">23</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3b11ebb3f9af216d2f24df42bf251fa2"></a>
+<a class="anchor" id="a94b3f929a75835278e4b0bf35cb0c989"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if (isset($_POST['sorting'])) $jdg = new <a class="el" href="../../de/d43/classjui__datagrid.html">jui_datagrid</a>()</td>
+          <td class="memname">$jdg = new <a class="el" href="../../de/d43/classjui__datagrid.html">jui_datagrid</a>($debug_mode)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00032">32</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00036">36</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -207,7 +241,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00059">59</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00064">64</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -235,7 +269,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00018">18</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00020">20</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -251,10 +285,11 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">= array(</div>
 <div class="line">    <span class="stringliteral">&#39;total_rows&#39;</span> =&gt; <a class="code" href="../../d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a>,</div>
 <div class="line">    <span class="stringliteral">&#39;page_data&#39;</span> =&gt; <a class="code" href="../../d7/dd6/fetch__data_8php.html#ade8f17dc8d74630899faaf17472391cd">$a_data</a>,</div>
-<div class="line">    <span class="stringliteral">&#39;error&#39;</span> =&gt; <a class="code" href="../../d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a></div>
+<div class="line">    <span class="stringliteral">&#39;error&#39;</span> =&gt; <a class="code" href="../../d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a>,</div>
+<div class="line">    <span class="stringliteral">&#39;debug_message&#39;</span> =&gt; <a class="code" href="../../d7/dd6/fetch__data_8php.html#abcfb5481cf39bdaabf0d09dd90429b4c">$debug_message</a></div>
 <div class="line">)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00011">11</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00012">12</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -268,7 +303,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00056">56</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00060">60</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -282,7 +317,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00057">57</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00061">61</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -296,7 +331,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00058">58</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00062">62</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea851cb5cd7f2d3857f4b01dc366a864"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$result['debug_message'] = $jdg-&gt;get_debug_message()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00063">63</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -310,7 +359,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00019">19</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00021">21</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -324,7 +373,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00026">26</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00028">28</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -353,7 +402,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00038">38</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00042">42</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
@@ -367,16 +416,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    $where = <a class="code" href="../../d7/dd6/fetch__data_8php.html#a3b11ebb3f9af216d2f24df42bf251fa2">$jdg</a>-&gt;get_whereSQL(<a class="code" href="../../d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="../../d7/dd6/fetch__data_8php.html#abaadef9a387318e61f818d346abc5f96">$filter_rules</a>)</div>
+<div class="line">    $where = <a class="code" href="../../d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_whereSQL(<a class="code" href="../../d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="../../d7/dd6/fetch__data_8php.html#abaadef9a387318e61f818d346abc5f96">$filter_rules</a>)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00036">36</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
+<p>Definition at line <a class="el" href="../../d7/dd6/fetch__data_8php_source.html#l00040">40</a> of file <a class="el" href="../../d7/dd6/fetch__data_8php_source.html">fetch_data.php</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 24 2012 12:33:17 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 25 2012 17:41:56 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
