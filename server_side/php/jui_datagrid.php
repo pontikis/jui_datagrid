@@ -272,6 +272,7 @@ class jui_datagrid {
 				$rs = pg_query_params($conn, $sql, $a_bind_params);
 				if($rs === false) {
 					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+					$a_data = false;
 				} else {
 					$a_data = pg_fetch_all($rs);
 				}
@@ -279,6 +280,7 @@ class jui_datagrid {
 				$rs = pg_query($conn, $sql);
 				if($rs === false) {
 					$this->last_error = 'Wrong SQL: ' . $sql . ' Error: ' . pg_last_error();
+					$a_data = false;
 				} else {
 					$a_data = pg_fetch_all($rs);
 				}
@@ -304,13 +306,18 @@ class jui_datagrid {
 							} else {
 								$args[$arg_len - 1] = $a_data[$i][$column['field']];
 							}
-							$a_data[$i][$column['field']] = call_user_func_array($function_name, $args);
+							try {
+								$a_data[$i][$column['field']] = call_user_func_array($function_name, $args);
+							} catch(Exception $e) {
+								$this->last_error = 'Column value (' . $a_data[$i][$column['field']] . ') conversion error server side: ' . $e->getMessage();
+								$a_data = false;
+								break;
+							}
 						}
 					}
 
 				}
 			}
-
 		}
 
 

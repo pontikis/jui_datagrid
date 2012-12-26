@@ -87,11 +87,7 @@ function date_decode($str_user_timezone,
 					 $str_server_datetime) {
 
 	// create date object
-	try {
-		$date = new DateTime($str_server_datetime);
-	} catch(Exception $e) {
-		trigger_error('date_decode: Invalid datetime: ' . $e->getMessage(), E_USER_ERROR);
-	}
+	$date = new DateTime($str_server_datetime);
 
 	// convert to user timezone
 	$userTimeZone = new DateTimeZone($str_user_timezone);
