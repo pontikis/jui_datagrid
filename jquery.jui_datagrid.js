@@ -151,21 +151,30 @@
                     data: {
                         page_num: settings.pageNum,
                         rows_per_page: settings.rowsPerPage,
+                        columns: settings.columns,
                         sorting: settings.sorting,
                         filter_rules: elem.data(pluginStatus)['filter_rules'],
                         debug_mode: debug_mode
                     },
                     success: function(data) {
-                        var a_data, server_error, row_primary_key, total_rows, page_data;
+                        var a_data, server_error, filter_error, row_primary_key, total_rows, page_data;
                         a_data = $.parseJSON(data);
+
                         server_error = a_data['error'];
                         if(server_error != null) {
                             err_msg = 'ERROR: ' + server_error;
                             elem.html('<span style="color: red;">' + err_msg + '</span>');
                             elem.triggerHandler("onDatagridError", {err_code: "server_error", err_description: server_error});
                             $.error(err_msg);
-
                         }
+
+                        filter_error = a_data['filter_error'];
+                        if(filter_error['error_message'] != null) {
+                            elem_filter_rules.jui_filter_rules("markRuleAsError", filter_error['element_rule_id'], true);
+                            elem_filter_rules.triggerHandler("onValidationError", {err_code: "filter_validation_server_error", err_description: filter_error['error_message']});
+                            $.error(filter_error['error_message']);
+                        }
+
                         total_rows = a_data['total_rows'];
                         page_data = a_data['page_data'];
 
@@ -1418,7 +1427,7 @@
                     click: function() {
                         a_rules = elem_filter_rules.jui_filter_rules("getRules", 0, []);
                         if(a_rules !== false) {
-                            elem_filter_rules.jui_filter_rules("markRulesAsApplied");
+                            elem_filter_rules.jui_filter_rules("markAllRulesAsApplied");
                             elem.data(pluginStatus)['filter_rules'] = a_rules;
                             // Reset selected rows
                             elem.data(pluginStatus)['a_selected_ids'] = [];
@@ -1432,7 +1441,7 @@
                 {
                     text: rsc_jui_dg.filters_reset,
                     click: function() {
-                        elem_filter_rules.jui_filter_rules("clearRules");
+                        elem_filter_rules.jui_filter_rules("clearAllRules");
                         elem.data(pluginStatus)['filter_rules'] = [];
                         elem.jui_datagrid({
                             pageNum: 1

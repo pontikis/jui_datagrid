@@ -130,13 +130,17 @@ class jui_datagrid {
 		} else {
 			$jfr = new jui_filter_rules($conn, $use_prepared_statements, $pst_placeholder, $rdbms);
 			$result = $jfr->parse_rules($filter_rules);
-		}
 
-		if($this->debug_mode) {
-			array_push($this->debug_message, 'WHERE  SQL: ' . $result['sql']);
-			array_push($this->debug_message, 'BIND PARAMS: ' . print_r($result['bind_params'], true));
+			$last_jfr_error = $jfr->get_last_error();
+			if(!is_null($last_jfr_error['error_message'])) {
+				$result = $last_jfr_error;
+			} else {
+				if($this->debug_mode) {
+					array_push($this->debug_message, 'WHERE  SQL: ' . $result['sql']);
+					array_push($this->debug_message, 'BIND PARAMS: ' . print_r($result['bind_params'], true));
+				}
+			}
 		}
-
 		return $result;
 	}
 
@@ -210,6 +214,7 @@ class jui_datagrid {
 	 * Fetch page data
 	 *
 	 * @param object $conn
+	 * @param array $columns
 	 * @param int $page_num
 	 * @param int $rows_per_page
 	 * @param string $selectSQL
@@ -218,7 +223,7 @@ class jui_datagrid {
 	 * @param array $a_bind_params
 	 * @return array|bool Page data or false
 	 */
-	public function fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $a_bind_params) {
+	public function fetch_page_data($conn, $columns, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $a_bind_params) {
 
 		$a_data = array();
 
@@ -279,6 +284,38 @@ class jui_datagrid {
 				}
 			}
 		}
+
+		// apply column value conversion (if any)
+		$rows = count($a_data);
+		if($rows > 0) {
+			foreach($columns as $column) {
+				if(array_key_exists('column_value_conversion_server_side', $column)) {
+					$column_value_conversion_server_side = $column['column_value_conversion_server_side'];
+
+					if(is_array($column_value_conversion_server_side)) {
+						$function_name = $column_value_conversion_server_side['function_name'];
+						$args = $column_value_conversion_server_side['args'];
+						$arg_len = count($args);
+
+						for($i = 0; $i < $rows; $i++) {
+							if($i == 0) {
+								array_push($args, $a_data[$i][$column['field']]);
+								$arg_len++;
+							} else {
+								$args[$arg_len - 1] = $a_data[$i][$column['field']];
+							}
+							$a_data[$i][$column['field']] = call_user_func_array($function_name, $args);
+						}
+					}
+
+				}
+			}
+
+		}
+
+
+
+
 
 		if($this->debug_mode) {
 			array_push($this->debug_message, 'selectSQL: ' . $selectSQL);

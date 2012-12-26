@@ -7,6 +7,7 @@
 // initialize ------------------------------------------------------------------
 $total_rows = null;
 $a_data = null;
+$last_filter_error = array();
 $last_error = null;
 $debug_message = array();
 $result = array(
@@ -19,6 +20,8 @@ $result = array(
 // get params ------------------------------------------------------------------
 $page_num = $_POST['page_num'];
 $rows_per_page = $_POST['rows_per_page'];
+
+$columns = $_POST['columns'];
 
 $filter_rules = array();
 if(isset($_POST['filter_rules'])) {
@@ -39,20 +42,24 @@ if($conn === false) {
 	$last_error = $jdg->get_last_error();
 } else {
 	$where = $jdg->get_whereSQL($conn, $filter_rules);
-	$whereSQL = $where['sql'];
-	$bind_params = $where['bind_params'];
 
-	$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
-
-	if($total_rows === false) {
-		$last_error = $jdg->get_last_error();
+	if(array_key_exists('error_message', $where)) {
+		$last_filter_error = $where;
 	} else {
-		$a_data = $jdg->fetch_page_data($conn, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);
-		if($a_data === false) {
+		$whereSQL = $where['sql'];
+		$bind_params = $where['bind_params'];
+
+		$total_rows = $jdg->get_total_rows($conn, $selectCountSQL, $whereSQL, $bind_params);
+
+		if($total_rows === false) {
 			$last_error = $jdg->get_last_error();
+		} else {
+			$a_data = $jdg->fetch_page_data($conn, $columns, $page_num, $rows_per_page, $selectSQL, $sorting, $whereSQL, $bind_params);
+			if($a_data === false) {
+				$last_error = $jdg->get_last_error();
+			}
 		}
 	}
-
 	$jdg->db_disconnect($conn);
 }
 
@@ -60,6 +67,7 @@ if($conn === false) {
 $result['total_rows'] = $total_rows;
 $result['page_data'] = $a_data;
 $result['error'] = $last_error;
+$result['filter_error'] = $last_filter_error;
 $result['debug_message'] = $jdg->get_debug_message();
 $json = json_encode($result);
 print $json;
