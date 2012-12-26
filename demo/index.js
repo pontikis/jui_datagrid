@@ -30,10 +30,15 @@ $(function() {
             {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
             {field: "email", visible: "no", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
             {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"},
-            {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth"},
+            {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth",
+                column_value_conversion: {
+                    function_name: "date_decode",
+                    args: ["DD/MM/YYYY"] // user function arguments array, except column value, which will become the LAST argument
+                }
+            },
             {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
                 column_value_conversion_server_side: {
-                    function_name: "date_decode",
+                    function_name: "UTC_timestamp_to_local_datetime",
                     args: ["Europe/Athens", "d/m/Y H:m:s"] // user function arguments array, except column value, which will become the LAST argument
                 }
             }
@@ -129,7 +134,7 @@ $(function() {
                     ],
                     validate_dateformat: ["DD/MM/YYYY HH:mm:ss"],
                     filter_value_conversion: {
-                        function_name: "local_date_to_UTC_timestamp",
+                        function_name: "local_datetime_to_UTC_timestamp",
                         args: ["DD/MM/YYYY HH:mm:ss"]
                     }
                 }
@@ -308,6 +313,28 @@ function create_log(elem_log, log, is_error, is_debug) {
 
 
 /**
+ *
+ * @param dateformat
+ * @param date_str
+ * @return {*}
+ */
+function date_decode(dateformat, date_str) {
+
+    if(date_str == null || date_str.length == 0) {
+        return '';
+    }
+
+    var year = date_str.substr(0,4),
+        month = date_str.substr(4,2),
+        day = date_str.substr(6,2);
+
+    var a = moment([year, month - 1, day]);
+    return a.format(dateformat);
+}
+
+
+
+/**
  * Convert local timezone date string to UTC timestamp
  *
  * Alternative syntax using jquery (instead of moment.js):
@@ -318,7 +345,7 @@ function create_log(elem_log, log, is_error, is_debug) {
  * @param date_str
  * @return {String}
  */
-function local_date_to_UTC_timestamp(dateformat, date_str) {
+function local_datetime_to_UTC_timestamp(dateformat, date_str) {
 
     // avoid date overflow in user input (moment("14/14/2005", "DD/MM/YYYY") => Tue Feb 14 2006)
     if(moment(date_str, dateformat).isValid() == false) {
