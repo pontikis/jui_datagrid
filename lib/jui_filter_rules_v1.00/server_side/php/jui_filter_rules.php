@@ -5,11 +5,27 @@
 class jui_filter_rules {
 
 	/** @var object Database connection */
-	var $conn;
+	private $conn;
 	/** @var bool Use prepared statements or not */
-	var $usePreparedStatements;
-	/** @var string RDBMS in use (one of "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES") */
-	var $rdbms;
+	private $usePreparedStatements;
+	/** @var string Prepared statements placeholder type ("question_mark" or "numbered") */
+	private $pst_placeholder;
+	/** @var string RDBMS in use (one of "ADODB", "POSTGRES") */
+	private $rdbms;
+	/**
+	 * @var array last_error
+	 *
+	 * array(
+	 *    'element_rule_id' => 'the id of rule li element',
+	 *    'error_message' => 'error message'
+	 * )
+	 *
+	 */
+	private $last_error;
+
+	public function get_last_error() {
+		return $this->get_last_error();
+	}
 
 	/**
 	 * @param object $dbcon database connection
@@ -22,6 +38,10 @@ class jui_filter_rules {
 		$this->usePreparedStatements = $use_ps;
 		$this->rdbms = $db_type;
 		$this->pst_placeholder = $pst_placeholder;
+		$this->last_error = array(
+			'element_rule_id' => null,
+			'error_message' => null
+		);
 	}
 
 	/**
@@ -49,11 +69,20 @@ class jui_filter_rules {
 
 				$filter_value_conversion_server_side = array_key_exists("filter_value_conversion_server_side", $rule) ? $rule['filter_value_conversion_server_side'] : null;
 				$filter_value = array_key_exists("filterValue", $rule['condition']) ? $rule['condition']['filterValue'] : null;
-				$filter_value_sql = $this->create_filter_value_sql($rule['condition']['filterType'],
-					$rule['condition']['operator'],
-					$filter_value,
-					$filter_value_conversion_server_side,
-					$this->usePreparedStatements, $this->rdbms);
+
+				try {
+					$filter_value_sql = $this->create_filter_value_sql($rule['condition']['filterType'],
+						$rule['condition']['operator'],
+						$filter_value,
+						$filter_value_conversion_server_side,
+						$this->usePreparedStatements, $this->rdbms);
+				} catch(Exception $e) {
+					$this->last_error = array(
+						'element_rule_id' => $rule['element_rule_id'],
+						'error_message' => $e->getMessage()
+					);
+				}
+
 
 				if($this->usePreparedStatements) {
 					if(!in_array($rule['condition']['operator'], array("is_null", "is_not_null"))) {
