@@ -7,13 +7,14 @@
 // initialize ------------------------------------------------------------------
 $total_rows = null;
 $a_data = null;
-$last_filter_error = array();
 $last_error = null;
+$last_filter_error = array();
 $debug_message = array();
 $result = array(
 	'total_rows' => $total_rows,
 	'page_data' => $a_data,
 	'error' => $last_error,
+	'filter_error' => $last_filter_error,
 	'debug_message' => $debug_message
 );
 

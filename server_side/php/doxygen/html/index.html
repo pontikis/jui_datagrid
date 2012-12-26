@@ -115,23 +115,27 @@ Fetch page data from server</h2>
 <div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    $where = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_whereSQL(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#abaadef9a387318e61f818d346abc5f96">$filter_rules</a>);</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#ac6ab311e7bbf2df03268f5deed72ab33">$whereSQL</a> = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a> = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
 <div class="line"></div>
-<div class="line">    $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_total_rows(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, $selectCountSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#ac6ab311e7bbf2df03268f5deed72ab33">$whereSQL</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> === <span class="keyword">false</span>) {</div>
-<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
+<div class="line">    <span class="keywordflow">if</span>(array_key_exists(<span class="stringliteral">&#39;error_message&#39;</span>, $where)) {</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a0e13824b378cfbad610b71885f5e9b2f">$last_filter_error</a> = $where;</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">        $selectSQL = <span class="stringliteral">&#39;SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender &#39;</span> .</div>
-<div class="line">            <span class="stringliteral">&#39;FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)&#39;</span>;</div>
-<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#ade8f17dc8d74630899faaf17472391cd">$a_data</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;fetch_page_data(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a129f576e647018fa748a3180db6bd78d">$page_num</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a25e9fd990572851e590a4d5bed823f20">$rows_per_page</a>, $selectSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#abdc5d7c5bae165869f15dbb990cd3b7c">$sorting</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#ac6ab311e7bbf2df03268f5deed72ab33">$whereSQL</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
-<div class="line">        <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#ade8f17dc8d74630899faaf17472391cd">$a_data</a> === <span class="keyword">false</span>) {</div>
+<div class="line">        $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a> = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
+<div class="line"></div>
+<div class="line">        $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_total_rows(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, $selectCountSQL, $whereSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> === <span class="keyword">false</span>) {</div>
 <div class="line">            <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">            $selectSQL = <span class="stringliteral">&#39;SELECT c.id as customer_id, c.lastname, c.firstname, c.email, g.gender &#39;</span> .</div>
+<div class="line">                <span class="stringliteral">&#39;FROM customers c INNER JOIN lk_genders g ON (c.lk_genders_id = g.id)&#39;</span>;</div>
+<div class="line">            <a class="code" href="d7/dd6/fetch__data_8php.html#ade8f17dc8d74630899faaf17472391cd">$a_data</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;fetch_page_data(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a129f576e647018fa748a3180db6bd78d">$page_num</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a25e9fd990572851e590a4d5bed823f20">$rows_per_page</a>, $selectSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#abdc5d7c5bae165869f15dbb990cd3b7c">$sorting</a>, $whereSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
+<div class="line">            <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#ade8f17dc8d74630899faaf17472391cd">$a_data</a> === <span class="keyword">false</span>) {</div>
+<div class="line">                <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
+<div class="line">            }</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
-<div class="line"></div>
 <div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;db_disconnect(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="usage2"></a>
@@ -142,22 +146,25 @@ Count total rows</h2>
 <div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    $where = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_whereSQL(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#abaadef9a387318e61f818d346abc5f96">$filter_rules</a>);</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#ac6ab311e7bbf2df03268f5deed72ab33">$whereSQL</a> = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a> = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
+<div class="line">    <span class="keywordflow">if</span>(array_key_exists(<span class="stringliteral">&#39;error_message&#39;</span>, $where)) {</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a0e13824b378cfbad610b71885f5e9b2f">$last_filter_error</a> = $where;</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">        $whereSQL = $where[<span class="stringliteral">&#39;sql&#39;</span>];</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a> = $where[<span class="stringliteral">&#39;bind_params&#39;</span>];</div>
 <div class="line"></div>
-<div class="line">    $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
-<div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_total_rows(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, $selectCountSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#ac6ab311e7bbf2df03268f5deed72ab33">$whereSQL</a>, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
+<div class="line">        $selectCountSQL = <span class="stringliteral">&#39;SELECT count(id) as totalrows FROM customers&#39;</span>;</div>
+<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_total_rows(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>, $selectCountSQL, $whereSQL, <a class="code" href="d7/dd6/fetch__data_8php.html#a4787a76724552b9621cb0250ceb29e8d">$bind_params</a>);</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> === <span class="keyword">false</span>) {</div>
-<div class="line">        <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
+<div class="line">        <span class="keywordflow">if</span>(<a class="code" href="d7/dd6/fetch__data_8php.html#af2c641e024ee7eeec68ae26c08ca2cf2">$total_rows</a> === <span class="keyword">false</span>) {</div>
+<div class="line">            <a class="code" href="d7/dd6/fetch__data_8php.html#a60375900d6ade93e662c348772867d64">$last_error</a> = <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;get_last_error();</div>
+<div class="line">        }</div>
 <div class="line">    }</div>
-<div class="line"></div>
 <div class="line">    <a class="code" href="d7/dd6/fetch__data_8php.html#a94b3f929a75835278e4b0bf35cb0c989">$jdg</a>-&gt;db_disconnect(<a class="code" href="d7/dd6/fetch__data_8php.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>);</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 17:41:56 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 26 2012 19:32:11 for jui_datagrid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
