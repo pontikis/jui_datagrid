@@ -157,7 +157,8 @@
                         debug_mode: debug_mode
                     },
                     success: function(data) {
-                        var a_data, server_error, filter_error, row_primary_key, total_rows, page_data;
+                        var a_data, server_error, filter_error, row_primary_key, total_rows, page_data, page_data_len,
+                            columns, column, col_len, column_value_conversion, conversion_function, arg_len, conversion_args = [];
                         a_data = $.parseJSON(data);
 
                         server_error = a_data['error'];
@@ -182,6 +183,53 @@
 
                         if(debug_mode == "yes") {
                             elem.triggerHandler("onDebug", {debug_message: a_data['debug_message']});
+                        }
+
+
+                        // apply column value conversions (if any)
+                        page_data_len = page_data.length;
+                        if(page_data_len > 0) {
+
+                            columns = settings.columns;
+                            col_len = columns.length;
+                            for(var c = 0; c < col_len; c++) {
+                                column = columns[c];
+                                if(column.hasOwnProperty("visible") && column['visible'] == "yes") {
+                                    if(column.hasOwnProperty("column_value_conversion")) {
+
+                                        column_value_conversion = column.column_value_conversion;
+                                        conversion_function = column_value_conversion["function_name"];
+                                        arg_len = column_value_conversion["args"].length;
+                                        for(var a = 0; a < arg_len; a++) {
+                                            conversion_args.push(column_value_conversion["args"][a]);
+                                        }
+
+                                        for(var v = 0; v < page_data_len; v++) {
+                                            if(v == 0) {
+                                                conversion_args.push(page_data[v][column["field"]]);
+                                            } else {
+                                                arg_len = conversion_args.length;
+                                                conversion_args[arg_len - 1] = page_data[v][column["field"]];
+                                            }
+                                            try {
+                                                page_data[v][column["field"]] = window[conversion_function].apply(null, conversion_args);
+                                            }
+                                            catch(err) {
+                                                elem.triggerHandler("onDatagridError",
+                                                    {
+                                                        err_code: "column_conversion_error_0",
+                                                        err_description: rsc_jui_dg.error_converting_column_value + ':\n\n' + err.message
+                                                    }
+                                                );
+                                                $.error(err.message);
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+
+
                         }
 
                         if(total_rows == 0) {
