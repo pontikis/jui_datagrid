@@ -185,7 +185,6 @@
                             elem.triggerHandler("onDebug", {debug_message: a_data['debug_message']});
                         }
 
-
                         // apply column value conversions (if any)
                         page_data_len = page_data.length;
                         if(page_data_len > 0) {
@@ -228,7 +227,6 @@
                                     }
                                 }
                             }
-
 
                         }
 
