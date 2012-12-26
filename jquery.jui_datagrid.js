@@ -214,13 +214,15 @@
                                                 page_data[v][column["field"]] = window[conversion_function].apply(null, conversion_args);
                                             }
                                             catch(err) {
+                                                err_msg = rsc_jui_dg.error_converting_column_value + ' (' + page_data[v][column["field"]] + ') ' + ':\n\n' + err.message;
                                                 elem.triggerHandler("onDatagridError",
                                                     {
                                                         err_code: "column_conversion_error_0",
-                                                        err_description: rsc_jui_dg.error_converting_column_value + ':\n\n' + err.message
+                                                        err_description: err_msg
                                                     }
                                                 );
-                                                $.error(err.message);
+                                                elem.html('<span style="color: red;">' + err_msg + '</span>');
+                                                $.error(err_msg);
                                             }
                                         }
 
