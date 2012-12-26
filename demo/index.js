@@ -10,7 +10,7 @@ $(function() {
         type: 'POST',
         url: "ajax/ajax_get_server_timezone.php",
         success: function(data) {
-            $('#tz_info').html('<strong>Detected USER timezone: </strong>' + getTimezoneName() + ' ' + getTZoffset() + '<br />' + '<strong>SERVER timezone: </strong>' + data);
+            $('#tz_info').html('<strong>SERVER timezone: </strong>' + data + ' <strong>Detected USER timezone: </strong>' + getTimezoneName() + ' ' + getTZoffset());
         }
     });
 
@@ -31,7 +31,12 @@ $(function() {
             {field: "email", visible: "no", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
             {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"},
             {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth"},
-            {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated"}
+            {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
+                column_value_conversion_server_side: {
+                    function_name: "date_decode",
+                    args: ["Europe/Athens", "d/m/Y H:m:s"] // user function arguments array, except column value, which will become the LAST argument
+                }
+            }
         ],
 
         sorting: [
