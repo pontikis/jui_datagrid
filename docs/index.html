@@ -98,6 +98,8 @@
 
     <p>DEMO <a href="http://pontikis.net/jui_datagrid/demo/">http://pontikis.net/jui_datagrid/demo/</a>
 
+    <p>FORUM <a href="http://bbs.pontikis.net">http://bbs.pontikis.net</a>
+
     <p>
         <small>Syntax highlight using <a
                 href="http://alexgorbatchev.com/SyntaxHighlighter/"
@@ -138,6 +140,7 @@
         <li>Single or multi-select rows
         <li>Powerful pagination
         <li>Powerful filters
+        <li>Column value conversion using javascript (or server side) function
         <li>Preferences dialog available to user
         <li>Debug mode available
         <li>Localization
@@ -262,6 +265,41 @@
         ]
     }
     </pre>
+</div>
+
+<!-- User functions -------------------------------------------------------- -->
+<h3>User functions (column value conversion)</h3>
+
+<div class="level3">
+    <p>Use can set custom functions for column value conversion either
+        javascript or server side functions.
+        These functions must have column value as <strong>LAST</strong>
+        argument.
+        Arguments can be passed as an array, which will NOT contain 'filter
+        value', as it will be added automatically by
+        <code>jui_datagrid</code> plugin.</p>
+
+    <p>Example of javascript user function</p>
+        <pre class="brush: js">
+
+
+
+
+
+        </pre>
+
+    <p>Example of server-side user function</p>
+        <pre class="brush: js">
+        columns: [
+            {field: "customer_id", visible: "no", "header": 'Code', "headerClass": "th_code", "dataClass": "td_code"},
+            {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
+                column_value_conversion_server_side: {
+                    function_name: "date_decode",
+                    args: ["Europe/Athens", "d/m/Y H:m:s"] // user function arguments array, except column value, which will become the LAST argument
+                }
+            }
+        ]
+        </pre>
 </div>
 
 <!-- Structure ------------------------------------------------------------- -->
