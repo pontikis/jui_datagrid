@@ -325,7 +325,7 @@ function local_date_to_UTC_timestamp(dateformat, date_str) {
         throw new Error("Invalid date");
     }
 
-    // parse date string using givn dateformat and create a javascript date object
+    // parse date string using given dateformat and create a javascript date object
     var date = moment(date_str, dateformat).toDate();
 
     // use javascript getUTC* functions to conv ert to UTC
