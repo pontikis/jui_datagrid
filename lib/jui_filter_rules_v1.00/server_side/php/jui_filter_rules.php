@@ -24,7 +24,7 @@ class jui_filter_rules {
 	private $last_error;
 
 	public function get_last_error() {
-		return $this->get_last_error();
+		return $this->last_error;
 	}
 
 	/**
