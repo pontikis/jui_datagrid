@@ -4,7 +4,7 @@
 
 jui_datagrid is a helper class for <a href="../../../../docs/">jquery.jui_datagrid</a> plugin, handles server operations (mainly through AJAX requests).
 
-<strong>NOTE</strong>: It is just a helper class. Anyone could write custom php code to return JSON results to jquery.jui_datagrid plugin.
+<strong>NOTE</strong>: It is just a helper class. Anyone could write custom php code to return JSON results to jquery.jui_datagrid plugin (or to perform any other action as delete, export etc).
 
 Required: php 5+
 
