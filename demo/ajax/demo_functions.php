@@ -62,8 +62,6 @@ function date_encode($str_user_timezone,
 }
 
 
-
-
 /**
  * Converts a UTC timestamp to date string of given timezone (considering DST) and given dateformat
  *
@@ -84,9 +82,9 @@ function date_encode($str_user_timezone,
  * @param $str_user_dateformat
  * @return string
  */
-function date_decode($str_server_datetime,
-					 $str_user_timezone,
-					 $str_user_dateformat) {
+function date_decode($str_user_timezone,
+					 $str_user_dateformat,
+					 $str_server_datetime) {
 
 	// create date object
 	try {
@@ -105,9 +103,3 @@ function date_decode($str_server_datetime,
 	return $str_user_datetime;
 }
 
-/**
- * @return string
- */
-function get_server_timezone() {
-	return system('date +%Z');
-}
