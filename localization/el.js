@@ -51,5 +51,7 @@ var rsc_jui_dg = {
     rows_info_of: 'από',
     rows_info_records: 'εγγραφές',
 
-    no_records_found: 'Δεν βρέθηκαν εγγραφές'
+    no_records_found: 'Δεν βρέθηκαν εγγραφές',
+
+    error_converting_column_value: "Λάθος κατά τη μετατροπή της τιμής στήλης"
 };

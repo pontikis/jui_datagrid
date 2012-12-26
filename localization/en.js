@@ -51,5 +51,7 @@ var rsc_jui_dg = {
     rows_info_of: 'of',
     rows_info_records: 'records',
 
-    no_records_found: 'No records found'
+    no_records_found: 'No records found',
+
+    error_converting_column_value: "Error converting column value"
 };
