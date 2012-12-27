@@ -820,8 +820,9 @@
 
         /**
          * Get any option set to plugin using its name (as string)
+         *
          * @example $(element).jui_datagrid('getOption', some_option);
-         * @param opt
+         * @param {String} opt
          * @return {*}
          */
         getOption: function(opt) {
@@ -842,9 +843,9 @@
         /**
          * Set option
          * @example $(element).jui_datagrid('setOption', 'option_name',  'option_value',  reinit);
-         * @param opt
+         * @param {String} opt
          * @param val
-         * @param reinit
+         * @param {Boolean} reinit
          */
         setOption: function(opt, val, reinit) {
             var elem = this;
@@ -916,10 +917,10 @@
         /**
          * Set a class to page column
          * @example $(element).jui_datagrid('setPageColClass', 1, 'headerClass', 'dataClass', true);
-         * @param col_index
-         * @param headerClass
-         * @param dataClass
-         * @param sync_col_width
+         * @param {Number} col_index
+         * @param {String} headerClass
+         * @param {String} dataClass
+         * @param {Boolean} sync_col_width
          */
         setPageColClass: function(col_index, headerClass, dataClass, sync_col_width) {
             var elem = this,
@@ -944,10 +945,10 @@
         /**
          * Set a class to page column
          * @example $(element).jui_datagrid('removePageColClass', 1, 'headerClass', 'dataClass', true);
-         * @param col_index
-         * @param headerClass
-         * @param dataClass
-         * @param sync_col_width
+         * @param {Number} col_index
+         * @param {String} headerClass
+         * @param {String} dataClass
+         * @param {Boolean} sync_col_width
          */
         removePageColClass: function(col_index, headerClass, dataClass, sync_col_width) {
             var elem = this,
