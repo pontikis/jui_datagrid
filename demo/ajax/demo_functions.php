@@ -82,9 +82,9 @@ function date_encode($str_user_timezone,
  * @param $str_user_dateformat
  * @return string
  */
-function UTC_timestamp_to_local_datetime($str_user_timezone,
-										 $str_user_dateformat,
-										 $str_server_datetime) {
+function UTC_timestamp_to_local_datetime($str_server_datetime,
+										 $str_user_timezone,
+										 $str_user_dateformat) {
 
 	// create date object
 	$date = new DateTime($str_server_datetime);

@@ -293,22 +293,29 @@ class jui_datagrid {
 			foreach($columns as $column) {
 				if($column['visible'] == 'yes') {
 					if(array_key_exists('column_value_conversion_server_side', $column)) {
-						$column_value_conversion_server_side = $column['column_value_conversion_server_side'];
 
+						$column_value_conversion_server_side = $column['column_value_conversion_server_side'];
 						if(is_array($column_value_conversion_server_side)) {
 							$function_name = $column_value_conversion_server_side['function_name'];
 							$args = $column_value_conversion_server_side['args'];
 							$arg_len = count($args);
 
 							for($i = 0; $i < $rows; $i++) {
-								if($i == 0) {
-									array_push($args, $a_data[$i][$column['field']]);
-									$arg_len++;
-								} else {
-									$args[$arg_len - 1] = $a_data[$i][$column['field']];
+
+								// create arguments values gor this row
+								$conversion_args = array();
+								for($a = 0; $a < $arg_len; $a++) {
+									if(array_key_exists("col_index", $args[$a])) {
+										$col_idx = $args[$a]["col_index"];
+										array_push($conversion_args, $a_data[$i][$columns[$col_idx]["field"]]);
+									}
+									if(array_key_exists("value", $args[$a])) {
+										array_push($conversion_args, $args[$a]["value"]);
+									}
 								}
+								// execute user function and assign return value to this column cell
 								try {
-									$a_data[$i][$column['field']] = call_user_func_array($function_name, $args);
+									$a_data[$i][$column['field']] = call_user_func_array($function_name, $conversion_args);
 								} catch(Exception $e) {
 									$this->last_error = 'Column value (' . $a_data[$i][$column['field']] . ') conversion error server side: ' . $e->getMessage();
 									$a_data = false;
@@ -322,9 +329,6 @@ class jui_datagrid {
 
 			}
 		}
-
-
-
 
 
 		if($this->debug_mode) {

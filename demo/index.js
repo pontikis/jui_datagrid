@@ -33,13 +33,20 @@ $(function() {
             {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth",
                 column_value_conversion: {
                     function_name: "date_decode",
-                    args: [{"col_index": 5}, {"value": "DD/MM/YYYY"}]
+                    args: [
+                        {"col_index": 5},
+                        {"value": "DD/MM/YYYY"}
+                    ]
                 }
             },
             {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
                 column_value_conversion_server_side: {
                     function_name: "UTC_timestamp_to_local_datetime",
-                    args: ["Europe/Athens", "d/m/Y H:m:s"]
+                    args: [
+                        {"col_index": 6},
+                        {"value": "Europe/Athens"},
+                        {"value": "d/m/Y H:m:s"}
+                    ]
                 }
             }
         ],
@@ -324,14 +331,13 @@ function date_decode(date_str, dateformat) {
         return '';
     }
 
-    var year = date_str.substr(0,4),
-        month = date_str.substr(4,2),
-        day = date_str.substr(6,2);
+    var year = date_str.substr(0, 4),
+        month = date_str.substr(4, 2),
+        day = date_str.substr(6, 2);
 
     var a = moment([year, month - 1, day]);
     return a.format(dateformat);
 }
-
 
 
 /**
