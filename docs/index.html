@@ -284,20 +284,31 @@
 
 <div class="level3">
     <p>Use can set custom functions for column value conversion either
-        javascript or server side functions.
-        These functions must have column value as <strong>LAST</strong>
-        argument.
-        Arguments can be passed as an array, which will NOT contain 'filter
-        value', as it will be added automatically by
-        <code>jui_datagrid</code> plugin.</p>
+        javascript or server side functions.</p>
+    <p>Arguments can be passed as an array of objects. Each argument object can contain:</p>
+
+    <ul>
+        <li>a direct value: <code>{"value": "DD/MM/YYYY"}</code></li>
+        <li>or the value of a column, providing the column index: <code>{"col_index": 5}</code></li>
+    </ul>
+
+    <p>So, any column value can become 'argument' for conversion functions.</p>
 
     <p>Example of javascript user function</p>
         <pre class="brush: js">
-
-
-
-
-
+        columns: [
+            {field: "customer_id", visible: "no", "header": 'Code', "headerClass": "th_code", "dataClass": "td_code"},
+            {field: "lastname", visible: "yes", "header": 'Lastname', "headerClass": "th_lastname", "dataClass": "td_lastname"},
+            {field: "firstname", visible: "yes", "header": 'Firstname', "headerClass": "th_firstname", "dataClass": "td_firstname"},
+            {field: "email", visible: "no", "header": 'Email', "headerClass": "th_email", "dataClass": "td_email"},
+            {field: "gender", visible: "yes", "header": 'Gender', "headerClass": "th_gender", "dataClass": "td_gender"},
+            {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth",
+                column_value_conversion: {
+                    function_name: "date_decode",
+                    args: [{"col_index": 5}, {"value": "DD/MM/YYYY"}]
+                }
+            }
+        ]
         </pre>
 
     <p>Example of server-side user function</p>
@@ -307,7 +318,7 @@
             {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
                 column_value_conversion_server_side: {
                     function_name: "date_decode",
-                    args: ["Europe/Athens", "d/m/Y H:m:s"] // user function arguments array, except column value, which will become the LAST argument
+                    args: ["Europe/Athens", "d/m/Y H:m:s"]
                 }
             }
         ]
