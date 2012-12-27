@@ -206,6 +206,7 @@
 
                                         for(var v = 0; v < page_data_len; v++) {
 
+                                            // create arguments values gor this row
                                             conversion_args = [];
                                             for(var a = 0; a < arg_len; a++) {
                                                 if(column_value_conversion_args[a].hasOwnProperty("col_index")) {
@@ -216,7 +217,7 @@
                                                     conversion_args.push(column_value_conversion_args[a]["value"]);
                                                 }
                                             }
-
+                                            // execute user function and assign return value to this column cell
                                             try {
                                                 page_data[v][column["field"]] = window[conversion_function].apply(null, conversion_args);
                                             }
