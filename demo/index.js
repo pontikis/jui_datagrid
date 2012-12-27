@@ -33,13 +33,13 @@ $(function() {
             {field: "date_of_birth", visible: "yes", "header": 'Date of birth', "headerClass": "th_date_of_birth", "dataClass": "th_date_of_birth",
                 column_value_conversion: {
                     function_name: "date_decode",
-                    args: ["DD/MM/YYYY"] // user function arguments array, except column value, which will become the LAST argument
+                    args: [{"col_index": 5}, {"value": "DD/MM/YYYY"}]
                 }
             },
             {field: "date_updated", visible: "yes", "header": 'Date updated', "headerClass": "th_date_updated", "dataClass": "th_date_updated",
                 column_value_conversion_server_side: {
                     function_name: "UTC_timestamp_to_local_datetime",
-                    args: ["Europe/Athens", "d/m/Y H:m:s"] // user function arguments array, except column value, which will become the LAST argument
+                    args: ["Europe/Athens", "d/m/Y H:m:s"]
                 }
             }
         ],
@@ -314,11 +314,11 @@ function create_log(elem_log, log, is_error, is_debug) {
 
 /**
  *
- * @param dateformat
  * @param date_str
- * @return {*}
+ * @param dateformat
+ * @return {String}
  */
-function date_decode(dateformat, date_str) {
+function date_decode(date_str, dateformat) {
 
     if(date_str == null || date_str.length == 0) {
         return '';
