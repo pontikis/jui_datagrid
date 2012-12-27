@@ -42,7 +42,7 @@ strong {
     width: 700px !important;
 }
 
-.th_code, .th_lastname, .th_firstname, .th_email, .th_gender {
+.th_code, .th_lastname, .th_firstname, .th_email, .th_gender, .th_date_of_birth, .th_date_updated {
     text-align: left;
 }
 
