@@ -158,7 +158,7 @@
                     },
                     success: function(data) {
                         var a_data, server_error, filter_error, row_primary_key, total_rows, page_data, page_data_len,
-                            columns, column, col_len, column_value_conversion, conversion_function, arg_len, conversion_args = [];
+                            columns, column, col_len, col_idx, column_value_conversion, conversion_function, column_value_conversion_args, arg_len, conversion_args = [];
                         a_data = $.parseJSON(data);
 
                         server_error = a_data['error'];
@@ -185,6 +185,9 @@
                             elem.triggerHandler("onDebug", {debug_message: a_data['debug_message']});
                         }
 
+                        // replace null with empty string
+
+
                         // apply column value conversions (if any)
                         page_data_len = page_data.length;
                         if(page_data_len > 0) {
@@ -198,18 +201,22 @@
 
                                         column_value_conversion = column.column_value_conversion;
                                         conversion_function = column_value_conversion["function_name"];
-                                        arg_len = column_value_conversion["args"].length;
-                                        for(var a = 0; a < arg_len; a++) {
-                                            conversion_args.push(column_value_conversion["args"][a]);
-                                        }
+                                        column_value_conversion_args = column_value_conversion["args"];
+                                        arg_len = column_value_conversion_args.length;
 
                                         for(var v = 0; v < page_data_len; v++) {
-                                            if(v == 0) {
-                                                conversion_args.push(page_data[v][column["field"]]);
-                                            } else {
-                                                arg_len = conversion_args.length;
-                                                conversion_args[arg_len - 1] = page_data[v][column["field"]];
+
+                                            conversion_args = [];
+                                            for(var a = 0; a < arg_len; a++) {
+                                                if(column_value_conversion_args[a].hasOwnProperty("col_index")) {
+                                                    col_idx = parseInt(column_value_conversion_args[a]["col_index"]);
+                                                    conversion_args.push(page_data[v][columns[col_idx]["field"]]);
+                                                }
+                                                if(column_value_conversion_args[a].hasOwnProperty("value")) {
+                                                    conversion_args.push(column_value_conversion_args[a]["value"]);
+                                                }
                                             }
+
                                             try {
                                                 page_data[v][column["field"]] = window[conversion_function].apply(null, conversion_args);
                                             }
