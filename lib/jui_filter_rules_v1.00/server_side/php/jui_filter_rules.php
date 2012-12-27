@@ -23,10 +23,6 @@ class jui_filter_rules {
 	 */
 	private $last_error;
 
-	public function get_last_error() {
-		return $this->last_error;
-	}
-
 	/**
 	 * @param object $dbcon database connection
 	 * @param bool $use_ps use prepared statements or not
@@ -42,6 +38,10 @@ class jui_filter_rules {
 			'element_rule_id' => null,
 			'error_message' => null
 		);
+	}
+
+	public function get_last_error() {
+		return $this->last_error;
 	}
 
 	/**
@@ -70,19 +70,11 @@ class jui_filter_rules {
 				$filter_value_conversion_server_side = array_key_exists("filter_value_conversion_server_side", $rule) ? $rule['filter_value_conversion_server_side'] : null;
 				$filter_value = array_key_exists("filterValue", $rule['condition']) ? $rule['condition']['filterValue'] : null;
 
-				try {
-					$filter_value_sql = $this->create_filter_value_sql($rule['condition']['filterType'],
-						$rule['condition']['operator'],
-						$filter_value,
-						$filter_value_conversion_server_side,
-						$this->usePreparedStatements, $this->rdbms);
-				} catch(Exception $e) {
-					$this->last_error = array(
-						'element_rule_id' => $rule['element_rule_id'],
-						'error_message' => $e->getMessage()
-					);
-				}
-
+				$filter_value_sql = $this->create_filter_value_sql($rule['condition']['filterType'],
+					$rule['condition']['operator'],
+					$filter_value,
+					$filter_value_conversion_server_side,
+					$rule['element_rule_id']);
 
 				if($this->usePreparedStatements) {
 					if(!in_array($rule['condition']['operator'], array("is_null", "is_not_null"))) {
@@ -136,9 +128,10 @@ class jui_filter_rules {
 	 * @param string $operator_type (see documentation for available operators)
 	 * @param array|null $a_values the values array
 	 * @param array|null $filter_value_conversion_server_side
+	 * @param string $element_rule_id
 	 * @return string
 	 */
-	private function create_filter_value_sql($filter_type, $operator_type, $a_values, $filter_value_conversion_server_side) {
+	private function create_filter_value_sql($filter_type, $operator_type, $a_values, $filter_value_conversion_server_side, $element_rule_id) {
 		$conn = $this->conn;
 		$res = '';
 		$vlen = count($a_values);
@@ -155,13 +148,27 @@ class jui_filter_rules {
 				$arg_len = count($args);
 
 				for($i = 0; $i < $vlen; $i++) {
-					if($i == 0) {
-						array_push($args, $a_values[$i]);
-						$arg_len++;
-					} else {
-						$args[$arg_len - 1] = $a_values[$i];
+					// create arguments values for this filter value
+					$conversion_args = array();
+					for($a = 0; $a < $arg_len; $a++) {
+						if(array_key_exists("filter_value", $args[$a])) {
+							array_push($conversion_args, $a_values[$i]);
+						}
+						if(array_key_exists("value", $args[$a])) {
+							array_push($conversion_args, $args[$a]["value"]);
+						}
 					}
-					$a_values[$i] = call_user_func_array($function_name, $args);
+					// execute user function and assign return value to filter value
+					try {
+						$a_values[$i] = call_user_func_array($function_name, $conversion_args);
+					} catch(Exception $e) {
+						$this->last_error = array(
+							'element_rule_id' => $element_rule_id,
+							'error_message' => $e->getMessage()
+						);
+						break;
+					}
+
 				}
 			}
 
