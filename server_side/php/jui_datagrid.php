@@ -302,7 +302,7 @@ class jui_datagrid {
 
 							for($i = 0; $i < $rows; $i++) {
 
-								// create arguments values gor this row
+								// create arguments values for this row
 								$conversion_args = array();
 								for($a = 0; $a < $arg_len; $a++) {
 									if(array_key_exists("col_index", $args[$a])) {
