@@ -206,7 +206,7 @@
 
                                         for(var v = 0; v < page_data_len; v++) {
 
-                                            // create arguments values gor this row
+                                            // create arguments values for this row
                                             conversion_args = [];
                                             for(var a = 0; a < arg_len; a++) {
                                                 if(column_value_conversion_args[a].hasOwnProperty("col_index")) {
