@@ -16,9 +16,9 @@ $(function() {
 
 
     // theme switcher ----------------------------------------------------------
-    $("#ui-theme-switcher").change(function() {
-        var theme_url = $(this).val();
-        $("#ui-theme").attr("href", theme_url);
+    $("#ui-theme-switcher").jui_theme_switch({
+        stylesheet_link_id: "ui-theme",
+        datasource_url: 'lib/jquery.jui_theme_switch_v1.00/json_data/dist/default.json'
     });
 
     // demo grid1 --------------------------------------------------------------
