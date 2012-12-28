@@ -77,11 +77,14 @@
 
 <div class="wrap">
 
-    <p>Project page: <a
-            href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
-    </p>
+    <div style="padding-top: 3px; font-size: 2em; display: inline-block">jui_datagrid demo (v1.00 beta)
+    </div>
 
-    <p id="tz_info"></p>
+    <div style="padding-top: 3px; font-size: 1em; display: inline-block">Project page: <a
+            href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
+    </div>
+
+    <div style="margin-top: 15px; margin-bottom: 10px" id="tz_info"></div>
 
     <label for="ui-theme-switcher">Select theme:</label> <select
         id="ui-theme-switcher">
@@ -190,16 +193,19 @@
 
     <div id="demo_grid1_test" style="margin-top: 10px;">
         <span><strong>rowSelectionMode: </strong></span>
-        <label for="selection_multiple">multiple</label><input type="radio"
-                                                               name="rowSelectionMode"
-                                                               id="selection_multiple"
-                                                               checked="checked">
-        <label for="selection_single">single</label><input type="radio"
-                                                           name="rowSelectionMode"
-                                                           id="selection_single">
-        <label for="selection_false">false</label><input type="radio"
-                                                         name="rowSelectionMode"
-                                                         id="selection_false">
+        <label for="selection_multiple">multiple</label>
+        <input type="radio"
+               name="rowSelectionMode"
+               id="selection_multiple"
+               checked="checked">
+        <label for="selection_single">single</label>
+        <input type="radio"
+               name="rowSelectionMode"
+               id="selection_single">
+        <label for="selection_false">false</label>
+        <input type="radio"
+               name="rowSelectionMode"
+               id="selection_false">
         <button id="log_show">Show log</button>
         <button id="log_hide">Hide log</button>
         <button id="log_clear">Clear log</button>
