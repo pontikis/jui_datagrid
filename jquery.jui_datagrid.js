@@ -157,8 +157,10 @@
                         debug_mode: debug_mode
                     },
                     success: function(data) {
-                        var a_data, server_error, filter_error, row_primary_key, total_rows, page_data, page_data_len,
-                            columns, column, col_len, col_idx, column_value_conversion, conversion_function, column_value_conversion_args, arg_len, conversion_args = [];
+                        var a_data, server_error, filter_error, row_primary_key, total_rows, page_data, page_data_len, v,
+                            columns = settings.columns,
+                            col_len = columns.length,
+                            column, c, col_idx, column_value_conversion, conversion_function, column_value_conversion_args, arg_len, conversion_args = [];
                         a_data = $.parseJSON(data);
 
                         server_error = a_data['error'];
@@ -178,6 +180,7 @@
 
                         total_rows = a_data['total_rows'];
                         page_data = a_data['page_data'];
+                        page_data_len = page_data.length;
 
                         row_primary_key = settings.row_primary_key;
 
@@ -186,15 +189,22 @@
                         }
 
                         // replace null with empty string
-
+                        if(page_data_len > 0) {
+                            for(v = 0; v < page_data_len; v++) {
+                                for(c = 0; c < col_len; c++) {
+                                    column = columns[c];
+                                    if(column.hasOwnProperty("visible") && column['visible'] == "yes") {
+                                        if(page_data[v][column['field']] == null) {
+                                            page_data[v][column['field']] = '';
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         // apply column value conversions (if any)
-                        page_data_len = page_data.length;
                         if(page_data_len > 0) {
-
-                            columns = settings.columns;
-                            col_len = columns.length;
-                            for(var c = 0; c < col_len; c++) {
+                            for(c = 0; c < col_len; c++) {
                                 column = columns[c];
                                 if(column.hasOwnProperty("visible") && column['visible'] == "yes") {
                                     if(column.hasOwnProperty("column_value_conversion")) {
@@ -204,7 +214,7 @@
                                         column_value_conversion_args = column_value_conversion["args"];
                                         arg_len = column_value_conversion_args.length;
 
-                                        for(var v = 0; v < page_data_len; v++) {
+                                        for(v = 0; v < page_data_len; v++) {
 
                                             // create arguments values for this row
                                             conversion_args = [];
