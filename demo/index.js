@@ -14,6 +14,8 @@ $(function() {
         }
     });
 
+    $("#jui_version").html('<strong>' + 'jQuery version: ' + '</strong>' + $().jquery
+        + ' - ' + '<strong>' + 'jQuery-ui version: ' + '</strong>' + $.ui.version);
 
     // theme switcher ----------------------------------------------------------
     $("#ui-theme-switcher").jui_theme_switch({
