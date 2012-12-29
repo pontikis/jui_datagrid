@@ -218,6 +218,16 @@
         "license": "Copyright 2012, Addy Osmani - Dual licensed under the MIT or GPL Version 2 licenses"
     },
     {
+        "theme_name": "Absolution",
+        "hosted_locally": "yes",
+        "theme_url": "/lib/jquery-ui-1.9.2.custom/css/3rd-party/Absolution/absolution.css",
+        "group": "3rd-party",
+        "active": "yes",
+        "author": "http://www.michaelvanderheeren.be/archives/382",
+        "license": "https://github.com/michaelvanderheeren/Absolution/blob/master/README.md",
+        "notes": "You are free to redistribute or change the theme. You can change the theme, but you should keep the references to contributors!"
+    },
+    {
         "theme_name": "Selene",
         "theme_url": "http://gravityonmars.github.com/Selene/css/ui-selene/jquery-ui-1.8.17.custom.css",
         "group": "3rd-party",
