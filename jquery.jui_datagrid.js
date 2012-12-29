@@ -88,9 +88,9 @@
                 elem.unbind("onCellClick").bind("onCellClick", settings.onCellClick);
                 elem.unbind("onRowClick").bind("onRowClick", settings.onRowClick);
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
-                elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
                 elem.unbind("onDatagridError").bind("onDatagridError", settings.onDatagridError);
                 elem.unbind("onDebug").bind("onDebug", settings.onDebug);
+                elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
                 var caption_id = create_id(settings.caption_id_prefix, container_id),
