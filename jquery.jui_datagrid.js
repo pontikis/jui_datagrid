@@ -1277,7 +1277,7 @@
                     text: rsc_jui_dg.preferences_close,
                     click: function() {
                         $(this).dialog("close");
-                        $(this).dialog("destroy");
+                        //$(this).dialog("destroy");
                     }
                 }
             ],
@@ -1395,7 +1395,7 @@
                     text: rsc_jui_dg.sorting_close,
                     click: function() {
                         $(this).dialog("close");
-                        $(this).dialog("destroy");
+                        //$(this).dialog("destroy");
                     }
                 }
             ],
