@@ -1,9 +1,10 @@
 {
     "name": "jui_datagrid",
-    "version": "1.0.0",
-    "title": "jui_datagrid",
+    "version": "0.9.0",
+    "title": "jui_datagrid jQuery plugin",
     "author": {
         "name": "Christos Pontikis",
+        "email": "christos@pontikis.net",
         "url": "http://pontikis.net"
     },
     "licenses": [
@@ -15,23 +16,27 @@
     "dependencies": {
         "jquery": ">=1.6",
         "jquery-ui": ">=1.8",
-        "moment.js": "1.7.2"
+        "jui_pagination": ">=2.0.0",
+        "jui_filter_rules": ">=1.0.0",
+        "jui_dropdown": ">=1.0.2",
+        "momentjs": ">=1.7.2"
     },
-    "description": "jquery plugin which displays database data in tabular format (datagrid)",
-    "homepage": "https://github.com/pontikis/jui_datagrid",
-    "docs": "http://pontikis.net/jui_datagrid/v1.00/docs",
-    "demo": "http://pontikis.net/jui_datagrid/v1.00/demo",
-    "download": "https://github.com/pontikis/jui_datagrid/zipball/v1.0.0",
+    "description": "jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate database data in tabular format. Fully customizable, simple but powerful API, jQuery themes compatible, localization support. It has a modular design, so it is using jui_pagination plugin for paging and jui_filter_rules plugin for searching.",
+    "homepage": "http://pontikis.net/labs/jui_datagrid",
+    "docs": "http://pontikis.net/labs/jui_datagrid/docs",
+    "demo": "http://pontikis.net/labs/jui_datagrid/demo",
+    "download": "https://github.com/pontikis/jui_datagrid/archive/master.zip",
     "keywords": [
+        "grid",
         "datagrid",
-        "SQL",
-        "i18n"
+        "table",
+        "database",
+        "paging",
+        "sorting",
+        "searching",
+        "jqueryui-themable",
+        "themable",
+        "ui"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pontikis/jui_datagrid"
-    },
-    "bugs": {
-        "url": "https://github.com/pontikis/jui_datagrid/issues"
-    }
+    "bugs": "https://github.com/pontikis/jui_datagrid/issues"
 }
