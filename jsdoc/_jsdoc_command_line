@@ -1,1 +1,0 @@
-jsdoc -a -p -v -t=jsdoc-tmpl -d=. ../jquery.jui_datagrid.js
