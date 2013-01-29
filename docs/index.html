@@ -1,8 +1,11 @@
+<?php require_once '../../../common/settings.php' ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>jui_datagrid documentation (v1.00)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <?php include_once PROJECT_PATH . '/common/labs_meta.php' ?>
 
     <link href="syntaxhighlighter_3.0.83/styles/shCore.css"
           rel="stylesheet" type="text/css"/>
@@ -29,13 +32,19 @@
         SyntaxHighlighter.all()
     </script>
 
+
 </head>
 <body>
 
-<a href="https://github.com/pontikis/jui_datagrid"><img
-        style="position: absolute; top: 0; right: 0; border: 0;"
+<?php include_once PROJECT_PATH . '/common/header.php' ?>
+
+<!--<a href="https://github.com/pontikis/jui_datagrid"><img
+        style="position: absolute; top: 0; left: 0; border: 0; z-index: 1000;"
         src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
-        alt="Fork me on GitHub"></a>
+        alt="Fork me on GitHub"></a>-->
+
+<section id="labs_docs" class="container" style="margin-top: 40px;">
+<div class="span12" style="border-bottom: none; margin-left: 0;">
 
 <h1>jui_datagrid documentation (v1.00 beta)</h1>
 
@@ -286,11 +295,14 @@
 <div class="level3">
     <p>Use can set custom functions for column value conversion either
         javascript or server side functions.</p>
-    <p>Arguments can be passed as an array of objects. Each argument object can contain:</p>
+
+    <p>Arguments can be passed as an array of objects. Each argument object can
+        contain:</p>
 
     <ul>
         <li>a direct value: <code>{"value": "DD/MM/YYYY"}</code></li>
-        <li>or the value of a column, providing the column index: <code>{"col_index": 5}</code></li>
+        <li>or the value of a column, providing the column index: <code>{"col_index":
+            5}</code></li>
     </ul>
 
     <p>So, any column value can become 'argument' for conversion functions.</p>
@@ -516,7 +528,8 @@
 <!-- Methods --------------------------------------------------------------- -->
 <h2>Methods list</h2>
 
-<div class="level3" style="margin-top: 50px;">
+
+<div class="level3" style="margin-top: 50px; margin-bottom: 20px;">
     <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">COMMON</span>
 </div>
 
@@ -581,7 +594,7 @@
     </pre>
 </div>
 
-<div class="level3" style="margin-top: 50px;">
+<div class="level3" style="margin-top: 50px; margin-bottom: 20px;">
     <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">GET DATA</span>
 </div>
 
@@ -609,7 +622,7 @@
     </pre>
 </div>
 
-<div class="level3" style="margin-top: 50px;">
+<div class="level3" style="margin-top: 50px; margin-bottom: 20px;">
     <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">STYLING</span>
 </div>
 
@@ -629,7 +642,7 @@
     </pre>
 </div>
 
-<div class="level3" style="margin-top: 50px;">
+<div class="level3" style="margin-top: 50px; margin-bottom: 20px;">
     <span style="background-color: #d9dbdc; padding: 5px; font-size: 140%;">PAGINATION</span>
 </div>
 
@@ -791,7 +804,11 @@
          title="jui_datagrid">
 </div>
 
-<br/><br/><br/>
+
+</div>
+</section>
+
+<?php include_once PROJECT_PATH . '/common/footer.php' ?>
 
 </body>
 </html>

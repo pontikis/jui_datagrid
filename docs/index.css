@@ -1,7 +1,7 @@
-body {
+/*body {
     font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
     color: black;
-}
+}*/
 
 h1 {
     font-size: 180%;
@@ -12,10 +12,12 @@ h1 {
     padding: 0.5em 0 0 0;
     border-bottom: 1px solid #8CACBB;
     clear: left;
+    text-align: left;
 }
 
 .level1 {
     margin-left: 3px;
+    text-align: left;
 }
 
 h2 {
@@ -27,10 +29,12 @@ h2 {
     padding: 0.5em 0 0 0;
     border-bottom: 1px solid #8CACBB;
     clear: left;
+    text-align: left;
 }
 
 .level2 {
     margin-left: 23px;
+    text-align: left;
 }
 
 h3 {
@@ -38,15 +42,35 @@ h3 {
     margin-left: 43px;
     border-bottom: none;
     font-weight: bold;
+    text-align: left;
 }
 
 
 .level3 {
     margin-left: 46px;
+    text-align: left;
 }
 
 code, samp, kbd {
     font-family: "Courier New", Courier, monospace, sans-serif;
     text-align: left;
     color: #555;
+}
+
+ul {
+    padding: 20px;
+    margin: 0;
+}
+
+ul li {
+    text-align: left;
+}
+
+p {
+    text-align: left;
+}
+
+img {
+    float: left;
+    clear: both;
 }
