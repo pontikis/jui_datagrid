@@ -1,11 +1,11 @@
 /**
- * @fileOverview jquery plugin which displays database data in tabular format (datagrid)
+ * @fileOverview jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate database data in tabular format.
  *               <p>License MIT
- *               <br />Copyright 2012 Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>
- *               <br />Project page <a href="https://github.com/pontikis/jui_datagrid">https://github.com/pontikis/jui_datagrid</a>
- * @version 1.00 (UPCOMING Release: 1.00 (?? Dec 2012))
+ *               <br />Copyright Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>
+ *               <br />Project page <a href="http://pontikis.net/labs/jui_datagrid/">http://pontikis.net/labs/jui_datagrid/</a>
+ * @version 0.9.0 (29 Jan 2013)
  * @author Christos Pontikis http://pontikis.net
- * @requires jquery, jquery-ui, jquery-ui themes, jui_pagination plugin, jui_filter_rules, jui_dropdown plugins
+ * @requires jquery, jquery-ui, jui_dropdown, jui_pagination, jui_filter_rules plugins
  */
 
 /**
