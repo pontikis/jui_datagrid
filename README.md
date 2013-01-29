@@ -1,45 +1,53 @@
 jui_datagrid
 ============
 
-jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate data in tabular format. As a javascript control, it can be integrated with any server-side technology (e.g. PHP, Perl, ASP, JSP and more). Compatible with modern web browsers. Tested with: Google Chrome, Mozilla Firefox, Microsoft Internet Explorer, (default) Android browser.
+jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate database data in tabular format. Fully customizable, simple but powerful API, jQuery themes compatible, localization support. It has a modular design, so it is using jui_pagination plugin for paging and jui_filter_rules plugin for searching.
 
-jui_datagrid API is simple and powerful.
+Copyright [Christos Pontikis][copyright]
+[copyright]: http://pontikis.net
 
-Copyright Christos Pontikis http://pontikis.net
+Requires jquery, jquery-ui, jui_dropdown, jui_pagination, jui_filter_rules plugins
 
-* Requires jquery, jquery-ui slider, jquery-ui CSS (tested with jquery 1.8.2 and jquery-ui 1.9.0)
-* For touch event support jquery.ui.touch-punch.min.js could be used (see folder /lib/jui_pagination/lib)
-* It is using jui_pagination plugin (usage and documentation [here][jui_pagination])
-* It is using jui_filter_rules plugin (usage and documentation [here][jui_filter_rules])
-* It is using jui_dropdown plugin (usage and documentation [here][jui_dropdown])
-
-[jui_pagination]: https://github.com/pontikis/jui_pagination
-[jui_filter_rules]: https://github.com/pontikis/jui_filter_rules
-[jui_dropdown]: https://github.com/pontikis/jui_dropdown
-
-UPCOMING Release: 1.00
+Release: 0.9.0 (29 Jan 2013)
 
 License [MIT][mit]
-[mit]: https://raw.github.com/pontikis/jui_datagrid/dev/MIT_LICENSE
+[mit]: https://raw.github.com/pontikis/jui_datagrid/master/MIT_LICENSE
 
 
-Documentation
--------------
-
-http://pontikis.net/jui_datagrid/v1.00/docs/
+Project page
+-----------
+[http://pontikis.net/labs/jui_datagrid][HOME]
+[HOME]: http://pontikis.net/labs/jui_datagrid
 
 Demo
 ----
+[http://pontikis.net/labs/jui_datagrid/demo][DEMO]
+[DEMO]: http://pontikis.net/labs/jui_datagrid/demo
 
-http://pontikis.net/jui_datagrid/v1.00/demo/
+Documentation
+-------------
+[http://pontikis.net/labs/jui_datagrid/docs][DOCS]
+[DOCS]: http://pontikis.net/labs/jui_datagrid/docs
 
-Preview:
--------
+Support Forum
+-------------
+[http://pontikis.net/bbs][FORUM]
+[FORUM]: http://pontikis.net/bbs
 
-![jui_datagrid sample][sample]
-![jui_datagrid preferences][pref]
-![jui_datagrid sorting][sorting]
+Download
+--------
+Download [here][DOWNLOAD]
+[DOWNLOAD]: https://github.com/pontikis/jui_datagrid/archive/master.zip
 
-[sample]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample.png "jui_datagrid"
-[pref]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample_pref.png "jui_datagrid preferences"
-[sorting]: https://raw.github.com/pontikis/jui_datagrid/dev/demo/samples/v1.00/sample_sort.png "jui_datagrid sorting"
+
+SCREENSHOTS
+-----------
+
+![jui_datagrid sample1][sample1]
+[sample1]: https://raw.github.com/pontikis/jui_datagrid/master/screenshots/sample1.png
+
+![jui_datagrid sample2][sample2]
+[sample2]: https://raw.github.com/pontikis/jui_datagrid/master/screenshots/sample1_pref.png
+
+![jui_datagrid sample3][sample3]
+[sample3]: https://raw.github.com/pontikis/jui_datagrid/master/screenshots/sample1_sort.png
