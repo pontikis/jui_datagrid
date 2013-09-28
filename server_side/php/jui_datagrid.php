@@ -381,6 +381,8 @@ class jui_datagrid {
 			$conn->Close();
 		} elseif(($rdbms == "POSTGRES")) {
 			pg_close($conn);
+		}  elseif(($rdbms == "MYSQLi")) {
+			$conn->close();
 		}
 	}
 }
