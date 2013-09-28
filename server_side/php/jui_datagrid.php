@@ -37,7 +37,7 @@ class jui_datagrid {
 	 * Create database connection
 	 *
 	 * Supported RDMBS: "ADODB", "MYSQL", "MYSQLi", "MYSQL_PDO", "POSTGRES"
-	 * Currently only "ADODB" and "POSTGRES" are implemented. ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
+	 * Currently only "ADODB", "POSTGRES" and "MYSQLi" are implemented. ADODB drivers tested: mysql, mysqlt, mysqli, pdo_mysql, postgres.
 	 * \todo implement misc RDBMS
 	 *
 	 * @param Array $db_settings database settings
@@ -46,7 +46,7 @@ class jui_datagrid {
 	public function db_connect($db_settings) {
 		$db_type = $db_settings['rdbms'];
 
-		if(!in_array($db_type, array("ADODB", "POSTGRES"))) {
+		if(!in_array($db_type, array("ADODB", "POSTGRES", "MYSQLi"))) {
 			$this->last_error = 'Database (' . $db_type . ') not supported';
 			return false;
 		}
@@ -101,6 +101,10 @@ class jui_datagrid {
 			$dsn = 'host=' . $db_settings['db_server'] . ' port=' . $db_settings['db_port'] . ' dbname=' . $db_settings['db_name'] .
 				' user=' . $db_settings['db_user'] . ' password=' . rawurlencode($db_settings['db_passwd']);
 			$conn = pg_connect($dsn);
+
+		} else if($db_type == "MYSQLi") {
+			$conn = new mysqli($db_settings['db_server'], $db_settings['db_user'],$db_settings['db_passwd'],$db_settings['db_name']);
+			$conn->set_charset('utf8');
 		}
 
 		if($conn === false) {
