@@ -70,7 +70,7 @@
                     elem.data(pluginStatus)['count_selected_ids'] = 0;
                     elem.data(pluginStatus)['filter_rules'] = [];
 
-                    if($.browser.mozilla || ($.browser.msie && parseInt($.browser.version) >= 10)) {
+                    if($.bowser.mozilla || ($.bowser.msie && parseInt($.bowser.version) >= 10)) {
                         elem.data(pluginStatus)['fix_border_collapse_td_width'] = 0;
                     } else {
                         elem.data(pluginStatus)['fix_border_collapse_td_width'] = settings.fix_border_collapse_td_width;
