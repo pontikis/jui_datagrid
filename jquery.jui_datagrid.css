@@ -18,6 +18,12 @@ http://mindvisionco.blogspot.gr/2010/12/easy-table-beautifier-by-jquery-ui-css.h
     font-weight: inherit !important;
 }
 
+.ui-dialog label {
+    margin-left: 5px;
+    margin-right: 7px;
+    font-weight: normal;
+}
+
 /* plugin container --------------------------------------------------------- */
 .grid_container {
     width: 600px;

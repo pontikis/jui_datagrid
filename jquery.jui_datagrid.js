@@ -3,9 +3,9 @@
  *               <p>License MIT
  *               <br />Copyright Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>
  *               <br />Project page <a href="http://pontikis.net/labs/jui_datagrid/">http://pontikis.net/labs/jui_datagrid/</a>
- * @version 0.9.0 (29 Jan 2013)
+ * @version 0.9.1 (20 Oct 2013)
  * @author Christos Pontikis http://pontikis.net
- * @requires jquery, jquery-ui, jui_dropdown, jui_pagination, jui_filter_rules plugins
+ * @requires jquery, jquery-ui, jui_dropdown, jui_pagination, jui_filter_rules plugins, bowser.js
  */
 
 /**
@@ -90,6 +90,7 @@
                 elem.unbind("onDelete").bind("onDelete", settings.onDelete);
                 elem.unbind("onDatagridError").bind("onDatagridError", settings.onDatagridError);
                 elem.unbind("onDebug").bind("onDebug", settings.onDebug);
+                elem.unbind("onChangeSelectedRows").bind("onChangeSelectedRows", settings.onChangeSelectedRows);
                 elem.unbind("onDisplay").bind("onDisplay", settings.onDisplay);
 
                 // initialize plugin html
@@ -823,6 +824,8 @@
                 },
                 onDebug: function() {
                 },
+                onChangeSelectedRows: function() {
+                },
                 onDisplay: function() {
                 }
             };
@@ -997,6 +1000,20 @@
             var datagrid_container_id = this.attr("id"),
                 pagination_id = $("#" + datagrid_container_id).jui_datagrid('getOption', 'pagination_id_prefix') + datagrid_container_id;
             return $("#" + pagination_id).jui_pagination('getAllOptions');
+        },
+
+        /**
+         * Get Dropdown Launcher ID
+         *
+         * utility function, useful to apply CSS fix to jui_dropdown launcher for third party themes (e.g. jQuery-UI-bootstrap)
+         *
+         * @example $(element).jui_datagrid('getDropdownLauncherID');
+         * @return {*}
+         */
+        getDropdownLauncherID: function() {
+            var elem = this,
+                container_id = elem.attr("id");
+            return create_id(elem.jui_datagrid('getOption', 'tools_id_prefix'), container_id) + '_drop_select';
         }
 
     };
@@ -1900,13 +1917,13 @@
                     dropdown_select_options = $.extend({}, dropdown_select_options, given_dropdown_select_options);
                 }
 
-                var internal_pagination_options = {
+                var internal_dropdown_options = {
                     launcher_id: launcher_id,
                     launcher_container_id: launcher_container_id,
                     menu_id: menu_id
                 };
 
-                dropdown_select_options = $.extend({}, dropdown_select_options, internal_pagination_options);
+                dropdown_select_options = $.extend({}, dropdown_select_options, internal_dropdown_options);
 
                 elem_dropdown_select.jui_dropdown(dropdown_select_options);
 
@@ -2105,6 +2122,8 @@
         $("#" + drop_select_id + '_launcher').button({
             label: rsc_jui_dg.tb_selected_label + ': ' + selected_rows
         });
+
+        elem.triggerHandler("onChangeSelectedRows");
     };
 
     /**

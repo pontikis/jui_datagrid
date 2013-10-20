@@ -10,7 +10,8 @@ Copyright [Christos Pontikis][copyright]
 
 Requires jquery, jquery-ui, jui_dropdown, jui_pagination, jui_filter_rules plugins
 
-Release: 0.9.0 (29 Jan 2013)
+Release: 0.9.1 (20 Oct 2013) - View CHANGELOG [here][CHANGELOG]
+[CHANGELOG]: https://raw.github.com/pontikis/jui_datagrid/master/CHANGELOG.md
 
 License [MIT][mit]
 [mit]: https://raw.github.com/pontikis/jui_datagrid/master/MIT_LICENSE

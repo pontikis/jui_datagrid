@@ -1,6 +1,6 @@
 {
     "name": "jui_datagrid",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "title": "jui_datagrid jQuery plugin",
     "author": {
         "name": "Christos Pontikis",
@@ -17,9 +17,10 @@
         "jquery": ">=1.6",
         "jquery-ui": ">=1.8",
         "jui_pagination": ">=2.0.0",
-        "jui_filter_rules": ">=1.0.0",
-        "jui_dropdown": ">=1.0.2",
-        "momentjs": ">=1.7.2"
+        "jui_filter_rules": ">=1.0.3",
+        "jui_dropdown": ">=1.0.4",
+        "momentjs": ">=2.2.1",
+        "bowser": ">=0.3.1"
     },
     "description": "jui_datagrid is an Ajax-enabled jQuery plugin, useful to manipulate database data in tabular format. Fully customizable, simple but powerful API, jQuery themes compatible, localization support. It has a modular design, so it is using jui_pagination plugin for paging and jui_filter_rules plugin for searching.",
     "homepage": "http://pontikis.net/labs/jui_datagrid",
