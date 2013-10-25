@@ -226,8 +226,7 @@ class jui_datagrid {
 			$result = array('sql' => '', 'bind_params' => array());
 		} else {
 			$jfr = new jui_filter_rules($conn, $use_prepared_statements, $pst_placeholder, $rdbms);
-			$res = $jfr->parse_rules($filter_rules);
-			$result = array("sql" => $res["sql"], "bind_params" => $res["bind_params"]);
+			$result = $jfr->parse_rules($filter_rules);
 
 			$last_jfr_error = $jfr->get_last_error();
 			if(!is_null($last_jfr_error['error_message'])) {
@@ -240,7 +239,7 @@ class jui_datagrid {
 			array_push($this->debug_message, 'BIND PARAMS: ' . print_r($result['bind_params'], true));
 			if($use_prepared_statements) {
 				$bind_params_type = '';
-				foreach($res["bind_params"] as $bind_param) {
+				foreach($result["bind_params"] as $bind_param) {
 					$bind_params_type .= gettype($bind_param) . ' ';
 				}
 				array_push($this->debug_message, 'BIND PARAMS TYPE: ' . $bind_params_type);
