@@ -245,8 +245,10 @@ class jui_datagrid {
 				array_push($this->debug_message, 'BIND PARAMS TYPE: ' . $bind_params_type);
 			}
 			array_push($this->debug_message, 'PREPARED STATEMENTS: ' . ($use_prepared_statements ? "yes" : "no"));
-			if(!is_null($last_jfr_error['error_message'])) {
-				array_push($this->debug_message, 'FILTER ERROR: ' . print_r($last_jfr_error['error_message'], true));
+			if(count($filter_rules) > 0) {
+				if(!is_null($last_jfr_error['error_message'])) {
+					array_push($this->debug_message, 'FILTER ERROR: ' . print_r($last_jfr_error['error_message'], true));
+				}
 			}
 		}
 
